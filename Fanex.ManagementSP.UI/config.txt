@@ -1,0 +1,1 @@
+﻿http://10.18.200.209:9911/api/;https://redmine.nexcel.vn/issues/
