@@ -16,10 +16,6 @@ namespace Fanex.ManagementSP.Client.Services
     /// </summary>
     public class BaseService
     {
-        ////public const string APISERVER = "http://10.21.10.19:8099/api/";
-
-        ////public const string APISERVER = "http://localhost:60170/api/";        
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseService"/> class.
         /// </summary>

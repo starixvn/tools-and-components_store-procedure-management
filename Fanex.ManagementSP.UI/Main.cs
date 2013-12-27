@@ -21,7 +21,6 @@ namespace Fanex.ManagementSP.UI
     using Fanex.ManagementSP.UI.ColumnIndex;
     using NPOI.HSSF.UserModel;
     using OutlookStyleControls;
-    using Fanex.ManagementSP.UI.Extend;
 
     /// <summary>
     /// The main class.
@@ -70,7 +69,7 @@ namespace Fanex.ManagementSP.UI
              * 0 : Server API Uri
              * 1 : Redmine link issue
              */
-            string[] setting = Utility.GetConfigSetting();
+            string[] setting = UtilityIO.GetConfigSetting();
             _apiUri = setting[0];
             _redmineIssueUri = setting[1];
 
@@ -83,20 +82,19 @@ namespace Fanex.ManagementSP.UI
             txtIssueId.Reset();
             chbQueryAll.Checked = true;
 
-            ////splitContainer1.Panel1.BackColor = Color.FromArgb(188, 199, 216);
             txtIssueId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
             txtMyIssuesId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
 
             // Init skin
-            SkinDefaultOutlookGrid();
-            SkinDefaultGridView(dataGridViewServer);
-            SkinDefaultGridView(dataGridViewDatabase);
-            SkinDefaultGridView(dataGridViewMyIssue);
+            UtilityUI.InitSkinOutlookGrid(outlookGridStore, imageList, _redmineIssueUri);
+            UtilityUI.InitSkinGridView(dataGridViewServer);
+            UtilityUI.InitSkinGridView(dataGridViewDatabase);
+            UtilityUI.InitSkinGridView(dataGridViewMyIssue);
 
             // Init header columns                
-            Utility.InitHeaderColumnsDataGridViewServer(dataGridViewServer);
-            Utility.InitHeaderColumnsDataGridViewDatabase(dataGridViewDatabase);
-            Utility.InitHeaderColumnsDataGridViewMyIssue(dataGridViewMyIssue);
+            UtilityUI.InitHeaderColumnsDataGridViewServer(dataGridViewServer);
+            UtilityUI.InitHeaderColumnsDataGridViewDatabase(dataGridViewDatabase);
+            UtilityUI.InitHeaderColumnsDataGridViewMyIssue(dataGridViewMyIssue);
 
             // For menu
             toolStripComboBoxSettingStore.SelectedIndex = 0;
@@ -160,9 +158,9 @@ namespace Fanex.ManagementSP.UI
             _listUser = _userService.GetAll();
 
             // Binding data to control
-            Utility.BindingDataToGridViewServer(dataGridViewServer, _listServer);
-            Utility.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
-            Utility.BindingIssueToComboBox(cmboMyIssues, _listIssue);
+            UtilityData.BindingDataToGridViewServer(dataGridViewServer, _listServer);
+            UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
+            UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
 
             // Binding stored procedure data
             string issueIds = txtIssueId.Text.Trim();
@@ -224,14 +222,14 @@ namespace Fanex.ManagementSP.UI
             outlookGridStore.BindData(null, string.Empty);
 
             //// Init header columns    
-            Utility.InitHeaderColumnsDataGridViewStore(outlookGridStore);
+            UtilityUI.InitHeaderColumnsDataGridViewStore(outlookGridStore);
 
             _listStoreProcedure = _storeProcedureService.GetByIssueId(issueIds, chbQueryAll.Checked);
 
             if (!ReferenceEquals(_listStoreProcedure, null)
                 && _listStoreProcedure.Any())
             {
-                Utility.BindingDataToGridViewStore(outlookGridStore, _listStoreProcedure.OrderBy(x => x.Issue.Id).ToList());
+                UtilityData.BindingDataToGridViewStore(outlookGridStore, _listStoreProcedure.OrderBy(x => x.Issue.Id).ToList());
                 Utility.GroupDataGridViewByIssue(outlookGridStore, StoreColumnIndex.IssueName);
             }
 
@@ -270,7 +268,7 @@ namespace Fanex.ManagementSP.UI
 
             if (!string.IsNullOrWhiteSpace(value))
             {
-                Utility.UpdateConfigSetting(value);
+                UtilityIO.UpdateConfigSetting(value);
 
                 MessageBox.Show(Resource.PleaseRestartYourApplication);
             }
@@ -436,12 +434,12 @@ namespace Fanex.ManagementSP.UI
                         {
                             case StoreColumnIndex.Server:
                                 _listServer = _serverService.GetAll();
-                                Utility.ReplaceServerByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listServer, _currentValue);
+                                UtilityData.ReplaceServerByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listServer, _currentValue);
                                 break;
                             case StoreColumnIndex.Database:
                                 _listDatabase = _databaseService.GetAll();
                                 var currentServer = outlookGridStore[StoreColumnIndex.Server, rowIndex].EditedFormattedValue.ToString();
-                                Utility.ReplaceDatabaseByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listDatabase, _currentValue, currentServer);
+                                UtilityData.ReplaceDatabaseByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listDatabase, _currentValue, currentServer);
                                 break;
                             case StoreColumnIndex.Name:
                                 bool isImageType = outlookGridStore[colIndex, rowIndex].FormattedValueType.Name == "Image";
@@ -454,20 +452,20 @@ namespace Fanex.ManagementSP.UI
 
                                 break;
                             case StoreColumnIndex.IsFunction:
-                                Utility.ReplaceIsFunctionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
+                                UtilityData.ReplaceIsFunctionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
                                 break;
                             case StoreColumnIndex.ActionName:
-                                Utility.ReplaceActionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
+                                UtilityData.ReplaceActionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
                                 break;
                             case StoreColumnIndex.Status:
-                                Utility.ReplaceStatusByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
+                                UtilityData.ReplaceStatusByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
                                 break;
                             case StoreColumnIndex.Developer:
-                                Utility.ReplaceDeveloperByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listUser, _currentValue);
+                                UtilityData.ReplaceDeveloperByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listUser, _currentValue);
                                 break;
                         }
 
-                        _storeProcedure = Utility.ConvertGridStoreRowToStoredProcedure(outlookGridStore, e.RowIndex, _listDatabase.ToList(), _listServer.ToList(), _listUser.ToList());
+                        _storeProcedure = UtilityConverter.ToStoredProcedure(outlookGridStore, e.RowIndex, _listDatabase.ToList(), _listServer.ToList(), _listUser.ToList());
                     }
                 }
 
@@ -598,7 +596,7 @@ namespace Fanex.ManagementSP.UI
                     break;
                 case StoreColumnIndex.ActionName:
                     currentValue = outlookGridStore[StoreColumnIndex.ActionName, e.RowIndex].EditedFormattedValue.ToString();
-                    if (Utility.ConvertActionNameToId(currentValue) < 0)
+                    if (UtilityConverter.ToActionID(currentValue) < 0)
                     {
                         DataGridViewImageCell cell = new DataGridViewImageCell();
                         outlookGridStore[StoreColumnIndex.ActionName, e.RowIndex] = cell;
@@ -607,7 +605,7 @@ namespace Fanex.ManagementSP.UI
                     break;
                 case StoreColumnIndex.Status:
                     currentValue = outlookGridStore[StoreColumnIndex.Status, e.RowIndex].EditedFormattedValue.ToString();
-                    if (Utility.ConvertStatusNameToId(currentValue) < 0)
+                    if (UtilityConverter.ToStatusID(currentValue) < 0)
                     {
                         DataGridViewImageCell cell = new DataGridViewImageCell();
                         outlookGridStore[StoreColumnIndex.Status, e.RowIndex] = cell;
@@ -648,7 +646,7 @@ namespace Fanex.ManagementSP.UI
 
                     if (rowIndex > 0 && outlookGridStore.IsValidStoredProcedure(rowIndex))
                     {
-                        var storeProcedure = Utility.ConvertGridStoreRowToStoredProcedure(
+                        var storeProcedure = UtilityConverter.ToStoredProcedure(
                             outlookGridStore,
                             rowIndex,
                             _listDatabase.ToList(),
@@ -660,7 +658,7 @@ namespace Fanex.ManagementSP.UI
                             int storeId = storeProcedure.Id;
                             if (storeProcedure.Id > 0)
                             {
-                                if (!Utility.StoreProcedureEquals(_storeProcedure, storeProcedure))
+                                if (!UtilityData.StoreProcedureEquals(_storeProcedure, storeProcedure))
                                 {
                                     ////Update data
                                     _storeProcedureService.InsertOrUpdate(
@@ -682,7 +680,7 @@ namespace Fanex.ManagementSP.UI
                             else
                             {
                                 // Find issue id in current selected group
-                                int issueId = Utility.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
+                                int issueId = UtilityData.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
 
                                 // Insert new
                                 if (storeProcedure.Server.Id != 0
@@ -754,7 +752,7 @@ namespace Fanex.ManagementSP.UI
                     int minIndex = 0;
                     int countSelectedRow = selectedRows.Count;
 
-                    Utility.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
+                    UtilityData.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
 
                     ContextMenuStrip menu = GenerateContextMenuStripGridViewStore(maxIndex, minIndex, countSelectedRow);
 
@@ -816,10 +814,10 @@ namespace Fanex.ManagementSP.UI
 
                 Task.Factory.StartNew(() =>
                 {
-                    string value = Utility.GetDetailsStoredProcedure(storeName, database.Server, database);
+                    string value = UtilityIO.GetDetailsStoredProcedure(storeName, database.Server, database);
                     if (!string.IsNullOrWhiteSpace(value))
                     {
-                        Utility.OpenFileDetailStoredProcedure(storeName, value);
+                        UtilityIO.OpenFileDetailStoredProcedure(storeName, value);
                     }
                 });
             }
@@ -843,7 +841,7 @@ namespace Fanex.ManagementSP.UI
                 {
                     int rowIndex = outlookGridStore.CurrentCell.RowIndex;
 
-                    var storeProcedure = Utility.ConvertGridStoreRowToStoredProcedure(
+                    var storeProcedure = UtilityConverter.ToStoredProcedure(
                         outlookGridStore,
                         rowIndex,
                         _listDatabase.ToList(),
@@ -852,10 +850,10 @@ namespace Fanex.ManagementSP.UI
 
                     Task.Factory.StartNew(() =>
                     {
-                        string value = Utility.GetDetailsStoredProcedure(storeProcedure.Name, storeProcedure.Server, storeProcedure.Database);
+                        string value = UtilityIO.GetDetailsStoredProcedure(storeProcedure.Name, storeProcedure.Server, storeProcedure.Database);
                         if (!string.IsNullOrWhiteSpace(value))
                         {
-                            Utility.OpenFileDetailStoredProcedure(storeProcedure.Name, value);
+                            UtilityIO.OpenFileDetailStoredProcedure(storeProcedure.Name, value);
                         }
                     });
                 }
@@ -876,13 +874,13 @@ namespace Fanex.ManagementSP.UI
             try
             {
                 ToolStripItem menuItem = sender as ToolStripItem;
-                int statusId = Utility.ConvertStatusNameToId(menuItem.Text);
+                int statusId = UtilityConverter.ToStatusID(menuItem.Text);
 
                 DataGridViewSelectedRowCollection selectedRows = outlookGridStore.SelectedRows;
                 string storeIds = string.Empty;
                 int minIndex = 0;
                 int maxIndex = 0;
-                Utility.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
+                UtilityData.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
 
                 if (selectedRows != null && selectedRows.Count > 0)
                 {
@@ -928,7 +926,7 @@ namespace Fanex.ManagementSP.UI
 
                 foreach (DataGridViewRow item in outlookGridStore.SelectedRows)
                 {
-                    value += Utility.ConvertDataGridViewStoreRowToString(outlookGridStore, item.Index) + "\n";
+                    value += UtilityConverter.ToString(outlookGridStore, item.Index) + "\n";
                 }
 
                 Clipboard.Clear();
@@ -957,7 +955,7 @@ namespace Fanex.ManagementSP.UI
                     int minIndex = 0;
                     int countSelectedRow = selectedRows.Count;
 
-                    Utility.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
+                    UtilityData.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
 
                     outlookGridStore.Rows.Insert(maxIndex + 1, countSelectedRow);
                 }
@@ -985,7 +983,7 @@ namespace Fanex.ManagementSP.UI
                     int minIndex = 0;
                     int countSelectedRow = selectedRows.Count;
 
-                    Utility.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
+                    UtilityData.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
 
                     if (minIndex > 0)
                     {
@@ -1015,7 +1013,7 @@ namespace Fanex.ManagementSP.UI
                 {
                     int minIndex = 0;
                     int maxIndex = 0;
-                    Utility.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
+                    UtilityData.FindMinMaxIndex(selectedRows, ref maxIndex, ref minIndex);
 
                     foreach (DataGridViewRow item in selectedRows)
                     {
@@ -1128,7 +1126,7 @@ namespace Fanex.ManagementSP.UI
                                         IsFunction = array[3].Trim() == "1",
                                         ActionName = array[4].Trim(),
                                         Developer = new User { Username = array[5].Trim() },
-                                        Status = Utility.ConvertStatusNameToId(array[6].Trim()),
+                                        Status = UtilityConverter.ToStatusID(array[6].Trim()),
                                         Description = array.Length >= 8 ? array[7].Trim() : string.Empty
                                     };
 
@@ -1184,7 +1182,7 @@ namespace Fanex.ManagementSP.UI
                                                 outlookGridStore.Rows.InsertRange(rowIndex, row);
                                                 this.outlookGridStore_CellEndEdit(null, new DataGridViewCellEventArgs(StoreColumnIndex.Id, rowIndex));
 
-                                                outlookGridStore[StoreColumnIndex.IssueId, rowIndex].Value = Utility.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
+                                                outlookGridStore[StoreColumnIndex.IssueId, rowIndex].Value = UtilityData.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
 
                                                 rowIndex += 1;
                                             }
@@ -1362,7 +1360,7 @@ namespace Fanex.ManagementSP.UI
                     {
                         var fileName = saveFileDialog.FileName;
 
-                        Utility.ExportExcel(outlookGridStore, _hssfworkbook, fileName);
+                        UtilityIO.ExportExcel(outlookGridStore, _hssfworkbook, fileName);
 
                         CustomMessageBox.MsgBox msgBox = new CustomMessageBox.MsgBox("Export file successfully !", "Export excel");
                         msgBox.SetButtons(new string[] { "Open file", "OK" }, new DialogResult[] { DialogResult.Yes, DialogResult.No }, 2);
@@ -1409,7 +1407,7 @@ namespace Fanex.ManagementSP.UI
                     {
                         var serverId = Convert.ToInt32(strServerId);
 
-                        Utility.BindingDataToGridViewDatabase(dataGridViewDatabase, _listDatabase, serverId);
+                        UtilityData.BindingDataToGridViewDatabase(dataGridViewDatabase, _listDatabase, serverId);
                     }
                 }
             }
@@ -1454,7 +1452,7 @@ namespace Fanex.ManagementSP.UI
                         _serverService.InsertOrUpdate(server.Id, server.Name, server.IPLocal, server.IPUAT, server.IPProduction, server.Description);
 
                         _listServer = _serverService.GetAll();
-                        Utility.BindingDataToGridViewServer(dataGridViewServer, _listServer);
+                        UtilityData.BindingDataToGridViewServer(dataGridViewServer, _listServer);
                     }
                     else
                     {
@@ -1642,7 +1640,7 @@ namespace Fanex.ManagementSP.UI
                             _databaseService.InsertOrUpdate(database.Id, database.Name, database.Description, database.Server.Id, database.UserID, database.Password);
 
                             _listDatabase = _databaseService.GetAll();
-                            Utility.BindingDataToGridViewDatabase(dataGridViewDatabase, _listDatabase, database.Server.Id);
+                            UtilityData.BindingDataToGridViewDatabase(dataGridViewDatabase, _listDatabase, database.Server.Id);
                         }
                         else
                         {
@@ -1803,8 +1801,8 @@ namespace Fanex.ManagementSP.UI
                         _issueService.DeleteFavorite(Utility.CurrentUsername, issueId);
 
                         _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
-                        Utility.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
-                        Utility.BindingIssueToComboBox(cmboMyIssues, _listIssue);
+                        UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
+                        UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
                         ////outlookGridStore.MyIssues = _listIssue.ToList();
                     }
                 }
@@ -1904,10 +1902,10 @@ namespace Fanex.ManagementSP.UI
                     }
                     else
                     {
-                        Utility.BindingIssueToComboBox(cmboMyIssues, _listIssue);
+                        UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
                     }
 
-                    Utility.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
+                    UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
                     ////outlookGridStore.MyIssues = _listIssue.ToList();
                 }
             }
@@ -1939,8 +1937,8 @@ namespace Fanex.ManagementSP.UI
                         _issueService.DeleteFavorite(Utility.CurrentUsername, issueId);
 
                         _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
-                        Utility.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
-                        Utility.BindingIssueToComboBox(cmboMyIssues, _listIssue);
+                        UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
+                        UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
                         ////outlookGridStore.MyIssues = _listIssue.ToList();
                     }
                     else
@@ -2013,8 +2011,8 @@ namespace Fanex.ManagementSP.UI
                         _issueService.DeleteFavorite(Utility.CurrentUsername, issueId);
 
                         _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
-                        Utility.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
-                        Utility.BindingIssueToComboBox(cmboMyIssues, _listIssue);
+                        UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
+                        UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
                     }
                 }
             }
@@ -2025,107 +2023,6 @@ namespace Fanex.ManagementSP.UI
         }
 
         #endregion
-
-        #endregion
-
-        #region Skin For Grid
-
-        /// <summary>
-        /// Skins the default outlook grid.
-        /// </summary>
-        private void SkinDefaultOutlookGrid()
-        {
-            this.outlookGridStore.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.outlookGridStore.DefaultCellStyle = dataGridViewCellStyle2;
-            this.outlookGridStore.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
-
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Desktop;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.outlookGridStore.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-
-            this.outlookGridStore.GridColor = System.Drawing.SystemColors.Control;
-            this.outlookGridStore.RowTemplate.Height = 22;
-            this.outlookGridStore.BackgroundColor = System.Drawing.SystemColors.GrayText;
-            ////this.outlookGrid1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            this.outlookGridStore.RowHeadersVisible = false;
-            this.outlookGridStore.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            this.outlookGridStore.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
-            ////this.outlookGrid1.AllowUserToAddRows = false;
-            ////this.outlookGrid1.AllowUserToDeleteRows = false;
-            ////this.outlookGrid1.AllowUserToResizeRows = false;
-            ////this.outlookGrid1.EditMode = DataGridViewEditMode.EditProgrammatically;
-            this.outlookGridStore.Font = new System.Drawing.Font("Tahoma", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
-            this.outlookGridStore.AllowUserToResizeColumns = true;
-            this.outlookGridStore.AllowUserToResizeRows = false;
-
-            this.outlookGridStore.ExpandIcon = imageList.Images[0];
-            this.outlookGridStore.CollapseIcon = imageList.Images[1];
-            this.outlookGridStore.IconLinkRedmine = imageList.Images[2];
-            this.outlookGridStore.LinkToRedmineIssue = _redmineIssueUri;
-            ////this.outlookGridStore.IconAddFavorites = imageList.Images[3];
-            ////this.outlookGridStore.IconRemoveFavorites = imageList.Images[4];
-            ////outlookGridStore.UpdateFavoriteIssues = this.UpdateFavoriteIssue;
-
-            this.outlookGridStore.MultiSelect = true;
-        }
-
-        /// <summary>
-        /// Skins the default grid view.
-        /// </summary>
-        /// <param name="gridView">The grid view.</param>
-        private void SkinDefaultGridView(DataGridView gridView)
-        {
-            this.outlookGridStore.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            gridView.DefaultCellStyle = dataGridViewCellStyle2;
-            gridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
-
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Desktop;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            gridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-
-            gridView.GridColor = System.Drawing.SystemColors.Control;
-            gridView.RowTemplate.Height = 22;
-            gridView.BackgroundColor = System.Drawing.SystemColors.GrayText;
-            ////this.outlookGrid1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            gridView.RowHeadersVisible = false;
-            gridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            ////this.outlookGrid1.AllowUserToAddRows = false;
-            ////this.outlookGrid1.AllowUserToDeleteRows = false;
-            ////this.outlookGrid1.AllowUserToResizeRows = false;
-            ////this.outlookGrid1.EditMode = DataGridViewEditMode.EditProgrammatically;
-            gridView.Font = new System.Drawing.Font("Tahoma", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
-            gridView.AllowUserToResizeColumns = true;
-            gridView.AllowUserToResizeRows = false;
-            gridView.ShowCellErrors = true;
-            gridView.ShowCellToolTips = true;
-            gridView.ShowEditingIcon = true;
-            gridView.ShowRowErrors = true;
-        }
 
         #endregion
 

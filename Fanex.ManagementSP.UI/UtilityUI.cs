@@ -1,0 +1,255 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="UtilityUI.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Edward.Nguyen" date="2013.12.27">Created</change>
+// </history>
+
+namespace Fanex.ManagementSP.UI
+{
+    using System.Windows.Forms;
+    using Fanex.ManagementSP.UI.ColumnIndex;
+    using OutlookStyleControls;
+
+    public static class UtilityUI
+    {
+        /// <summary>
+        /// Initializes the data grid view stored procedure.
+        /// </summary>
+        /// <param name="outlookGridView">The outlook grid view.</param>
+        public static void InitHeaderColumnsDataGridViewStore(OutlookGrid outlookGridView)
+        {
+            // Add column server            
+            outlookGridView.Columns.Add("No", "#");
+            outlookGridView.Columns.Add("Server", "Server");
+            outlookGridView.Columns.Add("Database", "Database");
+            outlookGridView.Columns.Add("SP_Function", "SP/Function");
+            outlookGridView.Columns.Add("IsFunction", "Is Function");
+            outlookGridView.Columns.Add("Actions", "Actions");
+            outlookGridView.Columns.Add("Developer", "Developer");
+            outlookGridView.Columns.Add("Status", "Status");
+            outlookGridView.Columns.Add("Description", "Description");
+            outlookGridView.Columns.Add("Issue", "Issue");
+            outlookGridView.Columns.Add("StoreId", "StoreId");
+            outlookGridView.Columns.Add("IssueId", "IssueId");
+            outlookGridView.Columns.Add("ModifiedBy", "Modified By");
+
+            // Init width            
+            var totalWith = outlookGridView.Width;
+            ////outlookGridView.Columns[StoreColumnIndex.Number].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            outlookGridView.Columns[StoreColumnIndex.Server].Width = 100;
+            outlookGridView.Columns[StoreColumnIndex.Database].Width = 100;
+            outlookGridView.Columns[StoreColumnIndex.Name].Width = 270;
+            outlookGridView.Columns[StoreColumnIndex.IsFunction].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            outlookGridView.Columns[StoreColumnIndex.ActionName].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            outlookGridView.Columns[StoreColumnIndex.ModifierUser].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            outlookGridView.Columns[StoreColumnIndex.Status].Width = 80;
+            outlookGridView.Columns[StoreColumnIndex.Description].Width = 100;
+            outlookGridView.Columns[StoreColumnIndex.Developer].Width = 100;
+
+            // Init align text
+            for (int i = 0; i < outlookGridView.Columns.Count; i++)
+            {
+                outlookGridView.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            // Hide column issue 
+            outlookGridView.Columns[StoreColumnIndex.Number].Visible = false;
+            outlookGridView.Columns[StoreColumnIndex.IssueName].Visible = false;
+            outlookGridView.Columns[StoreColumnIndex.IssueId].Visible = false;
+            outlookGridView.Columns[StoreColumnIndex.Id].Visible = false;
+
+            // Disable edit
+            outlookGridView.Columns[StoreColumnIndex.Number].ReadOnly = true;
+            outlookGridView.Columns[StoreColumnIndex.ModifierUser].ReadOnly = true;
+        }
+
+        /// <summary>
+        /// Initializes the data grid view server.
+        /// </summary>
+        /// <param name="dataGridView">The data grid view.</param>
+        public static void InitHeaderColumnsDataGridViewServer(DataGridView dataGridView)
+        {
+            dataGridView.Columns.Clear();
+            //// Add column server            
+            dataGridView.Columns.Add("No", "#");
+            dataGridView.Columns.Add("Name", "Name");
+            dataGridView.Columns.Add("IPLocal", "IP Local");
+            dataGridView.Columns.Add("IPUAT", "IP UAT");
+            dataGridView.Columns.Add("IPProduction", "IP Production");
+            dataGridView.Columns.Add("Description", "Description");
+            dataGridView.Columns.Add("Id", "Id");
+
+            // Align text
+            // Init align text
+            for (int i = 0; i < dataGridView.Columns.Count; i++)
+            {
+                dataGridView.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            // Hide columns
+            dataGridView.Columns[ServerColumnIndex.Number].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView.Columns[ServerColumnIndex.Number].ReadOnly = true;
+            dataGridView.Columns[ServerColumnIndex.Id].Visible = false;
+            dataGridView.Columns[ServerColumnIndex.Number].Visible = false;
+
+            // Init width
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        /// <summary>
+        /// Initializes the data grid view database.
+        /// </summary>
+        /// <param name="dataGridView">The data grid view.</param>
+        public static void InitHeaderColumnsDataGridViewDatabase(DataGridView dataGridView)
+        {
+            dataGridView.Columns.Clear();
+            //// Add column server            
+            dataGridView.Columns.Add("No", "#");
+            dataGridView.Columns.Add("Name", "Name");
+            dataGridView.Columns.Add("Description", "Description");
+            dataGridView.Columns.Add("UserID", "User ID");
+            dataGridView.Columns.Add("Password", "Password");
+            dataGridView.Columns.Add("Id", "Id");
+
+            // Align text
+            // Init align text
+            for (int i = 0; i < dataGridView.Columns.Count; i++)
+            {
+                dataGridView.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            // Hide columns
+            dataGridView.Columns[DatabaseColumnIndex.Number].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView.Columns[DatabaseColumnIndex.Number].ReadOnly = true;
+            dataGridView.Columns[DatabaseColumnIndex.Id].Visible = false;
+            dataGridView.Columns[DatabaseColumnIndex.Number].Visible = false;
+
+            // Init width
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        /// <summary>
+        /// Initializes the data grid view my issue.
+        /// </summary>
+        /// <param name="dataGridView">The data grid view.</param>
+        public static void InitHeaderColumnsDataGridViewMyIssue(DataGridView dataGridView)
+        {
+            dataGridView.Columns.Clear();
+            //// Add column server            
+            dataGridView.Columns.Add("IssueId", "#");
+            dataGridView.Columns.Add("Name", "Name");
+
+            DataGridViewLinkColumn link = new DataGridViewLinkColumn();
+            link.Text = "Remove";
+            link.HeaderText = "Remove";
+            link.UseColumnTextForLinkValue = true;
+
+            dataGridView.Columns.Add(link);
+
+            // Align text
+            // Init align text
+            for (int i = 0; i < dataGridView.Columns.Count; i++)
+            {
+                dataGridView.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dataGridView.Columns[i].ReadOnly = true;
+            }
+
+            dataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            dataGridView.Columns[0].Visible = false;
+
+            // Init width
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView.MultiSelect = true;
+        }
+
+        /// <summary>
+        /// Skins the default outlook grid.
+        /// </summary>
+        public static void InitSkinOutlookGrid(OutlookGrid outlookGridStore, ImageList imageList, string redmineIssueUri)
+        {
+            outlookGridStore.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            outlookGridStore.DefaultCellStyle = dataGridViewCellStyle2;
+            outlookGridStore.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            outlookGridStore.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+
+            outlookGridStore.GridColor = System.Drawing.SystemColors.Control;
+            outlookGridStore.RowTemplate.Height = 22;
+            outlookGridStore.BackgroundColor = System.Drawing.SystemColors.GrayText;
+
+            outlookGridStore.RowHeadersVisible = false;
+            outlookGridStore.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            outlookGridStore.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+
+            outlookGridStore.Font = new System.Drawing.Font("Tahoma", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            outlookGridStore.AllowUserToResizeColumns = true;
+            outlookGridStore.AllowUserToResizeRows = false;
+
+            outlookGridStore.ExpandIcon = imageList.Images[0];
+            outlookGridStore.CollapseIcon = imageList.Images[1];
+            outlookGridStore.IconLinkRedmine = imageList.Images[2];
+            outlookGridStore.LinkToRedmineIssue = redmineIssueUri;
+
+            outlookGridStore.MultiSelect = true;
+        }
+
+        /// <summary>
+        /// Skins the default grid view.
+        /// </summary>
+        /// <param name="gridView">The grid view.</param>
+        public static void InitSkinGridView(DataGridView gridView)
+        {
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            gridView.DefaultCellStyle = dataGridViewCellStyle2;
+            gridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            gridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+
+            gridView.GridColor = System.Drawing.SystemColors.Control;
+            gridView.RowTemplate.Height = 22;
+            gridView.BackgroundColor = System.Drawing.SystemColors.GrayText;
+            gridView.RowHeadersVisible = false;
+            gridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            gridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            gridView.Font = new System.Drawing.Font("Tahoma", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            gridView.AllowUserToResizeColumns = true;
+            gridView.AllowUserToResizeRows = false;
+            gridView.ShowCellErrors = true;
+            gridView.ShowCellToolTips = true;
+            gridView.ShowEditingIcon = true;
+            gridView.ShowRowErrors = true;
+        }
+    }
+}

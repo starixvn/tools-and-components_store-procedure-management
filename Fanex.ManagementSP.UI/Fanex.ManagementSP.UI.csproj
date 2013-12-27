@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColumnIndex\DatabaseColumnIndex.cs" />
+    <Compile Include="UtilityConverter.cs" />
     <Compile Include="DataGridViewRowComparer.cs" />
     <Compile Include="ColumnIndex\ServerColumnIndex.cs" />
     <Compile Include="Extend\DataGridViewComboBoxCellExtended.cs" />
@@ -100,6 +101,9 @@
       <DependentUpon>SearchBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
+    <Compile Include="UtilityData.cs" />
+    <Compile Include="UtilityIO.cs" />
+    <Compile Include="UtilityUI.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
