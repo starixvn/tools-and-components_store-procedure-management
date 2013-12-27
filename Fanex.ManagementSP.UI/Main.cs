@@ -400,7 +400,6 @@ namespace Fanex.ManagementSP.UI
         {
             try
             {
-                //// do something here
             }
             catch (Exception)
             {
@@ -775,7 +774,6 @@ namespace Fanex.ManagementSP.UI
                             }
                         }
 
-
                         viewDetailsStoredProcedure.MouseDown += new MouseEventHandler(ViewDetailsStoredProcedure_MouseDown);
 
                         menu.Items.Add(viewDetailsStoredProcedure);
@@ -804,6 +802,11 @@ namespace Fanex.ManagementSP.UI
             }
         }
 
+        /// <summary>
+        /// Handles the MouseDown event of the DatabaseMenu control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
         private void DatabaseMenu_MouseDown(object sender, MouseEventArgs e)
         {
             try
@@ -1486,7 +1489,10 @@ namespace Fanex.ManagementSP.UI
 
                     if (!string.IsNullOrWhiteSpace(strServerId))
                     {
-                        DialogResult diaLog = MessageBox.Show("All databases and stored procedures related to this server will be delete!", "Confirm delete database", MessageBoxButtons.YesNo);
+                        DialogResult diaLog = MessageBox.Show(
+                            "All databases and stored procedures related to this server will be delete!",
+                            "Confirm delete database",
+                            MessageBoxButtons.YesNo);
 
                         if (diaLog == DialogResult.Yes)
                         {
@@ -1566,7 +1572,10 @@ namespace Fanex.ManagementSP.UI
 
                     if (!string.IsNullOrWhiteSpace(strId))
                     {
-                        DialogResult diaLog = MessageBox.Show("All databases and stored procedures related to this server will be delete!", "Confirm delete database", MessageBoxButtons.YesNo);
+                        DialogResult diaLog = MessageBox.Show(
+                            "All databases and stored procedures related to this server will be delete!",
+                            "Confirm delete database",
+                            MessageBoxButtons.YesNo);
 
                         if (diaLog == DialogResult.Yes)
                         {
@@ -2068,6 +2077,11 @@ namespace Fanex.ManagementSP.UI
             }
         }
 
+        /// <summary>
+        /// Handles the EditingControlShowing event of the outlookGridStore control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DataGridViewEditingControlShowingEventArgs"/> instance containing the event data.</param>
         private void outlookGridStore_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             var colIndex = outlookGridStore.CurrentCell.ColumnIndex;
@@ -2097,8 +2111,11 @@ namespace Fanex.ManagementSP.UI
             ((DataGridViewComboBoxEditingControl)sender).BackColor = Color.White;
         }
 
-        private string _value = string.Empty;
-
+        /// <summary>
+        /// Handles the SelectedValueChanged event of the ComboBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             var combo = (DataGridViewComboBoxEditingControl)sender;

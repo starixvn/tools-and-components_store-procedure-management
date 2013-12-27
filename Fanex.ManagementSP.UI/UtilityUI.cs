@@ -13,6 +13,9 @@ namespace Fanex.ManagementSP.UI
     using Fanex.ManagementSP.UI.ColumnIndex;
     using OutlookStyleControls;
 
+    /// <summary>
+    /// The utility user interface class.
+    /// </summary>
     public static class UtilityUI
     {
         /// <summary>
@@ -168,8 +171,11 @@ namespace Fanex.ManagementSP.UI
         }
 
         /// <summary>
-        /// Skins the default outlook grid.
+        /// Initializes the skin outlook grid.
         /// </summary>
+        /// <param name="outlookGridStore">The outlook grid store.</param>
+        /// <param name="imageList">The image list.</param>
+        /// <param name="redmineIssueUri">The REDMINE issue URI.</param>
         public static void InitSkinOutlookGrid(OutlookGrid outlookGridStore, ImageList imageList, string redmineIssueUri)
         {
             outlookGridStore.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
