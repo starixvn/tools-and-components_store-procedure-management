@@ -171,7 +171,6 @@ namespace Fanex.ManagementSP.UI
 
             txtAPIUrl.Text = _apiUri;
             txtRedmineIssueUri.Text = _redmineIssueUri;
-            ////outlookGridStore.MyIssues = _listIssue.ToList();
         }
 
         #endregion
@@ -179,16 +178,6 @@ namespace Fanex.ManagementSP.UI
         #region Event
 
         #region Others
-
-        /// <summary>
-        /// Handles the TextChanged event of the txtIssueId control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void txtIssueId_TextChanged(object sender, EventArgs e)
-        {
-            ////this.LoadStore(txtIssueId.Text.Trim());            
-        }
 
         /// <summary>
         /// Handles the KeyDown event of the txtIssueId control.
@@ -406,6 +395,82 @@ namespace Fanex.ManagementSP.UI
             }
         }
 
+        /// <summary>
+        /// Handles the EditingControlShowing event of the outlookGridStore control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DataGridViewEditingControlShowingEventArgs"/> instance containing the event data.</param>
+        private void outlookGridStore_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            var colIndex = outlookGridStore.CurrentCell.ColumnIndex;
+
+            if (colIndex == StoreColumnIndex.Server
+                || colIndex == StoreColumnIndex.Database
+                || colIndex == StoreColumnIndex.IsFunction
+                || colIndex == StoreColumnIndex.ActionName
+                || colIndex == StoreColumnIndex.Developer
+                || colIndex == StoreColumnIndex.Status)
+            {
+                DataGridViewComboBoxEditingControl combo = e.Control as DataGridViewComboBoxEditingControl;
+
+                if (combo != null && _isEventClickComplete)
+                {
+                    // Remove an existing event-handler, if present, to avoid 
+                    // adding multiple handlers when the editing control is reused.
+                    combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
+                    combo.DropDown -= new EventHandler(combo_DropDown);
+                    combo.GotFocus -= new EventHandler(combo_DropDown);
+
+                    // Add the event handler. 
+                    combo.SelectedValueChanged += new EventHandler(ComboBox_SelectedValueChanged);
+                    combo.DropDown += new EventHandler(combo_DropDown);
+                    combo.GotFocus += new EventHandler(combo_DropDown);
+                }
+
+                combo.AutoCompleteMode = AutoCompleteMode.Suggest;
+            }
+        }
+
+        private void combo_DropDown(object sender, EventArgs e)
+        {
+            ((DataGridViewComboBoxEditingControl)sender).BackColor = Color.White;
+        }
+
+        /// <summary>
+        /// Handles the SelectedValueChanged event of the ComboBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void ComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var combo = (DataGridViewComboBoxEditingControl)sender;
+            var colIndex = outlookGridStore.CurrentCell.ColumnIndex;
+
+            if (colIndex == StoreColumnIndex.Server)
+            {
+                var rowIndex = outlookGridStore.CurrentCell.RowIndex;
+                var serverName = combo.Text;
+
+                if (!string.IsNullOrWhiteSpace(serverName)
+                    && !string.Equals(_currentValue, serverName, StringComparison.OrdinalIgnoreCase))
+                {
+                    var currentDatabaseName = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString();
+                    var filterListDatabase = _listDatabase.Where(x => x.Server.Name.ToLower() == serverName.ToLower()).ToList();
+                    var database = filterListDatabase.Where(x => x.Name.ToLower() == currentDatabaseName.ToLower()).FirstOrDefault();
+
+                    if (database == null)
+                    {
+                        database = filterListDatabase.FirstOrDefault();
+                        outlookGridStore[StoreColumnIndex.Database, rowIndex].Value = database != null ? database.Name : string.Empty;
+                    }
+                }
+            }
+
+            combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
+            combo.DropDown -= new EventHandler(combo_DropDown);
+            combo.GotFocus -= new EventHandler(combo_DropDown);
+        }
+
         #region Replace TextBox By ComboBox
 
         /// <summary>
@@ -585,10 +650,8 @@ namespace Fanex.ManagementSP.UI
                     break;
                 case StoreColumnIndex.IsFunction:
                     currentValue = outlookGridStore[StoreColumnIndex.IsFunction, e.RowIndex].EditedFormattedValue.ToString();
-                    if (currentValue != "0"
-                        || currentValue != "1")
+                    if (currentValue != "0" || currentValue != "1")
                     {
-                        ////DataGridViewImageCell cell = new DataGridViewImageCell();
                         outlookGridStore[StoreColumnIndex.IsFunction, e.RowIndex].Value = "0";
                     }
 
@@ -1161,7 +1224,7 @@ namespace Fanex.ManagementSP.UI
 
                                             if (user == null)
                                             {
-                                                errorUsernames.Add(storeProcedure.Modifier.Username);
+                                                errorUsernames.Add(storeProcedure.Developer.Username);
                                             }
                                             else
                                             {
@@ -1334,7 +1397,7 @@ namespace Fanex.ManagementSP.UI
                 }
                 else
                 {
-                    base.OnKeyDown(e);
+                    OnKeyDown(e);
                 }
             }
         }
@@ -1543,7 +1606,6 @@ namespace Fanex.ManagementSP.UI
 
                     ////Assign created context menu strip to the DataGridView
                     dataGridViewServer.ContextMenuStrip = menu;
-                    ////CellValue = outlookGrid1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 }
                 else
                 {
@@ -1701,7 +1763,6 @@ namespace Fanex.ManagementSP.UI
                     }
                     else
                     {
-                        ////MessageBox.Show(Resource.CanNotDelete);
                         e.Cancel = true;
                     }
                 }
@@ -1735,7 +1796,6 @@ namespace Fanex.ManagementSP.UI
 
                     ////Assign created context menu strip to the DataGridView
                     dataGridViewDatabase.ContextMenuStrip = menu;
-                    ////CellValue = outlookGrid1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 }
                 else
                 {
@@ -1783,6 +1843,47 @@ namespace Fanex.ManagementSP.UI
             }
         }
 
+        /// <summary>
+        /// Handles the EditingControlShowing event of the dataGridViewDatabase control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DataGridViewEditingControlShowingEventArgs"/> instance containing the event data.</param>
+        private void dataGridViewDatabase_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            int colIndex = dataGridViewDatabase.CurrentCell.ColumnIndex;
+            if (colIndex == DatabaseColumnIndex.Password)
+            {
+                TextBox textBox = e.Control as TextBox;
+                if (textBox != null)
+                {
+                    textBox.UseSystemPasswordChar = true;
+                }
+            }
+            else
+            {
+                TextBox textBox = e.Control as TextBox;
+                if (textBox != null)
+                {
+                    textBox.UseSystemPasswordChar = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the CellFormatting event of the dataGridViewDatabase control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DataGridViewCellFormattingEventArgs"/> instance containing the event data.</param>
+        private void dataGridViewDatabase_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == DatabaseColumnIndex.Password
+                && e.Value != null
+                && !string.IsNullOrWhiteSpace(e.Value.ToString()))
+            {
+                dataGridViewDatabase.Rows[e.RowIndex].Tag = e.Value;
+                e.Value = new string('*', 10);
+            }
+        }
         #endregion
 
         #region Data Grid View My Issue
@@ -1812,7 +1913,6 @@ namespace Fanex.ManagementSP.UI
                         _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
                         UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
                         UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
-                        ////outlookGridStore.MyIssues = _listIssue.ToList();
                     }
                 }
             }
@@ -1845,7 +1945,6 @@ namespace Fanex.ManagementSP.UI
             }
             catch (Exception ex)
             {
-                ////this.LoadStore(string.Empty);
                 Utility.HandleException(ex);
             }
         }
@@ -1915,7 +2014,6 @@ namespace Fanex.ManagementSP.UI
                     }
 
                     UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
-                    ////outlookGridStore.MyIssues = _listIssue.ToList();
                 }
             }
             catch (Exception ex)
@@ -1948,7 +2046,6 @@ namespace Fanex.ManagementSP.UI
                         _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
                         UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);
                         UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
-                        ////outlookGridStore.MyIssues = _listIssue.ToList();
                     }
                     else
                     {
@@ -1986,7 +2083,6 @@ namespace Fanex.ManagementSP.UI
 
                     ////Assign created context menu strip to the DataGridView
                     dataGridViewMyIssue.ContextMenuStrip = menu;
-                    ////CellValue = outlookGrid1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 }
                 else
                 {
@@ -2034,116 +2130,5 @@ namespace Fanex.ManagementSP.UI
         #endregion
 
         #endregion
-
-        /// <summary>
-        /// Handles the EditingControlShowing event of the dataGridViewDatabase control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="DataGridViewEditingControlShowingEventArgs"/> instance containing the event data.</param>
-        private void dataGridViewDatabase_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            int colIndex = dataGridViewDatabase.CurrentCell.ColumnIndex;
-            if (colIndex == DatabaseColumnIndex.Password)
-            {
-                TextBox textBox = e.Control as TextBox;
-                if (textBox != null)
-                {
-                    textBox.UseSystemPasswordChar = true;
-                }
-            }
-            else
-            {
-                TextBox textBox = e.Control as TextBox;
-                if (textBox != null)
-                {
-                    textBox.UseSystemPasswordChar = false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles the CellFormatting event of the dataGridViewDatabase control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="DataGridViewCellFormattingEventArgs"/> instance containing the event data.</param>
-        private void dataGridViewDatabase_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.ColumnIndex == DatabaseColumnIndex.Password
-                && e.Value != null
-                && !string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                dataGridViewDatabase.Rows[e.RowIndex].Tag = e.Value;
-                e.Value = new string('*', 10);
-            }
-        }
-
-        /// <summary>
-        /// Handles the EditingControlShowing event of the outlookGridStore control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="DataGridViewEditingControlShowingEventArgs"/> instance containing the event data.</param>
-        private void outlookGridStore_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            var colIndex = outlookGridStore.CurrentCell.ColumnIndex;
-
-            if (colIndex == StoreColumnIndex.Server && _isEventClickComplete)
-            {
-                DataGridViewComboBoxEditingControl combo = e.Control as DataGridViewComboBoxEditingControl;
-
-                if (combo != null)
-                {
-                    // Remove an existing event-handler, if present, to avoid 
-                    // adding multiple handlers when the editing control is reused.
-                    combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
-                    combo.DropDown -= new EventHandler(combo_DropDown);
-                    combo.GotFocus -= new EventHandler(combo_DropDown);
-
-                    // Add the event handler. 
-                    combo.SelectedValueChanged += new EventHandler(ComboBox_SelectedValueChanged);
-                    combo.DropDown += new EventHandler(combo_DropDown);
-                    combo.GotFocus += new EventHandler(combo_DropDown);
-                }
-            }
-        }
-
-        private void combo_DropDown(object sender, EventArgs e)
-        {
-            ((DataGridViewComboBoxEditingControl)sender).BackColor = Color.White;
-        }
-
-        /// <summary>
-        /// Handles the SelectedValueChanged event of the ComboBox control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void ComboBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-            var combo = (DataGridViewComboBoxEditingControl)sender;
-            var colIndex = outlookGridStore.CurrentCell.ColumnIndex;
-
-            if (colIndex == StoreColumnIndex.Server)
-            {
-                var rowIndex = outlookGridStore.CurrentCell.RowIndex;
-                var serverName = combo.Text;
-
-                if (!string.IsNullOrWhiteSpace(serverName)
-                    && !string.Equals(_currentValue, serverName, StringComparison.OrdinalIgnoreCase))
-                {
-                    var currentDatabaseName = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString();
-                    var filterListDatabase = _listDatabase.Where(x => x.Server.Name.ToLower() == serverName.ToLower()).ToList();
-                    var database = filterListDatabase.Where(x => x.Name.ToLower() == currentDatabaseName.ToLower()).FirstOrDefault();
-
-                    if (database == null)
-                    {
-                        database = filterListDatabase.FirstOrDefault();
-                        outlookGridStore[StoreColumnIndex.Database, rowIndex].Value = database != null ? database.Name : string.Empty;
-                    }
-                }
-            }
-
-            combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
-            combo.DropDown -= new EventHandler(combo_DropDown);
-            combo.GotFocus -= new EventHandler(combo_DropDown);
-        }
     }
 }

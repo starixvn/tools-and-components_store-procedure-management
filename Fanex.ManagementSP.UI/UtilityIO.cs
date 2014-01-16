@@ -294,7 +294,7 @@ namespace Fanex.ManagementSP.UI
         /// <summary>
         /// Opens the file detail stored procedure.
         /// </summary>
-        /// <param name="storeName">Name of the stored procedure.</param>
+        /// <param name="storeName">Name of the store.</param>
         /// <param name="value">The value.</param>
         public static void OpenFileDetailStoredProcedure(string storeName, string value)
         {

@@ -239,6 +239,7 @@ namespace Fanex.ManagementSP.UI
                 cellIsFunction.Items.Add("0");
                 cellIsFunction.Items.Add("1");
                 cellIsFunction.FlatStyle = FlatStyle.Flat;
+                cellIsFunction.AutoComplete = true;
 
                 outlookGirdView[colIndex, rowIndex] = cellIsFunction;
                 outlookGirdView[colIndex, rowIndex].Value = currentValue;
@@ -267,6 +268,7 @@ namespace Fanex.ManagementSP.UI
                 cellAction.Items.Add("Nested");
                 cellAction.Items.Add("Not Used");
                 cellAction.FlatStyle = FlatStyle.Flat;
+                cellAction.AutoComplete = true;
 
                 outlookGirdView[colIndex, rowIndex] = cellAction;
                 outlookGirdView[colIndex, rowIndex].Value = currentValue;

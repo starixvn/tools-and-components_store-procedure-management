@@ -374,7 +374,6 @@ namespace Fanex.ManagementSP.UI
             this.txtIssueId.Name = "txtIssueId";
             this.txtIssueId.Size = new System.Drawing.Size(83, 23);
             this.txtIssueId.TabIndex = 4;
-            this.txtIssueId.TextChanged += new System.EventHandler(this.txtIssueId_TextChanged);
             this.txtIssueId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtIssueId_KeyDown);
             // 
             // chbQueryAll
