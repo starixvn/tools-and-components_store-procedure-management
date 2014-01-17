@@ -69,7 +69,7 @@ namespace Fanex.ManagementSP.UI
             outlookGridView[StoreColumnIndex.Server, rowIndex].Value = itemStoreProcedure.Server != null ? itemStoreProcedure.Server.Name : string.Empty;
             outlookGridView[StoreColumnIndex.Database, rowIndex].Value = itemStoreProcedure.Database != null ? itemStoreProcedure.Database.Name : string.Empty;
             outlookGridView[StoreColumnIndex.Name, rowIndex].Value = itemStoreProcedure.Name;
-            outlookGridView[StoreColumnIndex.IsFunction, rowIndex].Value = id != 0 ? (itemStoreProcedure.IsFunction ? "1" : "0") : string.Empty;
+            outlookGridView[StoreColumnIndex.IsFunction, rowIndex].Value = id != 0 ? itemStoreProcedure.IsFunction : false;
             outlookGridView[StoreColumnIndex.ActionName, rowIndex].Value = itemStoreProcedure.ActionName != null ? itemStoreProcedure.ActionName : string.Empty;
             outlookGridView[StoreColumnIndex.ModifierUser, rowIndex].Value = itemStoreProcedure.Modifier != null ? itemStoreProcedure.Modifier.Username : string.Empty;
             outlookGridView[StoreColumnIndex.Status, rowIndex].Value = itemStoreProcedure.StatusName != null && id != 0 ? itemStoreProcedure.StatusName : string.Empty;
@@ -271,7 +271,7 @@ namespace Fanex.ManagementSP.UI
                 cellAction.AutoComplete = true;
 
                 outlookGirdView[colIndex, rowIndex] = cellAction;
-                outlookGirdView[colIndex, rowIndex].Value = currentValue;
+                outlookGirdView[colIndex, rowIndex].Value = currentValue.ToUpperAction();
             }
             catch (Exception ex)
             {
@@ -302,7 +302,7 @@ namespace Fanex.ManagementSP.UI
                 cellStatus.FlatStyle = FlatStyle.Flat;
 
                 outlookGirdView[colIndex, rowIndex] = cellStatus;
-                outlookGirdView[colIndex, rowIndex].Value = currentValue;
+                outlookGirdView[colIndex, rowIndex].Value = currentValue.ToUpperStatus();
             }
             catch (Exception ex)
             {
@@ -508,6 +508,20 @@ namespace Fanex.ManagementSP.UI
                 && string.Equals(objectA.Name, objectB.Name, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.Server.Name, objectB.Server.Name, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.StatusName, objectB.StatusName, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool RowIsNotEmpty(OutlookGrid outlookGrid, int rowIndex)
+        {
+            if (!string.IsNullOrWhiteSpace(outlookGrid[StoreColumnIndex.Server, rowIndex].FormattedValue.ToString())
+                || !string.IsNullOrWhiteSpace(outlookGrid[StoreColumnIndex.Database, rowIndex].FormattedValue.ToString())
+                || !string.IsNullOrWhiteSpace(outlookGrid[StoreColumnIndex.Name, rowIndex].FormattedValue.ToString())
+                || !string.IsNullOrWhiteSpace(outlookGrid[StoreColumnIndex.ActionName, rowIndex].FormattedValue.ToString())
+                || !string.IsNullOrWhiteSpace(outlookGrid[StoreColumnIndex.Status, rowIndex].FormattedValue.ToString()))
             {
                 return true;
             }

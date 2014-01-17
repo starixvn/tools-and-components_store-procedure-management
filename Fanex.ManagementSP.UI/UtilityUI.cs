@@ -29,7 +29,13 @@ namespace Fanex.ManagementSP.UI
             outlookGridView.Columns.Add("Server", "Server");
             outlookGridView.Columns.Add("Database", "Database");
             outlookGridView.Columns.Add("SP_Function", "SP/Function");
-            outlookGridView.Columns.Add("IsFunction", "Is Function");
+            //outlookGridView.Columns.Add("IsFunction", "Is Function");
+
+            DataGridViewCheckBoxColumn colIsFunction = new DataGridViewCheckBoxColumn();
+            colIsFunction.Name = "IsFunction";
+            colIsFunction.HeaderText = "Function";
+            outlookGridView.Columns.Add(colIsFunction);
+
             outlookGridView.Columns.Add("Actions", "Actions");
             outlookGridView.Columns.Add("Developer", "Developer");
             outlookGridView.Columns.Add("Status", "Status");
@@ -46,7 +52,7 @@ namespace Fanex.ManagementSP.UI
             outlookGridView.Columns[StoreColumnIndex.Database].Width = 100;
             outlookGridView.Columns[StoreColumnIndex.Name].Width = 270;
             outlookGridView.Columns[StoreColumnIndex.IsFunction].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            outlookGridView.Columns[StoreColumnIndex.ActionName].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            outlookGridView.Columns[StoreColumnIndex.ActionName].Width = 70;
             outlookGridView.Columns[StoreColumnIndex.ModifierUser].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             outlookGridView.Columns[StoreColumnIndex.Status].Width = 80;
             outlookGridView.Columns[StoreColumnIndex.Description].Width = 100;
@@ -216,6 +222,10 @@ namespace Fanex.ManagementSP.UI
             outlookGridStore.LinkToRedmineIssue = redmineIssueUri;
 
             outlookGridStore.MultiSelect = true;
+            outlookGridStore.ShowCellErrors = true;
+            outlookGridStore.ShowRowErrors = true;
+            outlookGridStore.ShowEditingIcon = true;
+            outlookGridStore.ShowCellToolTips = true;
         }
 
         /// <summary>

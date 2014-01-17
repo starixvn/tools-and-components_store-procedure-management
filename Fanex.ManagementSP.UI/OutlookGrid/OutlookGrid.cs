@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using Fanex.ManagementSP.Entities;
 using System.Linq;
+using Fanex.ManagementSP.UI.ColumnIndex;
 
 namespace OutlookStyleControls
 {
@@ -400,11 +401,23 @@ namespace OutlookStyleControls
                         counter = 1; // reset counter for next group
                     }
 
+                    int colIndex = 0;
                     foreach (object obj in r)
                     {
-                        DataGridViewCell cell = new DataGridViewTextBoxCell();
-                        cell.Value = obj.ToString();
-                        row.Cells.Add(cell);
+                        if (colIndex == StoreColumnIndex.IsFunction)
+                        {
+                            DataGridViewCheckBoxCell cell = new DataGridViewCheckBoxCell();
+                            cell.Value = obj.ToString();
+                            row.Cells.Add(cell);
+                        }
+                        else
+                        {
+                            DataGridViewCell cell = new DataGridViewTextBoxCell();
+                            cell.Value = obj.ToString();
+                            row.Cells.Add(cell);
+                        }
+                        
+                        colIndex++;
                     }
 
                     Rows.Add(row);

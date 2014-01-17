@@ -22,6 +22,44 @@ namespace Fanex.ManagementSP.UI
     /// </summary>
     public static class UtilityConverter
     {
+        public static string ToUpperStatus(this string name)
+        {
+            name = name.ToLower();
+
+            switch (name)
+            {
+                case "in progress":
+                    name = "In Progress";
+                    break;
+                case "done":
+                    name = "Done";
+                    break;
+                case "uat [ _xtest]":
+                    name = "UAT [ _xtest]";
+                    break;
+                case "uat [_xpre]":
+                    name = "UAT [_xpre]";
+                    break;
+                case "not required":
+                    name = "Not required";
+                    break;
+                case "released":
+                    name = "Released";
+                    break;
+                case "pending":
+                    name = "Pending";
+                    break;
+                case "uat":
+                    name = "UAT";
+                    break;
+                default:
+                    name = string.Empty;
+                    break;
+            }
+
+            return name;
+        }
+
         /// <summary>
         /// Converts the status name to identifier.
         /// </summary>
@@ -63,6 +101,35 @@ namespace Fanex.ManagementSP.UI
             }
 
             return statusId;
+        }
+
+        public static string ToUpperAction(this string name)
+        {
+            name = name.ToLower();
+
+            switch (name)
+            {
+                case "a":
+                    name = "A";
+                    break;
+                case "e":
+                    name = "E";
+                    break;
+                case "d":
+                    name = "D";
+                    break;
+                case "nested":
+                    name = "Nested";
+                    break;
+                case "not used":
+                    name = "Not Used";
+                    break;
+                default:
+                    name = string.Empty;
+                    break;
+            }
+
+            return name;
         }
 
         /// <summary>
@@ -169,8 +236,9 @@ namespace Fanex.ManagementSP.UI
                 storeProcedure.Name = string.Empty;
             }
 
-            storeProcedure.IsFunction = outlookGridStore[StoreColumnIndex.IsFunction, rowIndex].EditedFormattedValue.ToString() == "1";
+            storeProcedure.IsFunction = (bool)outlookGridStore[StoreColumnIndex.IsFunction, rowIndex].EditedFormattedValue;
             storeProcedure.ActionName = outlookGridStore[StoreColumnIndex.ActionName, rowIndex].EditedFormattedValue.ToString();
+            storeProcedure.ActionName = storeProcedure.ActionName.Length == 1 ? storeProcedure.ActionName.ToUpper() : storeProcedure.ActionName;
             storeProcedure.Modifier = new User { Username = outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].EditedFormattedValue.ToString() };
             storeProcedure.Status = UtilityConverter.ToStatusID(outlookGridStore[StoreColumnIndex.Status, rowIndex].EditedFormattedValue.ToString());
             storeProcedure.Description = outlookGridStore[StoreColumnIndex.Description, rowIndex].EditedFormattedValue.ToString();

@@ -406,7 +406,7 @@ namespace Fanex.ManagementSP.UI
 
             if (colIndex == StoreColumnIndex.Server
                 || colIndex == StoreColumnIndex.Database
-                || colIndex == StoreColumnIndex.IsFunction
+                //|| colIndex == StoreColumnIndex.IsFunction
                 || colIndex == StoreColumnIndex.ActionName
                 || colIndex == StoreColumnIndex.Developer
                 || colIndex == StoreColumnIndex.Status)
@@ -515,9 +515,9 @@ namespace Fanex.ManagementSP.UI
                                 }
 
                                 break;
-                            case StoreColumnIndex.IsFunction:
-                                UtilityData.ReplaceIsFunctionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
-                                break;
+                            //case StoreColumnIndex.IsFunction:
+                            //    UtilityData.ReplaceIsFunctionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
+                            //    break;
                             case StoreColumnIndex.ActionName:
                                 UtilityData.ReplaceActionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
                                 break;
@@ -569,13 +569,20 @@ namespace Fanex.ManagementSP.UI
                     int colIndex = e.ColumnIndex;
                     int rowIndex = e.RowIndex;
 
-                    if (rowIndex > 0)
+                    if (rowIndex > 0
+                        && colIndex != StoreColumnIndex.IsFunction)
                     {
                         var newValue = outlookGridStore[colIndex, rowIndex].EditedFormattedValue.ToString();
 
                         if (outlookGridStore[colIndex, rowIndex].FormattedValueType.Name == "Image")
                         {
                             newValue = string.Empty;
+                        }
+
+                        if (colIndex == StoreColumnIndex.ActionName
+                            && newValue.Length == 1)
+                        {
+                            newValue = newValue.ToUpper();
                         }
 
                         DataGridViewTextBoxCell cellText = new DataGridViewTextBoxCell();
@@ -613,17 +620,20 @@ namespace Fanex.ManagementSP.UI
             int rowIndex = e.RowIndex;
             var currentValue = string.Empty;
 
+            if (!UtilityData.RowIsNotEmpty(outlookGridStore, rowIndex))
+            {
+                return;
+            }
+
             switch (colIndex)
             {
                 case StoreColumnIndex.Server:
                     currentValue = outlookGridStore[StoreColumnIndex.Server, e.RowIndex].EditedFormattedValue.ToString();
                     var server = _listServer.Where(x => x.Name.ToLower() == currentValue.ToLower()).FirstOrDefault();
 
-                    if (string.IsNullOrWhiteSpace(currentValue)
-                        || server == null)
+                    if (string.IsNullOrWhiteSpace(currentValue) || server == null)
                     {
-                        DataGridViewImageCell cell = new DataGridViewImageCell();
-                        outlookGridStore[StoreColumnIndex.Server, e.RowIndex] = cell;
+                        outlookGridStore[colIndex, rowIndex].ErrorText = "Invalid";
                     }
 
                     break;
@@ -631,11 +641,9 @@ namespace Fanex.ManagementSP.UI
                     currentValue = outlookGridStore[StoreColumnIndex.Database, e.RowIndex].EditedFormattedValue.ToString();
                     var database = _listDatabase.Where(x => x.Name.ToLower() == currentValue.ToLower()).FirstOrDefault();
 
-                    if (string.IsNullOrWhiteSpace(currentValue)
-                        || database == null)
+                    if (string.IsNullOrWhiteSpace(currentValue) || database == null)
                     {
-                        DataGridViewImageCell cell = new DataGridViewImageCell();
-                        outlookGridStore[StoreColumnIndex.Database, e.RowIndex] = cell;
+                        outlookGridStore[colIndex, rowIndex].ErrorText = "Invalid";
                     }
 
                     break;
@@ -643,8 +651,7 @@ namespace Fanex.ManagementSP.UI
                     currentValue = outlookGridStore[StoreColumnIndex.Name, e.RowIndex].EditedFormattedValue.ToString();
                     if (string.IsNullOrWhiteSpace(currentValue))
                     {
-                        DataGridViewImageCell cell = new DataGridViewImageCell();
-                        outlookGridStore[StoreColumnIndex.Name, e.RowIndex] = cell;
+                        outlookGridStore[colIndex, rowIndex].ErrorText = "Invalid";
                     }
 
                     break;
@@ -652,7 +659,7 @@ namespace Fanex.ManagementSP.UI
                     currentValue = outlookGridStore[StoreColumnIndex.IsFunction, e.RowIndex].EditedFormattedValue.ToString();
                     if (currentValue != "0" || currentValue != "1")
                     {
-                        outlookGridStore[StoreColumnIndex.IsFunction, e.RowIndex].Value = "0";
+                        outlookGridStore[StoreColumnIndex.IsFunction, e.RowIndex].Value = false;
                     }
 
                     break;
@@ -660,8 +667,7 @@ namespace Fanex.ManagementSP.UI
                     currentValue = outlookGridStore[StoreColumnIndex.ActionName, e.RowIndex].EditedFormattedValue.ToString();
                     if (UtilityConverter.ToActionID(currentValue) < 0)
                     {
-                        DataGridViewImageCell cell = new DataGridViewImageCell();
-                        outlookGridStore[StoreColumnIndex.ActionName, e.RowIndex] = cell;
+                        outlookGridStore[colIndex, rowIndex].ErrorText = "Invalid";
                     }
 
                     break;
@@ -669,19 +675,16 @@ namespace Fanex.ManagementSP.UI
                     currentValue = outlookGridStore[StoreColumnIndex.Status, e.RowIndex].EditedFormattedValue.ToString();
                     if (UtilityConverter.ToStatusID(currentValue) < 0)
                     {
-                        DataGridViewImageCell cell = new DataGridViewImageCell();
-                        outlookGridStore[StoreColumnIndex.Status, e.RowIndex] = cell;
+                        outlookGridStore[colIndex, rowIndex].ErrorText = "Invalid";
                     }
 
                     break;
                 case StoreColumnIndex.Developer:
                     currentValue = outlookGridStore[StoreColumnIndex.Developer, e.RowIndex].EditedFormattedValue.ToString();
                     var user = _listUser.Where(x => x.Username.ToLower() == currentValue.ToLower()).FirstOrDefault();
-                    if (string.IsNullOrWhiteSpace(currentValue)
-                        || user == null)
+                    if (string.IsNullOrWhiteSpace(currentValue) || user == null)
                     {
-                        DataGridViewImageCell cell = new DataGridViewImageCell();
-                        outlookGridStore[StoreColumnIndex.Developer, e.RowIndex] = cell;
+                        outlookGridStore[colIndex, rowIndex].ErrorText = "Invalid";
                     }
 
                     break;
@@ -1153,167 +1156,177 @@ namespace Fanex.ManagementSP.UI
                 if (!string.IsNullOrWhiteSpace(copyValue))
                 {
                     copyValue = copyValue.Trim('\n');
-                    string[] rowValue = copyValue.Split('\n');
-
-                    var errorIndexs = new List<int>();
-                    var errorServers = new List<string>();
-                    var errorDatabases = new List<string>();
-                    var errorUsernames = new List<string>();
-
-                    if (outlookGridStore.CurrentCell != null)
+                    if (outlookGridStore.SelectedRows.Count > 0)
                     {
-                        int rowIndex = outlookGridStore.CurrentCell.RowIndex;
-                        int indexArray = 0;
+                        string[] rowValue = copyValue.Split('\n');
 
-                        foreach (var value in rowValue)
+                        var errorIndexs = new List<int>();
+                        var errorServers = new List<string>();
+                        var errorDatabases = new List<string>();
+                        var errorUsernames = new List<string>();
+
+                        if (outlookGridStore.CurrentCell != null)
                         {
-                            if (!string.IsNullOrWhiteSpace(value))
+                            int rowIndex = outlookGridStore.CurrentCell.RowIndex;
+                            int indexArray = 0;
+
+                            foreach (var value in rowValue)
                             {
-                                string[] array = value.Trim('\t').Split('\t');
-
-                                int number = 0;
-                                if (int.TryParse(array[0], out number))
+                                if (!string.IsNullOrWhiteSpace(value))
                                 {
-                                    for (int i = 1; i < array.Length; i++)
+                                    string[] array = value.Trim('\t').Split('\t');
+
+                                    int number = 0;
+                                    if (int.TryParse(array[0], out number))
                                     {
-                                        array[i - 1] = array[i];
-                                    }
-
-                                    array[7] = string.Empty;
-                                }
-
-                                if (!string.IsNullOrWhiteSpace(array[0]) && array.Length >= 7)
-                                {
-                                    var storeProcedure = new StoreProcedure
-                                    {
-                                        Server = new Server { Name = array[0].Trim() },
-                                        Database = new Database { Name = array[1].Trim() },
-                                        Name = array[2].Trim(),
-                                        IsFunction = array[3].Trim() == "1",
-                                        ActionName = array[4].Trim(),
-                                        Developer = new User { Username = array[5].Trim() },
-                                        Status = UtilityConverter.ToStatusID(array[6].Trim()),
-                                        Description = array.Length >= 8 ? array[7].Trim() : string.Empty
-                                    };
-
-                                    var server = _listServer.Where(x => x.Name.ToLower() == storeProcedure.Server.Name.ToLower()).FirstOrDefault();
-
-                                    if (server == null)
-                                    {
-                                        ////errorIndexs.Add(rowIndex);
-                                        if (!errorServers.Contains(storeProcedure.Server.Name))
+                                        for (int i = 1; i < array.Length; i++)
                                         {
-                                            errorServers.Add(storeProcedure.Server.Name);
+                                            array[i - 1] = array[i];
                                         }
-                                    }
-                                    else
-                                    {
-                                        var database = _listDatabase.Where(x => x.Name.ToLower() == storeProcedure.Database.Name.ToLower()).FirstOrDefault();
 
-                                        if (database == null)
+                                        array[7] = string.Empty;
+                                    }
+
+                                    if (!string.IsNullOrWhiteSpace(array[0]) && array.Length >= 7)
+                                    {
+                                        array[3] = array[3] == "1" || array[3].ToLower() == "true" ? "true" : "false";
+
+                                        var storeProcedure = new StoreProcedure
+                                        {
+                                            Server = new Server { Name = array[0].Trim() },
+                                            Database = new Database { Name = array[1].Trim() },
+                                            Name = array[2].Trim(),
+                                            IsFunction = Convert.ToBoolean(array[3].Trim()),
+                                            ActionName = array[4].Trim(),
+                                            Developer = new User { Username = array[5].Trim() },
+                                            Status = UtilityConverter.ToStatusID(array[6].Trim()),
+                                            Description = array.Length >= 8 ? array[7].Trim() : string.Empty
+                                        };
+
+                                        var server = _listServer.Where(x => x.Name.ToLower() == storeProcedure.Server.Name.ToLower()).FirstOrDefault();
+
+                                        if (server == null)
                                         {
                                             ////errorIndexs.Add(rowIndex);
-                                            if (!errorDatabases.Contains(storeProcedure.Database.Name))
+                                            if (!errorServers.Contains(storeProcedure.Server.Name))
                                             {
-                                                errorDatabases.Add(storeProcedure.Database.Name);
+                                                errorServers.Add(storeProcedure.Server.Name);
                                             }
                                         }
                                         else
                                         {
-                                            var user = _listUser.Where(x => x.Username.ToLower() == storeProcedure.Developer.Username.ToLower()).FirstOrDefault();
+                                            var database = _listDatabase.Where(x => x.Name.ToLower() == storeProcedure.Database.Name.ToLower()).FirstOrDefault();
 
-                                            if (user == null)
+                                            if (database == null)
                                             {
-                                                errorUsernames.Add(storeProcedure.Developer.Username);
+                                                ////errorIndexs.Add(rowIndex);
+                                                if (!errorDatabases.Contains(storeProcedure.Database.Name))
+                                                {
+                                                    errorDatabases.Add(storeProcedure.Database.Name);
+                                                }
                                             }
                                             else
                                             {
-                                                var row = new OutlookGridRow();
-                                                row.CreateCells(
-                                                    outlookGridStore,
-                                                    rowIndex,
-                                                    storeProcedure.Server.Name,
-                                                    storeProcedure.Database.Name,
-                                                    storeProcedure.Name,
-                                                    storeProcedure.IsFunction ? "1" : "0",
-                                                    storeProcedure.ActionName,
-                                                    storeProcedure.Developer.Username,
-                                                    storeProcedure.StatusName,
-                                                    storeProcedure.Description,
-                                                     string.Empty,
-                                                     string.Empty,
-                                                     string.Empty,
-                                                     Utility.CurrentUsername);
+                                                var user = _listUser.Where(x => x.Username.ToLower() == storeProcedure.Developer.Username.ToLower()).FirstOrDefault();
 
-                                                outlookGridStore.Rows.InsertRange(rowIndex, row);
-                                                this.outlookGridStore_CellEndEdit(null, new DataGridViewCellEventArgs(StoreColumnIndex.Id, rowIndex));
+                                                if (user == null)
+                                                {
+                                                    errorUsernames.Add(storeProcedure.Developer.Username);
+                                                }
+                                                else
+                                                {
+                                                    var row = new OutlookGridRow();
+                                                    row.CreateCells(
+                                                        outlookGridStore,
+                                                        rowIndex,
+                                                        storeProcedure.Server.Name,
+                                                        storeProcedure.Database.Name,
+                                                        storeProcedure.Name,
+                                                        storeProcedure.IsFunction,
+                                                        storeProcedure.ActionName,
+                                                        storeProcedure.Developer.Username,
+                                                        storeProcedure.StatusName,
+                                                        storeProcedure.Description,
+                                                         string.Empty,
+                                                         string.Empty,
+                                                         string.Empty,
+                                                         Utility.CurrentUsername);
 
-                                                outlookGridStore[StoreColumnIndex.IssueId, rowIndex].Value = UtilityData.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
+                                                    outlookGridStore.Rows.InsertRange(rowIndex, row);
+                                                    this.outlookGridStore_CellEndEdit(null, new DataGridViewCellEventArgs(StoreColumnIndex.Id, rowIndex));
 
-                                                rowIndex += 1;
+                                                    outlookGridStore[StoreColumnIndex.IssueId, rowIndex].Value = UtilityData.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
+
+                                                    rowIndex += 1;
+                                                }
                                             }
                                         }
+                                    }
+                                    else
+                                    {
+                                        errorIndexs.Add(indexArray);
                                     }
                                 }
                                 else
                                 {
                                     errorIndexs.Add(indexArray);
                                 }
+
+                                indexArray++;
                             }
-                            else
+                        }
+
+                        if (errorIndexs.Count > 0
+                            || errorServers.Count > 0
+                            || errorDatabases.Count > 0
+                            || errorUsernames.Count > 0)
+                        {
+                            string errorServer = string.Empty;
+                            string errorDatabase = string.Empty;
+                            string errorUserName = string.Empty;
+
+                            foreach (var item in errorServers)
                             {
-                                errorIndexs.Add(indexArray);
+                                errorServer += "[" + item + "]" + " ";
                             }
 
-                            indexArray++;
+                            foreach (var item in errorDatabases)
+                            {
+                                errorDatabase += "[" + item + "]" + " ";
+                            }
+
+                            foreach (var item in errorUsernames)
+                            {
+                                errorUserName += "[" + item + "]" + " ";
+                            }
+
+                            string message = string.Empty;
+
+                            if (!string.IsNullOrWhiteSpace(errorServer))
+                            {
+                                message += "+ Server : " + errorServer + "\n";
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(errorDatabase))
+                            {
+                                message += "+ Database : " + errorDatabase + "\n";
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(errorUserName))
+                            {
+                                message += "+ Modified By : " + errorUserName + "\n";
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(message))
+                            {
+                                MessageBox.Show("Check your data not exists !\n" + message);
+                            }
                         }
                     }
-
-                    if (errorIndexs.Count > 0
-                        || errorServers.Count > 0
-                        || errorDatabases.Count > 0
-                        || errorUsernames.Count > 0)
+                    else
                     {
-                        string errorServer = string.Empty;
-                        string errorDatabase = string.Empty;
-                        string errorUserName = string.Empty;
-
-                        foreach (var item in errorServers)
-                        {
-                            errorServer += "[" + item + "]" + " ";
-                        }
-
-                        foreach (var item in errorDatabases)
-                        {
-                            errorDatabase += "[" + item + "]" + " ";
-                        }
-
-                        foreach (var item in errorUsernames)
-                        {
-                            errorUserName += "[" + item + "]" + " ";
-                        }
-
-                        string message = string.Empty;
-
-                        if (!string.IsNullOrWhiteSpace(errorServer))
-                        {
-                            message += "+ Server : " + errorServer + "\n";
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(errorDatabase))
-                        {
-                            message += "+ Database : " + errorDatabase + "\n";
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(errorUserName))
-                        {
-                            message += "+ Modified By : " + errorUserName + "\n";
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(message))
-                        {
-                            MessageBox.Show("Check your data not exists !\n" + message);
-                        }
+                        outlookGridStore.CurrentCell.Value = copyValue;
+                        outlookGridStore_CellEndEdit(sender, new DataGridViewCellEventArgs(outlookGridStore.CurrentCell.ColumnIndex, outlookGridStore.CurrentCell.RowIndex));
                     }
                 }
             }

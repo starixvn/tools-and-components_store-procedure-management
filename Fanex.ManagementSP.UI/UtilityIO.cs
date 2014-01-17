@@ -80,7 +80,7 @@ namespace Fanex.ManagementSP.UI
                             valueCell = rowData.CreateCell(j);
                             if (j == 3)
                             {
-                                valueCell.SetCellValue(Convert.ToInt32(outlookGridStore[j + 1, i].EditedFormattedValue.ToString()));
+                                valueCell.SetCellValue((bool)outlookGridStore[j + 1, i].EditedFormattedValue ? 1 : 0);
                             }
                             else
                             {
@@ -180,7 +180,6 @@ namespace Fanex.ManagementSP.UI
             style.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
             style.WrapText = true;
             styles.Add("cell", style);
-
             return styles;
         }
 
