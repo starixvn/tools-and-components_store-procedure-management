@@ -2024,6 +2024,7 @@ namespace Fanex.ManagementSP.UI
                     else
                     {
                         UtilityData.BindingIssueToComboBox(cmboMyIssues, _listIssue);
+                        MessageBox.Show(Resource.AddSuccessfully);
                     }
 
                     UtilityData.BindingIssueToGridView(dataGridViewMyIssue, _listIssue);

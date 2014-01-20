@@ -23,7 +23,7 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// <param name="ex">The exception.</param>
         public void HandleException(Exception ex)
         {
-            Logger.Log.Error(ex.Message);
+            throw ex;
         }
     }
 }

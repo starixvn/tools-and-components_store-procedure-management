@@ -15,6 +15,7 @@ namespace Fanex.ManagementSP.Core.Services.Impl
     using Fanex.ManagementSP.Core.Repositories.Interface;
     using Fanex.ManagementSP.Core.Services.Interface;
     using Fanex.ManagementSP.Entities;
+    using Fanex.Common;
 
     /// <summary>
     /// The database service class.
@@ -72,6 +73,7 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         {
             try
             {
+                password = Cryptography.CfsEnCrypt(password);
                 return _databaseRepository.InsertOrUpdate(id, name, description, serverId, userId, password);
             }
             catch (Exception ex)

@@ -253,7 +253,7 @@ namespace Fanex.ManagementSP.UI
                         server.IPLocal,
                         database.Name,
                         database.UserID,
-                        database.Password)))
+                        Fanex.Common.Cryptography.CfsDeCrypt(database.Password))))
                     {
                         SqlCommand command = new SqlCommand();
                         command.CommandText = "sys.sp_helptext";

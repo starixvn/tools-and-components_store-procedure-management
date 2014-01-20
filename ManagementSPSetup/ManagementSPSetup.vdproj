@@ -351,6 +351,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8D735466008627CC67D2F477EFEB2494"
+        "OwnerKey" = "8:_033F20C466414D3D88ADFF8DFD4A92C5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8D735466008627CC67D2F477EFEB2494"
+        "OwnerKey" = "8:_5E7278B0702CEA56598D8895E829DF0C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8D735466008627CC67D2F477EFEB2494"
+        "OwnerKey" = "8:_D5A8AD72EC814F0382140A6AE10C1843"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_924E1BD04D1C27E58047BCBD5EEB1C9D"
         "OwnerKey" = "8:_9D7C219C29D62AA46F6F19AA78E71C1B"
         "MsmSig" = "8:_UNDEFINED"
@@ -598,6 +616,12 @@
         "Entry"
         {
         "MsmKey" = "8:_F485D62C9B63444E418ED6F1C94C4B1C"
+        "OwnerKey" = "8:_8D735466008627CC67D2F477EFEB2494"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F485D62C9B63444E418ED6F1C94C4B1C"
         "OwnerKey" = "8:_D5A8AD72EC814F0382140A6AE10C1843"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -629,6 +653,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C234BB863615E152996CCFA876B642CF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8D735466008627CC67D2F477EFEB2494"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1028,11 +1058,6 @@
             "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2F759D0BE2ADD850A68FAFF115FE0ADD"
-                    {
-                    "Name" = "8:Fanex.ManagementSP.Client.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Fanex.ManagementSP.Client.dll"
             "TargetName" = "8:"
@@ -1214,11 +1239,6 @@
             "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_559B81B8B4D0854B6F2E324A3A67CCCA"
-                    {
-                    "Name" = "8:Fanex.ManagementSP.Entities.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Fanex.ManagementSP.Entities.dll"
             "TargetName" = "8:"
@@ -1327,11 +1347,6 @@
             "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_5E7278B0702CEA56598D8895E829DF0C"
-                    {
-                    "Name" = "8:Fanex.ManagementSP.UI.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Fanex.ManagementSP.UI.dll"
             "TargetName" = "8:"
@@ -1420,11 +1435,6 @@
             "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_7A7B2AE7968441B08AC48CB2A4E6264A"
-                    {
-                    "Name" = "8:Fanex.ManagementSP.Entities.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Fanex.ManagementSP.Entities.dll"
             "TargetName" = "8:"
@@ -1451,13 +1461,34 @@
             "AssemblyAsmDisplayName" = "8:Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_85762EEE8E45B414823968B80F5A3127"
-                    {
-                    "Name" = "8:Ionic.Zip.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Ionic.Zip.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_91742237583D42878535D68C052096A6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8D735466008627CC67D2F477EFEB2494"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Fanex.Common, Version=1.0.404.98, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                }
+            "SourcePath" = "8:Fanex.Common.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_91742237583D42878535D68C052096A6"
@@ -1666,11 +1697,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A92DB62A02BFBD5DEC71EB2E68A3FEA5"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -1759,11 +1785,6 @@
             "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B8820018E57779007BB489020BBACDD8"
-                    {
-                    "Name" = "8:Fanex.ManagementSP.Client.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Fanex.ManagementSP.Client.dll"
             "TargetName" = "8:"
@@ -2005,11 +2026,6 @@
             "AssemblyAsmDisplayName" = "8:NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F485D62C9B63444E418ED6F1C94C4B1C"
-                    {
-                    "Name" = "8:NPOI.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:NPOI.dll"
             "TargetName" = "8:"
@@ -2192,13 +2208,13 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Manage SP Tool"
         "ProductCode" = "8:{10C8958D-8F6F-4EDC-AD32-F036481B83B3}"
-        "PackageCode" = "8:{C9FD4D9F-499F-4AF0-8780-C88006BE3354}"
+        "PackageCode" = "8:{96950BFF-A6C9-4F78-AA8F-41BCBD5F28B8}"
         "UpgradeCode" = "8:{D9A24ABE-39C0-49E9-8533-F2630B43042D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.5"
         "Manufacturer" = "8:Nexcel Solutions"
         "ARPHELPTELEPHONE" = "8:"
