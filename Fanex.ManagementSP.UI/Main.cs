@@ -321,6 +321,24 @@ namespace Fanex.ManagementSP.UI
 
             string menuTextDelete = countSelectedRow > 1 ? string.Format("Delete Row {0}-{1}", minIndex + 1, maxIndex + 1) : "Delete Row";
 
+            ToolStripMenuItem insertAtBottom = new ToolStripMenuItem("Insert at bottom");
+            ToolStripItem insertAtBottom5Row = new ToolStripMenuItem("5 more rows");
+            insertAtBottom5Row.Tag = 5;
+            ToolStripItem insertAtBottom10Row = new ToolStripMenuItem("10 more rows");
+            insertAtBottom10Row.Tag = 10;
+            ToolStripItem insertAtBottom20Row = new ToolStripMenuItem("20 more rows");
+            insertAtBottom20Row.Tag = 20;
+            insertAtBottom.DropDownItems.AddRange(new ToolStripItem[] 
+                    {
+                        insertAtBottom5Row,
+                        insertAtBottom10Row, 
+                        insertAtBottom20Row
+                    });
+
+            insertAtBottom5Row.MouseDown += new MouseEventHandler(insertAtBottomRow_MouseDown);
+            insertAtBottom10Row.MouseDown += new MouseEventHandler(insertAtBottomRow_MouseDown);
+            insertAtBottom20Row.MouseDown += new MouseEventHandler(insertAtBottomRow_MouseDown);
+
             ToolStripMenuItem insertMultiAbove = new ToolStripMenuItem(string.Format("Insert {0} above", countSelectedRow));
             ToolStripMenuItem insertMultiBelow = new ToolStripMenuItem(string.Format("Insert {0} below", countSelectedRow));
             ToolStripMenuItem pasteRow = new ToolStripMenuItem("Paste Ctrl + V");
@@ -367,6 +385,7 @@ namespace Fanex.ManagementSP.UI
             menu.Items.AddRange(new ToolStripItem[] 
                         {
                             statusMultiUpdate, 
+                            insertAtBottom,
                             insertMultiAbove, 
                             insertMultiBelow,
                             deleteMultiRow, 
@@ -374,6 +393,13 @@ namespace Fanex.ManagementSP.UI
                             pasteRow 
                         });
             return menu;
+        }
+
+        void insertAtBottomRow_MouseDown(object sender, MouseEventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+
+            outlookGridStore.Rows.Insert(outlookGridStore.Rows.Count - 1, (int)item.Tag);
         }
 
         #endregion
@@ -413,21 +439,24 @@ namespace Fanex.ManagementSP.UI
             {
                 DataGridViewComboBoxEditingControl combo = e.Control as DataGridViewComboBoxEditingControl;
 
-                if (combo != null && _isEventClickComplete)
+                if (combo != null)
                 {
-                    // Remove an existing event-handler, if present, to avoid 
-                    // adding multiple handlers when the editing control is reused.
-                    combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
-                    combo.DropDown -= new EventHandler(combo_DropDown);
-                    combo.GotFocus -= new EventHandler(combo_DropDown);
+                    if (_isEventClickComplete)
+                    {
+                        // Remove an existing event-handler, if present, to avoid 
+                        // adding multiple handlers when the editing control is reused.
+                        combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
+                        combo.DropDown -= new EventHandler(combo_DropDown);
+                        combo.GotFocus -= new EventHandler(combo_DropDown);
 
-                    // Add the event handler. 
-                    combo.SelectedValueChanged += new EventHandler(ComboBox_SelectedValueChanged);
-                    combo.DropDown += new EventHandler(combo_DropDown);
-                    combo.GotFocus += new EventHandler(combo_DropDown);
+                        // Add the event handler. 
+                        combo.SelectedValueChanged += new EventHandler(ComboBox_SelectedValueChanged);
+                        combo.DropDown += new EventHandler(combo_DropDown);
+                        combo.GotFocus += new EventHandler(combo_DropDown);
+                    }
+
+                    combo.AutoCompleteMode = AutoCompleteMode.Suggest;
                 }
-
-                combo.AutoCompleteMode = AutoCompleteMode.Suggest;
             }
         }
 
@@ -548,7 +577,7 @@ namespace Fanex.ManagementSP.UI
         /// <param name="e">The <see cref="DataGridViewCellEventArgs"/> instance containing the event data.</param>
         private void outlookGridStore_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (_isBindingStoreComplete && _isEventClickComplete)
+            if (_isBindingStoreComplete)//&& _isEventClickComplete)
             {
                 this.outlookGridStore_CellClick(sender, e);
             }
@@ -1156,10 +1185,10 @@ namespace Fanex.ManagementSP.UI
                 if (!string.IsNullOrWhiteSpace(copyValue))
                 {
                     copyValue = copyValue.Trim('\n');
+                    string[] rowValue = copyValue.Split('\n');
+
                     if (outlookGridStore.SelectedRows.Count > 0)
                     {
-                        string[] rowValue = copyValue.Split('\n');
-
                         var errorIndexs = new List<int>();
                         var errorServers = new List<string>();
                         var errorDatabases = new List<string>();
@@ -1325,8 +1354,31 @@ namespace Fanex.ManagementSP.UI
                     }
                     else
                     {
-                        outlookGridStore.CurrentCell.Value = copyValue;
-                        outlookGridStore_CellEndEdit(sender, new DataGridViewCellEventArgs(outlookGridStore.CurrentCell.ColumnIndex, outlookGridStore.CurrentCell.RowIndex));
+                        int rowIndex = outlookGridStore.CurrentCell.RowIndex;
+                        int colIndex = outlookGridStore.CurrentCell.ColumnIndex;
+                        int currentRowIndex = rowIndex;
+                        int currentColIndex = colIndex;
+
+                        foreach (var item in rowValue)
+                        {
+                            if (!string.IsNullOrWhiteSpace(item))
+                            {
+                                string[] arrayItem = item.Split('\t');
+
+                                foreach (var itemCell in arrayItem)
+                                {
+                                    outlookGridStore[currentColIndex, currentRowIndex].Value = itemCell;
+                                    outlookGridStore_CellEndEdit(sender, new DataGridViewCellEventArgs(outlookGridStore.CurrentCell.ColumnIndex, outlookGridStore.CurrentCell.RowIndex));
+
+                                    currentColIndex++;
+                                }
+
+                                currentRowIndex++;
+                                currentColIndex = colIndex;
+                            }
+                        }
+
+
                     }
                 }
             }
@@ -2142,6 +2194,11 @@ namespace Fanex.ManagementSP.UI
         }
 
         #endregion
+
+        private void outlookGridStore_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
 
         #endregion
     }
