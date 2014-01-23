@@ -168,6 +168,7 @@
       <LastGenOutput>config.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\refresh.png" />
     <None Include="Resources\gnome_edit_find.png" />
     <None Include="Resources\search.png" />
     <None Include="Resources\495%282%29.GIF" />

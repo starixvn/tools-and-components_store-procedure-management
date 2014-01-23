@@ -2201,5 +2201,10 @@ namespace Fanex.ManagementSP.UI
         }
 
         #endregion
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            this.Main_Load(null, null);
+        }
     }
 }
