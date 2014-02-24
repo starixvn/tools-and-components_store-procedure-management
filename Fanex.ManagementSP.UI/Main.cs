@@ -79,11 +79,12 @@ namespace Fanex.ManagementSP.UI
             _issueService = new IssueService(_apiUri);
             _userService = new UserService(_apiUri);
 
-            txtIssueId.Reset();
+            
             chbQueryAll.Checked = true;
 
             txtIssueId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
             txtMyIssuesId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            txtIssueId.Reset();
 
             // Init skin
             UtilityUI.InitSkinOutlookGrid(outlookGridStore, imageList, _redmineIssueUri);
@@ -2001,7 +2002,7 @@ namespace Fanex.ManagementSP.UI
                 if (currentIndex > 0)
                 {
                     var selectedIssue = (Issue)cmboMyIssues.SelectedItem;
-                    txtIssueId.Text = string.Empty;
+                    txtIssueId.Reset();
 
                     this.LoadStore(selectedIssue.Id.ToString());
 
