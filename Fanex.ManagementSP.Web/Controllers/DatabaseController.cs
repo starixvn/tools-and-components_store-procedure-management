@@ -41,22 +41,22 @@ namespace Fanex.ManagementSP.Web.Controllers
         /// <param name="userId">The user identifier.</param>
         /// <param name="password">The password.</param>
         [AcceptVerbs]
-        public void Post(int id, string name, string description, int serverId, string userId, string password)
+        public void Post(int id, string name, string description, int serverId, string userId, string password, int modifiedById)
         {
             description = description != null ? description : string.Empty;
             userId = userId != null ? userId : string.Empty;
             password = password != null ? password : string.Empty;
 
-            _databaseService.InsertOrUpdate(id, name, description, serverId, userId, password);
+            _databaseService.InsertOrUpdate(id, name, description, serverId, userId, password, modifiedById);
         }
 
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        public void Delete(int id)
+        public void Delete(int id, int modifiedById)
         {
-            _databaseService.Delete(id);
+            _databaseService.Delete(id, modifiedById);
         }
     }
 }

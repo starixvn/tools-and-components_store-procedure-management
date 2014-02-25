@@ -9,9 +9,11 @@
 
 namespace Fanex.ManagementSP.UI
 {
+    using System.Drawing;
     using System.Windows.Forms;
     using Fanex.ManagementSP.UI.ColumnIndex;
     using OutlookStyleControls;
+    using SourceGrid;
 
     /// <summary>
     /// The utility user interface class.
@@ -176,6 +178,36 @@ namespace Fanex.ManagementSP.UI
             dataGridView.MultiSelect = true;
         }
 
+        public static void InitHeaderColumnsGridLog(Grid grid)
+        {
+            grid.Redim(2, 8);
+            grid.FixedRows = 2;
+
+            //1 Header Row
+            grid[0, 0] = new MyHeader("LogId");
+            grid[0, 0].RowSpan = 2;
+            grid[0, 0].Column.AutoSizeMode = SourceGrid.AutoSizeMode.MinimumSize;
+            grid[0, 1] = new MyHeader("Log Date");
+            grid[0, 1].RowSpan = 2;
+            grid[0, 2] = new MyHeader("Name");
+            grid[0, 2].RowSpan = 2;
+            grid[0, 3] = new MyHeader("Modifier");
+            grid[0, 3].RowSpan = 2;
+            grid[0, 4] = new MyHeader("Action");
+            grid[0, 4].RowSpan = 2;
+            grid[0, 5] = new MyHeader("Description");
+            grid[0, 5].ColumnSpan = 3;
+            grid[0, 5].Column.AutoSizeMode = SourceGrid.AutoSizeMode.EnableStretch;
+
+            ////2 Header Row
+            grid[1, 5] = new MyHeader("#");
+            grid[1, 6] = new MyHeader("New Value");
+            grid[1, 7] = new MyHeader("Old Value");
+
+            grid.AutoStretchColumnsToFitWidth = true;
+            grid.AutoSizeCells();
+        }
+
         /// <summary>
         /// Initializes the skin outlook grid.
         /// </summary>
@@ -266,6 +298,21 @@ namespace Fanex.ManagementSP.UI
             gridView.ShowCellToolTips = true;
             gridView.ShowEditingIcon = true;
             gridView.ShowRowErrors = true;
+        }
+    }
+
+    public class MyHeader : SourceGrid.Cells.ColumnHeader
+    {
+        public MyHeader(object value)
+            : base(value)
+        {
+            //1 Header Row
+            SourceGrid.Cells.Views.ColumnHeader view = new SourceGrid.Cells.Views.ColumnHeader();
+            view.Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold);
+            view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleCenter;
+            View = view;
+
+            AutomaticSortEnabled = false;
         }
     }
 }

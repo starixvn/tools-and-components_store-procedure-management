@@ -72,12 +72,13 @@ namespace Fanex.ManagementSP.Client.Services
             string ipLocal,
             string ipUat,
             string ipProduction,
-            string description)
+            string description,
+            int modifiedById)
         {
             try
             {
-                var format = "?id={0}&name={1}&ipLocal={2}&ipUat={3}&ipProduction={4}&description={5}";
-                var query = string.Format(format, id, name, ipLocal, ipUat, ipProduction, description);
+                var format = "?id={0}&name={1}&ipLocal={2}&ipUat={3}&ipProduction={4}&description={5}&modifiedById={6}";
+                var query = string.Format(format, id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
 
                 var taskRequest = AsyncRequsest.MakeRequest(_apiServer + query, WebRequestMethods.Http.Post);
 
@@ -96,11 +97,14 @@ namespace Fanex.ManagementSP.Client.Services
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int modifiedById)
         {
             try
             {
-                var taskRequest = AsyncRequsest.MakeRequest(_apiServer + "/" + id.ToString(), "DELETE");
+                var format = "?id={0}&modifiedById={1}";
+                var query = string.Format(format, id, modifiedById);
+
+                var taskRequest = AsyncRequsest.MakeRequest(_apiServer + query, "DELETE");
 
                 var result = taskRequest.Result;
             }

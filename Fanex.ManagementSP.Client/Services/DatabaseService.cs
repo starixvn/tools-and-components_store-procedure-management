@@ -68,12 +68,13 @@ namespace Fanex.ManagementSP.Client.Services
             string description,
             int serverId,
             string userId,
-            string password)
+            string password,
+            int modifiedById)
         {
             try
             {
-                var format = "?id={0}&name={1}&description={2}&serverId={3}&userId={4}&password={5}";
-                var query = string.Format(format, id, name, description, serverId, userId, System.Web.HttpUtility.UrlEncode(password));
+                var format = "?id={0}&name={1}&description={2}&serverId={3}&userId={4}&password={5}&modifiedById={6}";
+                var query = string.Format(format, id, name, description, serverId, userId, System.Web.HttpUtility.UrlEncode(password), modifiedById);
 
                 var taskRequest = AsyncRequsest.MakeRequest(_apiDatabase + query, WebRequestMethods.Http.Post);
 
@@ -92,11 +93,14 @@ namespace Fanex.ManagementSP.Client.Services
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int modifiedById)
         {
             try
             {
-                var taskRequest = AsyncRequsest.MakeRequest(_apiDatabase + "/" + id.ToString(), "DELETE");
+                var format = "?id={0}&modifiedById={1}";
+                var query = string.Format(format, id, modifiedById);
+
+                var taskRequest = AsyncRequsest.MakeRequest(_apiDatabase + query, "DELETE");
 
                 var result = taskRequest.Result;
             }

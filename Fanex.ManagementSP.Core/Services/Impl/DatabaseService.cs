@@ -69,12 +69,12 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// <param name="userId">The user identifier.</param>
         /// <param name="password">The password.</param>
         /// <returns>Result of update.</returns>
-        public bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password)
+        public bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password, int modifiedById)
         {
             try
             {
                 password = Cryptography.CfsEnCrypt(password);
-                return _databaseRepository.InsertOrUpdate(id, name, description, serverId, userId, password);
+                return _databaseRepository.InsertOrUpdate(id, name, description, serverId, userId, password, modifiedById);
             }
             catch (Exception ex)
             {
@@ -89,11 +89,11 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int modifiedById)
         {
             try
             {
-                return _databaseRepository.Delete(id);
+                return _databaseRepository.Delete(id, modifiedById);
             }
             catch (Exception ex)
             {

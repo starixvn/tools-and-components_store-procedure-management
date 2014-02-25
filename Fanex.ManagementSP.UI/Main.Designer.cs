@@ -51,10 +51,8 @@ namespace Fanex.ManagementSP.UI
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusStore = new System.Windows.Forms.ToolStripStatusLabel();
-            this.outlookGridStore = new OutlookStyleControls.OutlookGrid();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cmboMyIssues = new System.Windows.Forms.ComboBox();
-            this.txtIssueId = new Demo.PlaceholderTextBox();
             this.chbQueryAll = new System.Windows.Forms.CheckBox();
             this.btnExport = new System.Windows.Forms.Button();
             this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
@@ -73,7 +71,6 @@ namespace Fanex.ManagementSP.UI
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.dataGridViewMyIssue = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtMyIssuesId = new Demo.PlaceholderTextBox();
             this.btnAddMyIssue = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txtRedmineIssueUri = new System.Windows.Forms.TextBox();
@@ -83,7 +80,26 @@ namespace Fanex.ManagementSP.UI
             this.btnUpdateAPIUrl = new System.Windows.Forms.Button();
             this.txtAPIUrl = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.btnSubmitLog = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cmboFilterTypeLog = new System.Windows.Forms.ComboBox();
+            this.txtNameLog = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtUsernameLog = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.dtpFromLog = new System.Windows.Forms.DateTimePicker();
+            this.dtpToLog = new System.Windows.Forms.DateTimePicker();
+            this.statusStrip4 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
             this.imageListError = new System.Windows.Forms.ImageList(this.components);
+            this.outlookGridStore = new OutlookStyleControls.OutlookGrid();
+            this.txtIssueId = new Demo.PlaceholderTextBox();
+            this.txtMyIssuesId = new Demo.PlaceholderTextBox();
+            this.gridLog = new SourceGrid.Grid();
             this.contextMenuStripGird.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -94,7 +110,6 @@ namespace Fanex.ManagementSP.UI
             this.tabPageStore.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outlookGridStore)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.tabPageSetting.SuspendLayout();
@@ -109,6 +124,13 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel5.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.statusStrip4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.outlookGridStore)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStripGird
@@ -228,7 +250,8 @@ namespace Fanex.ManagementSP.UI
             "Stored Procedures",
             "Servers & Databases",
             "My Issues",
-            "Configuration"});
+            "Configuration",
+            "View Logs"});
             this.toolStripComboBoxSettingStore.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBoxSettingStore.Name = "toolStripComboBoxSettingStore";
             this.toolStripComboBoxSettingStore.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -247,6 +270,7 @@ namespace Fanex.ManagementSP.UI
             this.tabControlStore.Controls.Add(this.tabPageSetting);
             this.tabControlStore.Controls.Add(this.tabPageMyIssue);
             this.tabControlStore.Controls.Add(this.tabPage1);
+            this.tabControlStore.Controls.Add(this.tabPage2);
             this.tabControlStore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlStore.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlStore.ItemSize = new System.Drawing.Size(1, 10);
@@ -318,29 +342,6 @@ namespace Fanex.ManagementSP.UI
             this.toolStripStatusStore.Size = new System.Drawing.Size(65, 13);
             this.toolStripStatusStore.Text = "No change !";
             // 
-            // outlookGridStore
-            // 
-            this.outlookGridStore.CollapseIcon = null;
-            this.outlookGridStore.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outlookGridStore.ExpandIcon = null;
-            this.outlookGridStore.IconLinkRedmine = null;
-            this.outlookGridStore.LinkToRedmineIssue = null;
-            this.outlookGridStore.Location = new System.Drawing.Point(3, 3);
-            this.outlookGridStore.MultiSelect = false;
-            this.outlookGridStore.Name = "outlookGridStore";
-            this.outlookGridStore.Size = new System.Drawing.Size(878, 533);
-            this.outlookGridStore.TabIndex = 0;
-            this.outlookGridStore.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellClick);
-            this.outlookGridStore.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellClick);
-            this.outlookGridStore.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellEndEdit);
-            this.outlookGridStore.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellEnter);
-            this.outlookGridStore.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellLeave);
-            this.outlookGridStore.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.outlookGridStore_CellMouseDown);
-            this.outlookGridStore.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.outlookGridStore_DataError);
-            this.outlookGridStore.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.outlookGridStore_EditingControlShowing);
-            this.outlookGridStore.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.outlookGridStore_UserDeletingRow);
-            this.outlookGridStore.KeyDown += new System.Windows.Forms.KeyEventHandler(this.outlookGridStore_KeyDown);
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
@@ -350,7 +351,7 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 394F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 189F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 223F));
             this.tableLayoutPanel2.Controls.Add(this.cmboMyIssues, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.txtIssueId, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.chbQueryAll, 2, 0);
@@ -372,7 +373,7 @@ namespace Fanex.ManagementSP.UI
             this.cmboMyIssues.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmboMyIssues.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmboMyIssues.FormattingEnabled = true;
-            this.cmboMyIssues.Location = new System.Drawing.Point(45, 0);
+            this.cmboMyIssues.Location = new System.Drawing.Point(30, 0);
             this.cmboMyIssues.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.cmboMyIssues.MinimumSize = new System.Drawing.Size(88, 0);
             this.cmboMyIssues.Name = "cmboMyIssues";
@@ -381,24 +382,11 @@ namespace Fanex.ManagementSP.UI
             this.cmboMyIssues.SelectionChangeCommitted += new System.EventHandler(this.cmboMyIssues_SelectionChangeCommitted);
             this.cmboMyIssues.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cmboMyIssues_KeyDown);
             // 
-            // txtIssueId
-            // 
-            this.txtIssueId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtIssueId.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIssueId.ForeColor = System.Drawing.Color.LightGray;
-            this.txtIssueId.Location = new System.Drawing.Point(0, 0);
-            this.txtIssueId.Margin = new System.Windows.Forms.Padding(0);
-            this.txtIssueId.MinimumSize = new System.Drawing.Size(83, 23);
-            this.txtIssueId.Name = "txtIssueId";
-            this.txtIssueId.Size = new System.Drawing.Size(83, 23);
-            this.txtIssueId.TabIndex = 4;
-            this.txtIssueId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtIssueId_KeyDown);
-            // 
             // chbQueryAll
             // 
             this.chbQueryAll.AutoSize = true;
             this.chbQueryAll.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbQueryAll.Location = new System.Drawing.Point(87, 5);
+            this.chbQueryAll.Location = new System.Drawing.Point(53, 5);
             this.chbQueryAll.Margin = new System.Windows.Forms.Padding(10, 5, 0, 0);
             this.chbQueryAll.Name = "chbQueryAll";
             this.chbQueryAll.Size = new System.Drawing.Size(162, 17);
@@ -425,7 +413,7 @@ namespace Fanex.ManagementSP.UI
             // pictureBoxLoading
             // 
             this.pictureBoxLoading.Image = global::Fanex.ManagementSP.UI.Properties.Resources._495_2_;
-            this.pictureBoxLoading.Location = new System.Drawing.Point(260, 3);
+            this.pictureBoxLoading.Location = new System.Drawing.Point(226, 3);
             this.pictureBoxLoading.Name = "pictureBoxLoading";
             this.pictureBoxLoading.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxLoading.TabIndex = 6;
@@ -437,7 +425,7 @@ namespace Fanex.ManagementSP.UI
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Image = global::Fanex.ManagementSP.UI.Properties.Resources.gnome_edit_find;
-            this.btnSearch.Location = new System.Drawing.Point(654, 3);
+            this.btnSearch.Location = new System.Drawing.Point(620, 3);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(37, 19);
             this.btnSearch.TabIndex = 7;
@@ -461,7 +449,7 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 94.10681F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.893186F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 733F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 767F));
             this.tableLayoutPanel3.Controls.Add(this.statusStrip2, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.dataGridViewServer, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.dataGridViewDatabase, 2, 1);
@@ -505,7 +493,7 @@ namespace Fanex.ManagementSP.UI
             this.dataGridViewServer.Location = new System.Drawing.Point(3, 33);
             this.dataGridViewServer.MultiSelect = false;
             this.dataGridViewServer.Name = "dataGridViewServer";
-            this.dataGridViewServer.Size = new System.Drawing.Size(136, 538);
+            this.dataGridViewServer.Size = new System.Drawing.Size(104, 538);
             this.dataGridViewServer.TabIndex = 0;
             this.dataGridViewServer.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewServer_CellMouseDown);
             this.dataGridViewServer.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewServer_CellValueChanged);
@@ -518,10 +506,10 @@ namespace Fanex.ManagementSP.UI
             this.dataGridViewDatabase.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewDatabase.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewDatabase.Location = new System.Drawing.Point(153, 33);
+            this.dataGridViewDatabase.Location = new System.Drawing.Point(119, 33);
             this.dataGridViewDatabase.MultiSelect = false;
             this.dataGridViewDatabase.Name = "dataGridViewDatabase";
-            this.dataGridViewDatabase.Size = new System.Drawing.Size(728, 538);
+            this.dataGridViewDatabase.Size = new System.Drawing.Size(762, 538);
             this.dataGridViewDatabase.TabIndex = 1;
             this.dataGridViewDatabase.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewDatabase_CellFormatting);
             this.dataGridViewDatabase.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewDatabase_CellMouseDown);
@@ -544,7 +532,7 @@ namespace Fanex.ManagementSP.UI
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(150, 0);
+            this.label3.Location = new System.Drawing.Point(116, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 16);
@@ -623,17 +611,6 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(884, 24);
             this.tableLayoutPanel5.TabIndex = 0;
-            // 
-            // txtMyIssuesId
-            // 
-            this.txtMyIssuesId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMyIssuesId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
-            this.txtMyIssuesId.ForeColor = System.Drawing.Color.LightGray;
-            this.txtMyIssuesId.Location = new System.Drawing.Point(0, 0);
-            this.txtMyIssuesId.Margin = new System.Windows.Forms.Padding(0);
-            this.txtMyIssuesId.Name = "txtMyIssuesId";
-            this.txtMyIssuesId.Size = new System.Drawing.Size(382, 20);
-            this.txtMyIssuesId.TabIndex = 0;
             // 
             // btnAddMyIssue
             // 
@@ -721,11 +698,240 @@ namespace Fanex.ManagementSP.UI
             this.label1.TabIndex = 0;
             this.label1.Text = "API Uri";
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.splitContainer2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 14);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(890, 598);
+            this.tabPage2.TabIndex = 4;
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.IsSplitterFixed = true;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.btnSubmitLog);
+            this.splitContainer2.Panel1.Controls.Add(this.label9);
+            this.splitContainer2.Panel1.Controls.Add(this.cmboFilterTypeLog);
+            this.splitContainer2.Panel1.Controls.Add(this.txtNameLog);
+            this.splitContainer2.Panel1.Controls.Add(this.label8);
+            this.splitContainer2.Panel1.Controls.Add(this.label7);
+            this.splitContainer2.Panel1.Controls.Add(this.label6);
+            this.splitContainer2.Panel1.Controls.Add(this.txtUsernameLog);
+            this.splitContainer2.Panel1.Controls.Add(this.label5);
+            this.splitContainer2.Panel1.Controls.Add(this.dtpFromLog);
+            this.splitContainer2.Panel1.Controls.Add(this.dtpToLog);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.gridLog);
+            this.splitContainer2.Panel2.Controls.Add(this.statusStrip4);
+            this.splitContainer2.Size = new System.Drawing.Size(884, 592);
+            this.splitContainer2.SplitterDistance = 30;
+            this.splitContainer2.TabIndex = 2;
+            // 
+            // btnSubmitLog
+            // 
+            this.btnSubmitLog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSubmitLog.Location = new System.Drawing.Point(829, 2);
+            this.btnSubmitLog.Name = "btnSubmitLog";
+            this.btnSubmitLog.Size = new System.Drawing.Size(54, 23);
+            this.btnSubmitLog.TabIndex = 6;
+            this.btnSubmitLog.Text = "Submit";
+            this.btnSubmitLog.UseVisualStyleBackColor = true;
+            this.btnSubmitLog.Click += new System.EventHandler(this.btnSubmitLog_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(634, 12);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Filter Type";
+            // 
+            // cmboFilterTypeLog
+            // 
+            this.cmboFilterTypeLog.BackColor = System.Drawing.Color.White;
+            this.cmboFilterTypeLog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmboFilterTypeLog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cmboFilterTypeLog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmboFilterTypeLog.FormattingEnabled = true;
+            this.cmboFilterTypeLog.Items.AddRange(new object[] {
+            "Stored Procedure",
+            "Database",
+            "Server"});
+            this.cmboFilterTypeLog.Location = new System.Drawing.Point(702, 4);
+            this.cmboFilterTypeLog.Name = "cmboFilterTypeLog";
+            this.cmboFilterTypeLog.Size = new System.Drawing.Size(121, 21);
+            this.cmboFilterTypeLog.TabIndex = 5;
+            // 
+            // txtNameLog
+            // 
+            this.txtNameLog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNameLog.Location = new System.Drawing.Point(512, 5);
+            this.txtNameLog.Name = "txtNameLog";
+            this.txtNameLog.Size = new System.Drawing.Size(100, 21);
+            this.txtNameLog.TabIndex = 4;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(467, 12);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Name";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(325, 12);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(19, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "To";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(175, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "From";
+            // 
+            // txtUsernameLog
+            // 
+            this.txtUsernameLog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsernameLog.Location = new System.Drawing.Point(58, 5);
+            this.txtUsernameLog.Name = "txtUsernameLog";
+            this.txtUsernameLog.Size = new System.Drawing.Size(100, 21);
+            this.txtUsernameLog.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(0, 12);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(55, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Username";
+            // 
+            // dtpFromLog
+            // 
+            this.dtpFromLog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpFromLog.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFromLog.Location = new System.Drawing.Point(209, 5);
+            this.dtpFromLog.Name = "dtpFromLog";
+            this.dtpFromLog.Size = new System.Drawing.Size(97, 21);
+            this.dtpFromLog.TabIndex = 2;
+            // 
+            // dtpToLog
+            // 
+            this.dtpToLog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpToLog.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpToLog.Location = new System.Drawing.Point(349, 5);
+            this.dtpToLog.Name = "dtpToLog";
+            this.dtpToLog.Size = new System.Drawing.Size(97, 21);
+            this.dtpToLog.TabIndex = 3;
+            // 
+            // statusStrip4
+            // 
+            this.statusStrip4.AutoSize = false;
+            this.statusStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel6});
+            this.statusStrip4.Location = new System.Drawing.Point(0, 540);
+            this.statusStrip4.Name = "statusStrip4";
+            this.statusStrip4.Size = new System.Drawing.Size(884, 18);
+            this.statusStrip4.TabIndex = 4;
+            this.statusStrip4.Text = "statusStrip4";
+            // 
+            // toolStripStatusLabel6
+            // 
+            this.toolStripStatusLabel6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
+            this.toolStripStatusLabel6.Size = new System.Drawing.Size(167, 13);
+            this.toolStripStatusLabel6.Text = "© 2013 Nexcel Solutions Co., Ltd";
+            // 
             // imageListError
             // 
             this.imageListError.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListError.ImageStream")));
             this.imageListError.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListError.Images.SetKeyName(0, "exclamation.png");
+            // 
+            // outlookGridStore
+            // 
+            this.outlookGridStore.CollapseIcon = null;
+            this.outlookGridStore.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outlookGridStore.ExpandIcon = null;
+            this.outlookGridStore.IconLinkRedmine = null;
+            this.outlookGridStore.LinkToRedmineIssue = null;
+            this.outlookGridStore.Location = new System.Drawing.Point(3, 3);
+            this.outlookGridStore.MultiSelect = false;
+            this.outlookGridStore.Name = "outlookGridStore";
+            this.outlookGridStore.Size = new System.Drawing.Size(878, 533);
+            this.outlookGridStore.TabIndex = 0;
+            this.outlookGridStore.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellClick);
+            this.outlookGridStore.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellClick);
+            this.outlookGridStore.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellEndEdit);
+            this.outlookGridStore.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellEnter);
+            this.outlookGridStore.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellLeave);
+            this.outlookGridStore.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.outlookGridStore_CellMouseDown);
+            this.outlookGridStore.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.outlookGridStore_DataError);
+            this.outlookGridStore.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.outlookGridStore_EditingControlShowing);
+            this.outlookGridStore.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.outlookGridStore_UserDeletingRow);
+            this.outlookGridStore.KeyDown += new System.Windows.Forms.KeyEventHandler(this.outlookGridStore_KeyDown);
+            // 
+            // txtIssueId
+            // 
+            this.txtIssueId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtIssueId.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIssueId.ForeColor = System.Drawing.Color.LightGray;
+            this.txtIssueId.Location = new System.Drawing.Point(0, 0);
+            this.txtIssueId.Margin = new System.Windows.Forms.Padding(0);
+            this.txtIssueId.MinimumSize = new System.Drawing.Size(83, 23);
+            this.txtIssueId.Name = "txtIssueId";
+            this.txtIssueId.Size = new System.Drawing.Size(83, 23);
+            this.txtIssueId.TabIndex = 4;
+            this.txtIssueId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtIssueId_KeyDown);
+            // 
+            // txtMyIssuesId
+            // 
+            this.txtMyIssuesId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMyIssuesId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
+            this.txtMyIssuesId.ForeColor = System.Drawing.Color.LightGray;
+            this.txtMyIssuesId.Location = new System.Drawing.Point(0, 0);
+            this.txtMyIssuesId.Margin = new System.Windows.Forms.Padding(0);
+            this.txtMyIssuesId.Name = "txtMyIssuesId";
+            this.txtMyIssuesId.Size = new System.Drawing.Size(382, 20);
+            this.txtMyIssuesId.TabIndex = 0;
+            // 
+            // gridLog
+            // 
+            this.gridLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridLog.EnableSort = true;
+            this.gridLog.Location = new System.Drawing.Point(0, 0);
+            this.gridLog.Name = "gridLog";
+            this.gridLog.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
+            this.gridLog.SelectionMode = SourceGrid.GridSelectionMode.Cell;
+            this.gridLog.Size = new System.Drawing.Size(884, 540);
+            this.gridLog.TabIndex = 5;
+            this.gridLog.TabStop = true;
+            this.gridLog.ToolTipText = "";
             // 
             // Main
             // 
@@ -748,7 +954,6 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel1.ResumeLayout(false);
             this.statusStrip5.ResumeLayout(false);
             this.statusStrip5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outlookGridStore)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
@@ -770,6 +975,15 @@ namespace Fanex.ManagementSP.UI
             this.tabPage1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            this.statusStrip4.ResumeLayout(false);
+            this.statusStrip4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.outlookGridStore)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -828,6 +1042,22 @@ namespace Fanex.ManagementSP.UI
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusStore;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DateTimePicker dtpToLog;
+        private System.Windows.Forms.DateTimePicker dtpFromLog;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cmboFilterTypeLog;
+        private System.Windows.Forms.TextBox txtNameLog;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtUsernameLog;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnSubmitLog;
+        private System.Windows.Forms.StatusStrip statusStrip4;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
+        private SourceGrid.Grid gridLog;
 
     }
 }

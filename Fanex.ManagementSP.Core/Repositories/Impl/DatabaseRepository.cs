@@ -34,7 +34,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                 using (var conn = new MySqlConnection(ConnectionString))
                 {
                     list = conn.Query<Database, Server, Database>(
-                        sql: "spm_database_getall",
+                        sql: "spm_databases_getall",
                         map: (d, s) => { d.Server = s; return d; },
                         splitOn: "Id",
                         commandType: CommandType.StoredProcedure);
@@ -58,7 +58,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
         /// <param name="userId">The user identifier.</param>
         /// <param name="password">The password.</param>
         /// <returns>Result of update.</returns>
-        public bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password)
+        public bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password, int modifiedById)
         {
             try
             {
@@ -73,7 +73,8 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                         Description = description,
                         ServerId = serverId,
                         UserLogin = userId,
-                        UserPassword = password
+                        UserPassword = password,
+                        ModifiedById = modifiedById
                     },
                     commandType: CommandType.StoredProcedure);
                 }
@@ -91,7 +92,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int modifiedById)
         {
             try
             {
@@ -99,7 +100,11 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                 {
                     conn.Execute(
                     sql: "spm_databases_delete",
-                    param: new { DatabaseId = id },
+                    param: new
+                    {
+                        DatabaseId = id,
+                        ModifiedById = modifiedById
+                    },
                     commandType: CommandType.StoredProcedure);
                 }
             }

@@ -60,7 +60,8 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
             string ipLocal,
             string ipUat,
             string ipProduction,
-            string description)
+            string description,
+            int modifiedById)
         {
             try
             {
@@ -75,7 +76,8 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                         IPLocal = ipLocal,
                         IPUAT = ipUat,
                         IPProduction = ipProduction,
-                        Description = description
+                        Description = description,
+                        ModifiedById = modifiedById
                     },
                     commandType: CommandType.StoredProcedure);
                 }
@@ -93,7 +95,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int modifiedById)
         {
             try
             {
@@ -101,7 +103,11 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                 {
                     conn.Execute(
                     sql: "spm_servers_delete",
-                    param: new { ServerId = id },
+                    param: new
+                    {
+                        ServerId = id,
+                        ModifiedById = modifiedById
+                    },
                     commandType: CommandType.StoredProcedure);
                 }
             }

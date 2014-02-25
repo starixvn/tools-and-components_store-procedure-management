@@ -74,11 +74,12 @@ namespace Fanex.ManagementSP.Core.Services.Impl
             string ipLocal,
             string ipUat,
             string ipProduction,
-            string description)
+            string description,
+            int modifiedById)
         {
             try
             {
-                return _serverRepository.InsertOrUpdate(id, name, ipLocal, ipUat, ipProduction, description);
+                return _serverRepository.InsertOrUpdate(id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
             }
             catch (Exception ex)
             {
@@ -93,11 +94,11 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int modifiedById)
         {
             try
             {
-                return _serverRepository.Delete(id);
+                return _serverRepository.Delete(id, modifiedById);
             }
             catch (Exception ex)
             {

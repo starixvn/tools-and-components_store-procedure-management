@@ -55,14 +55,14 @@ namespace Fanex.ManagementSP.Web.Controllers
             string name,
             bool isFunction,
             string actionName,
-            string modifiedBy,
+            int modifiedById,
             int status,
             string description,
             int issueId,
             int developerId)
         {
             description = description == null ? string.Empty : description;
-            _storeProcedureService.InsertOrUpdate(ref id, serverId, databaseId, name, isFunction, actionName, modifiedBy, status, description, issueId, developerId);
+            _storeProcedureService.InsertOrUpdate(ref id, serverId, databaseId, name, isFunction, actionName, modifiedById, status, description, issueId, developerId);
 
             return id;
         }
@@ -73,18 +73,18 @@ namespace Fanex.ManagementSP.Web.Controllers
         /// <param name="ids">The array identifier.</param>
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
-        public void Put(string ids, int statusId, string username)
+        public void Put(string ids, int statusId, string username, int modifiedById)
         {
-            _storeProcedureService.UpdateStatus(ids, statusId, username);
+            _storeProcedureService.UpdateStatus(ids, statusId, username, modifiedById);
         }
 
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        public void Delete(int id)
+        public void Delete(int id, int modifiedById)
         {
-            _storeProcedureService.Delete(id);
+            _storeProcedureService.Delete(id, modifiedById);
         }
     }
 }

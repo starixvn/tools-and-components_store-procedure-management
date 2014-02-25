@@ -33,13 +33,13 @@ namespace Fanex.ManagementSP.Core.Services.Interface
         /// <param name="userId">The user identifier.</param>
         /// <param name="password">The password.</param>
         /// <returns>Result of update.</returns>
-        bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password);
+        bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password, int modifiedById);
 
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        bool Delete(int id);
+        bool Delete(int id, int modifiedById);
     }
 }

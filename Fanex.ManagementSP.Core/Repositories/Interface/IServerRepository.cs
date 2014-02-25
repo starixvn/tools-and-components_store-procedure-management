@@ -39,13 +39,14 @@ namespace Fanex.ManagementSP.Core.Repositories.Interface
            string ipLocal,
            string ipUat,
            string ipProduction,
-           string description);
+           string description,
+           int modifiedById);
 
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        bool Delete(int id);
+        bool Delete(int id, int modifiedById);
     }
 }

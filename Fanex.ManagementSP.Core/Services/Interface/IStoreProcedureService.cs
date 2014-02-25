@@ -34,7 +34,7 @@ namespace Fanex.ManagementSP.Core.Services.Interface
         /// <param name="name">The stored procedure name.</param>
         /// <param name="isFunction">If set to <c>true</c> [is function].</param>
         /// <param name="actionName">Name of the action.</param>
-        /// <param name="modifiedBy">The modified by.</param>
+        /// <param name="modifiedById">The modified by.</param>
         /// <param name="status">The status.</param>
         /// <param name="description">The description.</param>
         /// <param name="issueId">The issue identifier.</param>
@@ -47,7 +47,7 @@ namespace Fanex.ManagementSP.Core.Services.Interface
            string name,
            bool isFunction,
            string actionName,
-           string modifiedBy,
+           int modifiedById,
            int status,
            string description,
            int issueId,
@@ -58,7 +58,7 @@ namespace Fanex.ManagementSP.Core.Services.Interface
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        bool Delete(int id);
+        bool Delete(int id, int modifiedById);
 
         /// <summary>
         /// Updates the status.
@@ -67,6 +67,6 @@ namespace Fanex.ManagementSP.Core.Services.Interface
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
-        bool UpdateStatus(string ids, int statusId, string username);
+        bool UpdateStatus(string ids, int statusId, string username, int modifiedById);
     }
 }

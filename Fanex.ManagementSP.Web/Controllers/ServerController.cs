@@ -21,7 +21,7 @@ namespace Fanex.ManagementSP.Web.Controllers
     public class ServerController : ApiController
     {
         private readonly IServerService _serverService = new ServerService();
-        
+
         /// <summary>
         /// Gets this instance.
         /// </summary>
@@ -46,18 +46,19 @@ namespace Fanex.ManagementSP.Web.Controllers
             string ipLocal,
             string ipUat,
             string ipProduction,
-            string description)
+            string description,
+            int modifiedById)
         {
-            _serverService.InsertOrUpdate(id, name, ipLocal, ipUat, ipProduction, description);
+            _serverService.InsertOrUpdate(id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
         }
 
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        public void Delete(int id)
+        public void Delete(int id, int modifiedById)
         {
-            _serverService.Delete(id);
+            _serverService.Delete(id, modifiedById);
         }
     }
 }

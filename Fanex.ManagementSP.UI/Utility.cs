@@ -13,7 +13,8 @@ namespace Fanex.ManagementSP.UI
     using System.Collections.Generic;
     using System.ComponentModel;
     using OutlookStyleControls;
-
+    using Fanex.ManagementSP.Entities;
+    using System.Linq;
     /// <summary>
     /// The utility class.
     /// </summary>
@@ -27,6 +28,18 @@ namespace Fanex.ManagementSP.UI
             {
                 return Environment.UserName.ToLower();
             }
+        }
+
+        public static int GetUserId(List<User> users)
+        {
+            var user = users.Where(x => string.Equals(x.Username, CurrentUsername, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+            if (!ReferenceEquals(user, null))
+            {
+                return user.Id;
+            }
+
+            return 0;
         }
 
         #endregion

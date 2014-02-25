@@ -47,7 +47,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Interface
             string name,
             bool isFunction,
             string actionName,
-            string modifiedBy,
+            int modifiedById,
             int status,
             string description,
             int issueId,
@@ -60,13 +60,13 @@ namespace Fanex.ManagementSP.Core.Repositories.Interface
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
-        bool UpdateStatus(string ids, int statusId, string username);
+        bool UpdateStatus(string ids, int statusId, string username, int modifiedById);
 
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        bool Delete(int id);
+        bool Delete(int id, int modifiedById);
     }
 }

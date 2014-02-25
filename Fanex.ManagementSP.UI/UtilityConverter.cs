@@ -187,6 +187,22 @@ namespace Fanex.ManagementSP.UI
             return collection;
         }
 
+        public static AutoCompleteStringCollection ToAutoCompleteStringCollection(this IEnumerable<User> users)
+        {
+            AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
+
+            if (users != null && users.Any())
+            {
+                foreach (var item in users)
+                {
+                    collection.Add(item.Username.ToLower());
+                }
+            }
+
+            return collection;
+        }
+
+
         /// <summary>
         /// Converts the data grid view store row to string.
         /// </summary>

@@ -17,6 +17,8 @@ namespace Fanex.ManagementSP.UI
     using Fanex.ManagementSP.UI.ColumnIndex;
     using Fanex.ManagementSP.UI.Extend;
     using OutlookStyleControls;
+    using SourceGrid;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The utility data class.
@@ -384,9 +386,10 @@ namespace Fanex.ManagementSP.UI
         {
             try
             {
+                gridView.Rows.Clear();
+
                 if (listIssue != null && listIssue.Any())
                 {
-                    gridView.Rows.Clear();
                     foreach (var item in listIssue)
                     {
                         gridView.Rows.Add(item.Id, item.Name);
@@ -397,6 +400,145 @@ namespace Fanex.ManagementSP.UI
             {
                 Utility.HandleException(ex);
             }
+        }
+
+        public static void BindingLogDataToGrid(Grid grid, List<LogExecSp> logs)
+        {
+            int index = 0;
+
+            foreach (var itemLog in logs)
+            {
+                index = grid.Rows.Count;
+
+                if (itemLog.ActionTypeId == 2)
+                {
+                    BindingLogDataRowDatabase(grid, index, itemLog);
+                }
+
+                if (itemLog.ActionTypeId == 3)
+                {
+                    BindingLogDataRowServer(grid, index, itemLog);
+                }
+
+                if (itemLog.ActionTypeId == 1)
+                {
+                    BindingLogDataRowStoreProcedure(grid, index, itemLog);
+                }
+            }
+        }
+
+        private static void BindingLogDataRowStoreProcedure(Grid grid, int index, LogExecSp itemLog)
+        {
+            BindingLogDataRow(grid, index, 9, itemLog);
+            grid[index, 5] = new SourceGrid.Cells.Cell("Server", typeof(string));
+            grid[index + 1, 5] = new SourceGrid.Cells.Cell("Database", typeof(string));
+            grid[index + 2, 5] = new SourceGrid.Cells.Cell("Name", typeof(string));
+            grid[index + 3, 5] = new SourceGrid.Cells.Cell("Is Function", typeof(string));
+            grid[index + 4, 5] = new SourceGrid.Cells.Cell("Action", typeof(string));
+            grid[index + 5, 5] = new SourceGrid.Cells.Cell("Status", typeof(string));
+            grid[index + 6, 5] = new SourceGrid.Cells.Cell("Description", typeof(string));
+            grid[index + 7, 5] = new SourceGrid.Cells.Cell("Issue", typeof(string));
+            grid[index + 8, 5] = new SourceGrid.Cells.Cell("Developer", typeof(string));
+
+            if (!string.IsNullOrWhiteSpace(itemLog.Data))
+            {
+                var storeProcedure = itemLog.ToStoreProcedure(itemLog.Data);
+                BindingLogDataRowStoreProcedureDetails(grid, index, 6, storeProcedure);
+            }
+
+            if (!string.IsNullOrWhiteSpace(itemLog.OldData))
+            {
+                var storeProcedure = itemLog.ToStoreProcedure(itemLog.OldData);
+                BindingLogDataRowStoreProcedureDetails(grid, index, 7, storeProcedure);
+            }
+        }
+
+        private static void BindingLogDataRowServer(Grid grid, int index, LogExecSp itemLog)
+        {
+            BindingLogDataRow(grid, index, 5, itemLog);
+            grid[index, 5] = new SourceGrid.Cells.Cell("Name", typeof(string));
+            grid[index + 1, 5] = new SourceGrid.Cells.Cell("Description", typeof(string));
+            grid[index + 2, 5] = new SourceGrid.Cells.Cell("IP Local", typeof(string));
+            grid[index + 3, 5] = new SourceGrid.Cells.Cell("IP UAT", typeof(string));
+            grid[index + 4, 5] = new SourceGrid.Cells.Cell("IP Production", typeof(string));
+
+            if (!string.IsNullOrWhiteSpace(itemLog.Data))
+            {
+                var server = itemLog.ToServer(itemLog.Data);
+                BindingLogDataRowServerDetails(grid, index, 6, server);
+            }
+
+            if (!string.IsNullOrWhiteSpace(itemLog.OldData))
+            {
+                var server = itemLog.ToServer(itemLog.OldData);
+                BindingLogDataRowServerDetails(grid, index, 7, server);
+            }
+        }
+
+        private static void BindingLogDataRowDatabase(Grid grid, int index, LogExecSp itemLog)
+        {
+            BindingLogDataRow(grid, index, 4, itemLog);
+            grid[index, 5] = new SourceGrid.Cells.Cell("Name", typeof(string));
+            grid[index + 1, 5] = new SourceGrid.Cells.Cell("Description", typeof(string));
+            grid[index + 2, 5] = new SourceGrid.Cells.Cell("Server", typeof(string));
+            grid[index + 3, 5] = new SourceGrid.Cells.Cell("User Login", typeof(string));
+
+            if (!string.IsNullOrWhiteSpace(itemLog.Data))
+            {
+                var database = itemLog.ToDatabase(itemLog.Data);
+                BindingLogDataRowDatabaseDetails(grid, index, 6, database);
+            }
+
+            if (!string.IsNullOrWhiteSpace(itemLog.OldData))
+            {
+                var database = itemLog.ToDatabase(itemLog.OldData);
+                BindingLogDataRowDatabaseDetails(grid, index, 7, database);
+            }
+        }
+
+        private static void BindingLogDataRowStoreProcedureDetails(Grid grid, int index, int colIndex, StoreProcedure storeProcedure)
+        {
+            grid[index, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Server.Name, typeof(string));
+            grid[index + 1, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Database.Name, typeof(string));
+            grid[index + 2, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Name, typeof(string));
+            grid[index + 3, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.IsFunction.ToString(), typeof(string));
+            grid[index + 4, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.ActionName, typeof(string));
+            grid[index + 5, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.StatusName, typeof(string));
+            grid[index + 6, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Description, typeof(string));
+            grid[index + 7, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Issue.Id, typeof(string));
+            grid[index + 8, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Developer.Username, typeof(string));
+        }
+
+        private static void BindingLogDataRowServerDetails(Grid grid, int index, int colIndex, Server server)
+        {
+            grid[index, colIndex] = new SourceGrid.Cells.Cell(server.Name, typeof(string));
+            grid[index + 1, colIndex] = new SourceGrid.Cells.Cell(server.Description, typeof(string));
+            grid[index + 2, colIndex] = new SourceGrid.Cells.Cell(server.IPLocal, typeof(string));
+            grid[index + 3, colIndex] = new SourceGrid.Cells.Cell(server.IPUAT, typeof(string));
+            grid[index + 4, colIndex] = new SourceGrid.Cells.Cell(server.IPProduction, typeof(string));
+        }
+
+        private static void BindingLogDataRowDatabaseDetails(Grid grid, int index, int colIndex, Database database)
+        {
+            grid[index, colIndex] = new SourceGrid.Cells.Cell(database.Name, typeof(string));
+            grid[index + 1, colIndex] = new SourceGrid.Cells.Cell(database.Description, typeof(string));
+            grid[index + 2, colIndex] = new SourceGrid.Cells.Cell(database.Server.Name, typeof(string));
+            grid[index + 3, colIndex] = new SourceGrid.Cells.Cell(database.UserID, typeof(string));
+        }
+
+        private static void BindingLogDataRow(Grid grid, int index, int rowSpan, LogExecSp itemLog)
+        {
+            grid.Rows.InsertRange(index, rowSpan);
+            grid[index, 0] = new SourceGrid.Cells.Cell(itemLog.Id, typeof(string));
+            grid[index, 0].RowSpan = rowSpan;
+            grid[index, 1] = new SourceGrid.Cells.Cell(itemLog.LogDate, typeof(string));
+            grid[index, 1].RowSpan = rowSpan;
+            grid[index, 2] = new SourceGrid.Cells.Cell(itemLog.Name, typeof(string));
+            grid[index, 2].RowSpan = rowSpan;
+            grid[index, 3] = new SourceGrid.Cells.Cell(itemLog.Modifier, typeof(string));
+            grid[index, 3].RowSpan = rowSpan;
+            grid[index, 4] = new SourceGrid.Cells.Cell(itemLog.ActionName, typeof(string));
+            grid[index, 4].RowSpan = rowSpan;
         }
 
         #endregion

@@ -46,6 +46,7 @@
     <Compile Include="Entities\Issue.cs" />
     <Compile Include="Enumerations\Action.cs" />
     <Compile Include="Enumerations\Status.cs" />
+    <Compile Include="Models\LogExecSp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Server.cs" />
     <Compile Include="Entities\StoreProcedure.cs" />

@@ -69,7 +69,7 @@ namespace Fanex.ManagementSP.Client.Services
         /// <param name="name">The stored procedure name.</param>
         /// <param name="isFunction">If set to <c>true</c> [is function].</param>
         /// <param name="actionName">Name of the action.</param>
-        /// <param name="modifiedBy">The modified by.</param>
+        /// <param name="modifiedById">The modified by.</param>
         /// <param name="status">The status.</param>
         /// <param name="description">The description.</param>
         /// <param name="issueId">The issue identifier.</param>
@@ -82,7 +82,7 @@ namespace Fanex.ManagementSP.Client.Services
             string name,
             bool isFunction,
             string actionName,
-            string modifiedBy,
+            int modifiedById,
             int status,
             string description,
             int issueId,
@@ -92,9 +92,9 @@ namespace Fanex.ManagementSP.Client.Services
             {
                 var list = new List<StoreProcedure>();
                 var format = string.Empty;
-                format = "?id={0}&serverId={1}&databaseId={2}&name={3}&isFunction={4}&actionName={5}&modifiedBy={6}&status={7}&description={8}&issueId={9}&developerId={10}";
+                format = "?id={0}&serverId={1}&databaseId={2}&name={3}&isFunction={4}&actionName={5}&modifiedById={6}&status={7}&description={8}&issueId={9}&developerId={10}";
 
-                string query = string.Format(format, id, serverId, databaseId, name, isFunction, actionName, modifiedBy, status, description, issueId, developerId);
+                string query = string.Format(format, id, serverId, databaseId, name, isFunction, actionName, modifiedById, status, description, issueId, developerId);
 
                 var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + query, WebRequestMethods.Http.Post);
 
@@ -113,11 +113,14 @@ namespace Fanex.ManagementSP.Client.Services
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Result of delete.</returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int modifiedById)
         {
             try
             {
-                var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + "/" + id.ToString(), "DELETE");
+                var format = "?id={0}&modifiedById={1}";
+                var query = string.Format(format, id, modifiedById);
+
+                var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + query, "DELETE");
 
                 var result = taskRequest.Result;
             }
@@ -136,11 +139,11 @@ namespace Fanex.ManagementSP.Client.Services
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
-        public bool UpdateStatus(string ids, int statusId, string username)
+        public bool UpdateStatus(string ids, int statusId, string username, int modifiedById)
         {
             try
             {
-                string query = string.Format("?ids={0}&statusId={1}&username={2}", ids, statusId, username);
+                string query = string.Format("?ids={0}&statusId={1}&username={2}&modifiedById={3}", ids, statusId, username, modifiedById);
                 var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + query, WebRequestMethods.Http.Put);
 
                 var result = taskRequest.Result;

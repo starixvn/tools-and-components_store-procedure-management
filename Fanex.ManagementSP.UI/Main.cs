@@ -18,9 +18,11 @@ namespace Fanex.ManagementSP.UI
     using System.Windows.Forms;
     using Fanex.ManagementSP.Client.Services;
     using Fanex.ManagementSP.Entities;
+    using Fanex.ManagementSP.Entities.Models;
     using Fanex.ManagementSP.UI.ColumnIndex;
     using NPOI.HSSF.UserModel;
     using OutlookStyleControls;
+    using SourceGrid;
 
     /// <summary>
     /// The main class.
@@ -38,6 +40,7 @@ namespace Fanex.ManagementSP.UI
         private DatabaseService _databaseService;
         private IssueService _issueService;
         private UserService _userService;
+        private LogService _logService;
 
         // Global variables
         private string _currentValue = string.Empty;
@@ -53,6 +56,8 @@ namespace Fanex.ManagementSP.UI
         private bool _isBindingStoreComplete = false;
         private bool _isEventClickComplete = false;
         private StoreProcedure _storeProcedure = new StoreProcedure();
+
+        private int _userId = 0;
 
         #endregion
 
@@ -78,8 +83,8 @@ namespace Fanex.ManagementSP.UI
             _databaseService = new DatabaseService(_apiUri);
             _issueService = new IssueService(_apiUri);
             _userService = new UserService(_apiUri);
+            _logService = new LogService(_apiUri);
 
-            
             chbQueryAll.Checked = true;
 
             txtIssueId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
@@ -96,6 +101,7 @@ namespace Fanex.ManagementSP.UI
             UtilityUI.InitHeaderColumnsDataGridViewServer(dataGridViewServer);
             UtilityUI.InitHeaderColumnsDataGridViewDatabase(dataGridViewDatabase);
             UtilityUI.InitHeaderColumnsDataGridViewMyIssue(dataGridViewMyIssue);
+            UtilityUI.InitHeaderColumnsGridLog(gridLog);
 
             // For menu
             toolStripComboBoxSettingStore.SelectedIndex = 0;
@@ -157,6 +163,7 @@ namespace Fanex.ManagementSP.UI
             _listServer = _serverService.GetAll();
             _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
             _listUser = _userService.GetAll();
+            _userId = Utility.GetUserId(_listUser.ToList());
 
             // Binding data to control
             UtilityData.BindingDataToGridViewServer(dataGridViewServer, _listServer);
@@ -172,6 +179,10 @@ namespace Fanex.ManagementSP.UI
 
             txtAPIUrl.Text = _apiUri;
             txtRedmineIssueUri.Text = _redmineIssueUri;
+            txtUsernameLog.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtUsernameLog.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            txtUsernameLog.AutoCompleteCustomSource = UtilityConverter.ToAutoCompleteStringCollection(_listUser);
+            cmboFilterTypeLog.SelectedIndex = 0;
         }
 
         #endregion
@@ -763,7 +774,7 @@ namespace Fanex.ManagementSP.UI
                                         storeProcedure.Name,
                                         storeProcedure.IsFunction,
                                         storeProcedure.ActionName,
-                                        storeProcedure.Modifier.Username,
+                                        _userId,
                                         storeProcedure.Status,
                                         storeProcedure.Description,
                                         storeProcedure.Issue.Id,
@@ -792,7 +803,7 @@ namespace Fanex.ManagementSP.UI
                                     storeProcedure.Name,
                                     storeProcedure.IsFunction,
                                     storeProcedure.ActionName,
-                                    storeProcedure.Modifier.Username,
+                                    _userId,
                                     storeProcedure.Status,
                                     storeProcedure.Description,
                                     issueId,
@@ -994,7 +1005,7 @@ namespace Fanex.ManagementSP.UI
 
                 if (!string.IsNullOrWhiteSpace(storeIds))
                 {
-                    _storeProcedureService.UpdateStatus(storeIds, statusId, Utility.CurrentUsername);
+                    _storeProcedureService.UpdateStatus(storeIds, statusId, Utility.CurrentUsername, _userId);
 
                     if (minIndex == maxIndex)
                     {
@@ -1122,7 +1133,7 @@ namespace Fanex.ManagementSP.UI
                         {
                             int storeId = Convert.ToInt32(strId);
 
-                            _storeProcedureService.Delete(storeId);
+                            _storeProcedureService.Delete(storeId, _userId);
 
                             outlookGridStore.Rows.RemoveAt(item.Index);
                         }
@@ -1412,7 +1423,7 @@ namespace Fanex.ManagementSP.UI
                     {
                         int storeId = Convert.ToInt32(strStoreId);
 
-                        _storeProcedureService.Delete(storeId);
+                        _storeProcedureService.Delete(storeId, _userId);
 
                         toolStripStatusStore.Text = Resource.DeleteSuccessfully + "( Row " + (rowIndex + 1).ToString() + ")";
                     }
@@ -1581,7 +1592,7 @@ namespace Fanex.ManagementSP.UI
 
                     if (tempData == null || server.Id != 0)
                     {
-                        _serverService.InsertOrUpdate(server.Id, server.Name, server.IPLocal, server.IPUAT, server.IPProduction, server.Description);
+                        _serverService.InsertOrUpdate(server.Id, server.Name, server.IPLocal, server.IPUAT, server.IPProduction, server.Description, _userId);
 
                         _listServer = _serverService.GetAll();
                         UtilityData.BindingDataToGridViewServer(dataGridViewServer, _listServer);
@@ -1627,7 +1638,7 @@ namespace Fanex.ManagementSP.UI
                         {
                             int serverId = Convert.ToInt32(strServerId);
 
-                            _serverService.Delete(serverId);
+                            _serverService.Delete(serverId, _userId);
 
                             _listServer = _serverService.GetAll();
                         }
@@ -1709,7 +1720,7 @@ namespace Fanex.ManagementSP.UI
                         {
                             int serverId = Convert.ToInt32(strId);
 
-                            _serverService.Delete(serverId);
+                            _serverService.Delete(serverId, _userId);
                             _listServer = _serverService.GetAll();
                             dataGridViewServer.Rows.RemoveAt(currentRowIndex);
                         }
@@ -1774,7 +1785,7 @@ namespace Fanex.ManagementSP.UI
 
                         if (tempData == null)
                         {
-                            _databaseService.InsertOrUpdate(database.Id, database.Name, database.Description, database.Server.Id, database.UserID, database.Password);
+                            _databaseService.InsertOrUpdate(database.Id, database.Name, database.Description, database.Server.Id, database.UserID, database.Password, _userId);
 
                             _listDatabase = _databaseService.GetAll();
                             UtilityData.BindingDataToGridViewDatabase(dataGridViewDatabase, _listDatabase, database.Server.Id);
@@ -1819,7 +1830,7 @@ namespace Fanex.ManagementSP.UI
                         {
                             int databaseId = Convert.ToInt32(strDatabaseId);
 
-                            _databaseService.Delete(databaseId);
+                            _databaseService.Delete(databaseId, _userId);
                             _listDatabase = _databaseService.GetAll();
                         }
                         else
@@ -1896,7 +1907,7 @@ namespace Fanex.ManagementSP.UI
                         {
                             int databaseId = Convert.ToInt32(strId);
 
-                            _databaseService.Delete(databaseId);
+                            _databaseService.Delete(databaseId, _userId);
                             _listDatabase = _databaseService.GetAll();
                             dataGridViewDatabase.Rows.RemoveAt(currentRowIndex);
                         }
@@ -1966,7 +1977,7 @@ namespace Fanex.ManagementSP.UI
                 int rowIndex = e.RowIndex;
                 int colIndex = e.ColumnIndex;
 
-                if (rowIndex > 0 && colIndex == 2)
+                if (colIndex == 2)
                 {
                     var strId = dataGridViewMyIssue[0, rowIndex].EditedFormattedValue.ToString();
 
@@ -2206,6 +2217,20 @@ namespace Fanex.ManagementSP.UI
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             this.Main_Load(null, null);
+        }
+
+        private void btnSubmitLog_Click(object sender, EventArgs e)
+        {
+            gridLog.Rows.Clear();
+            UtilityUI.InitHeaderColumnsGridLog(gridLog);
+
+            var logs = _logService.SearchLog(txtNameLog.Text.Trim(),
+                            txtUsernameLog.Text.Trim(),
+                            dtpFromLog.Value,
+                            dtpToLog.Value,
+                            cmboFilterTypeLog.SelectedIndex + 1).ToList();
+
+            UtilityData.BindingLogDataToGrid(gridLog, logs);
         }
     }
 }
