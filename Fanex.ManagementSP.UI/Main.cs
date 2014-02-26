@@ -92,7 +92,7 @@ namespace Fanex.ManagementSP.UI
             txtIssueId.Reset();
 
             // Init skin
-            UtilityUI.InitSkinOutlookGrid(outlookGridStore, imageList, _redmineIssueUri);
+            //UtilityUI.InitSkinOutlookGrid(outlookGridStore, imageList, _redmineIssueUri);
             UtilityUI.InitSkinGridView(dataGridViewServer);
             UtilityUI.InitSkinGridView(dataGridViewDatabase);
             UtilityUI.InitSkinGridView(dataGridViewMyIssue);
@@ -114,8 +114,8 @@ namespace Fanex.ManagementSP.UI
             // Loading
             pictureBoxLoading.Visible = false;
             btnExport.Enabled = false;
-            this.outlookGridStore.RowHeadersVisible = true;
-            this.outlookGridStore.RowPostPaint += new DataGridViewRowPostPaintEventHandler(outlookGridStore_RowPostPaint);
+            //this.outlookGridStore.RowHeadersVisible = true;
+            //this.outlookGridStore.RowPostPaint += new DataGridViewRowPostPaintEventHandler(outlookGridStore_RowPostPaint);
 
             this.dataGridViewServer.RowHeadersVisible = true;
             this.dataGridViewServer.RowPostPaint += new DataGridViewRowPostPaintEventHandler(outlookGridStore_RowPostPaint);
@@ -220,23 +220,23 @@ namespace Fanex.ManagementSP.UI
 
             pictureBoxLoading.Visible = true;
             //// Reset data
-            outlookGridStore.BindData(null, string.Empty);
+            //outlookGridStore.BindData(null, string.Empty);
 
             //// Init header columns    
-            UtilityUI.InitHeaderColumnsDataGridViewStore(outlookGridStore);
+            //UtilityUI.InitHeaderColumnsDataGridViewStore(outlookGridStore);
 
             _listStoreProcedure = _storeProcedureService.GetByIssueId(issueIds, chbQueryAll.Checked);
 
             if (!ReferenceEquals(_listStoreProcedure, null)
                 && _listStoreProcedure.Any())
             {
-                UtilityData.BindingDataToGridViewStore(outlookGridStore, _listStoreProcedure.OrderBy(x => x.Issue.Id).ToList());
-                Utility.GroupDataGridViewByIssue(outlookGridStore, StoreColumnIndex.IssueName);
+                //UtilityData.BindingDataToGridViewStore(outlookGridStore, _listStoreProcedure.OrderBy(x => x.Issue.Id).ToList());
+                //Utility.GroupDataGridViewByIssue(outlookGridStore, StoreColumnIndex.IssueName);
             }
 
             pictureBoxLoading.Visible = false;
 
-            btnExport.Enabled = outlookGridStore.Rows.Count > 0;
+            //btnExport.Enabled = outlookGridStore.Rows.Count > 0;
 
             _isBindingStoreComplete = true;
             toolStripStatusStore.Text = Resource.NoChange;
@@ -297,20 +297,20 @@ namespace Fanex.ManagementSP.UI
             {
                 bool isFound = false;
 
-                for (int i = 0; i < outlookGridStore.Rows.Count; i++)
-                {
-                    string storeName = outlookGridStore[StoreColumnIndex.Name, i].EditedFormattedValue.ToString();
+                //for (int i = 0; i < outlookGridStore.Rows.Count; i++)
+                //{
+                //    string storeName = outlookGridStore[StoreColumnIndex.Name, i].EditedFormattedValue.ToString();
 
-                    if (string.Equals(frm.SearchText, storeName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        outlookGridStore.Rows[i].Selected = true;
-                        isFound = true;
-                    }
-                    else
-                    {
-                        outlookGridStore.Rows[i].Selected = false;
-                    }
-                }
+                //    if (string.Equals(frm.SearchText, storeName, StringComparison.OrdinalIgnoreCase))
+                //    {
+                //        outlookGridStore.Rows[i].Selected = true;
+                //        isFound = true;
+                //    }
+                //    else
+                //    {
+                //        outlookGridStore.Rows[i].Selected = false;
+                //    }
+                //}
 
                 if (!isFound)
                 {
@@ -318,7 +318,7 @@ namespace Fanex.ManagementSP.UI
                 }
             }
         }
-
+        /*
         /// <summary>
         /// Generates the context menu strip grid view store.
         /// </summary>
@@ -413,9 +413,9 @@ namespace Fanex.ManagementSP.UI
 
             outlookGridStore.Rows.Insert(outlookGridStore.Rows.Count - 1, (int)item.Tag);
         }
-
+        */
         #endregion
-
+        /*
         #region Outlook Grid View Store
 
         /// <summary>
@@ -1529,7 +1529,7 @@ namespace Fanex.ManagementSP.UI
         #endregion
 
         #endregion
-
+        */
         #region Data Grid View Server
 
         /// <summary>
@@ -2237,5 +2237,14 @@ namespace Fanex.ManagementSP.UI
 
             UtilityData.BindingLogDataToGrid(gridLog, logs);
         }
+
+        #region Grid Store Procedure
+
+        void InitHeaderColumnGridStoreProcedure() 
+        {
+
+        }
+
+        #endregion
     }
 }

@@ -51,7 +51,6 @@ namespace Fanex.ManagementSP.UI
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusStore = new System.Windows.Forms.ToolStripStatusLabel();
-            this.outlookGridStore = new OutlookStyleControls.OutlookGrid();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cmboMyIssues = new System.Windows.Forms.ComboBox();
             this.txtIssueId = new Demo.PlaceholderTextBox();
@@ -100,6 +99,7 @@ namespace Fanex.ManagementSP.UI
             this.statusStrip4 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
             this.imageListError = new System.Windows.Forms.ImageList(this.components);
+            this.gridStoreProcedure = new SourceGrid.Grid();
             this.contextMenuStripGird.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -110,7 +110,6 @@ namespace Fanex.ManagementSP.UI
             this.tabPageStore.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outlookGridStore)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.tabPageSetting.SuspendLayout();
@@ -298,7 +297,7 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.statusStrip5, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.outlookGridStore, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.gridStoreProcedure, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 38);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -342,29 +341,6 @@ namespace Fanex.ManagementSP.UI
             this.toolStripStatusStore.Size = new System.Drawing.Size(65, 13);
             this.toolStripStatusStore.Text = "No change !";
             // 
-            // outlookGridStore
-            // 
-            this.outlookGridStore.CollapseIcon = null;
-            this.outlookGridStore.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outlookGridStore.ExpandIcon = null;
-            this.outlookGridStore.IconLinkRedmine = null;
-            this.outlookGridStore.LinkToRedmineIssue = null;
-            this.outlookGridStore.Location = new System.Drawing.Point(3, 3);
-            this.outlookGridStore.MultiSelect = false;
-            this.outlookGridStore.Name = "outlookGridStore";
-            this.outlookGridStore.Size = new System.Drawing.Size(878, 533);
-            this.outlookGridStore.TabIndex = 0;
-            this.outlookGridStore.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellClick);
-            this.outlookGridStore.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellClick);
-            this.outlookGridStore.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellEndEdit);
-            this.outlookGridStore.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellEnter);
-            this.outlookGridStore.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.outlookGridStore_CellLeave);
-            this.outlookGridStore.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.outlookGridStore_CellMouseDown);
-            this.outlookGridStore.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.outlookGridStore_DataError);
-            this.outlookGridStore.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.outlookGridStore_EditingControlShowing);
-            this.outlookGridStore.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.outlookGridStore_UserDeletingRow);
-            this.outlookGridStore.KeyDown += new System.Windows.Forms.KeyEventHandler(this.outlookGridStore_KeyDown);
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
@@ -374,7 +350,7 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 394F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 224F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 226F));
             this.tableLayoutPanel2.Controls.Add(this.cmboMyIssues, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.txtIssueId, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.chbQueryAll, 2, 0);
@@ -396,7 +372,7 @@ namespace Fanex.ManagementSP.UI
             this.cmboMyIssues.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmboMyIssues.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmboMyIssues.FormattingEnabled = true;
-            this.cmboMyIssues.Location = new System.Drawing.Point(29, 0);
+            this.cmboMyIssues.Location = new System.Drawing.Point(28, 0);
             this.cmboMyIssues.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.cmboMyIssues.MinimumSize = new System.Drawing.Size(88, 0);
             this.cmboMyIssues.Name = "cmboMyIssues";
@@ -422,7 +398,7 @@ namespace Fanex.ManagementSP.UI
             // 
             this.chbQueryAll.AutoSize = true;
             this.chbQueryAll.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbQueryAll.Location = new System.Drawing.Point(52, 5);
+            this.chbQueryAll.Location = new System.Drawing.Point(50, 5);
             this.chbQueryAll.Margin = new System.Windows.Forms.Padding(10, 5, 0, 0);
             this.chbQueryAll.Name = "chbQueryAll";
             this.chbQueryAll.Size = new System.Drawing.Size(162, 17);
@@ -444,12 +420,11 @@ namespace Fanex.ManagementSP.UI
             this.btnExport.TabIndex = 5;
             this.btnExport.Text = "Export Excel";
             this.btnExport.UseVisualStyleBackColor = false;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // pictureBoxLoading
             // 
             this.pictureBoxLoading.Image = global::Fanex.ManagementSP.UI.Properties.Resources._495_2_;
-            this.pictureBoxLoading.Location = new System.Drawing.Point(225, 3);
+            this.pictureBoxLoading.Location = new System.Drawing.Point(223, 3);
             this.pictureBoxLoading.Name = "pictureBoxLoading";
             this.pictureBoxLoading.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxLoading.TabIndex = 6;
@@ -461,7 +436,7 @@ namespace Fanex.ManagementSP.UI
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Image = global::Fanex.ManagementSP.UI.Properties.Resources.gnome_edit_find;
-            this.btnSearch.Location = new System.Drawing.Point(619, 3);
+            this.btnSearch.Location = new System.Drawing.Point(617, 3);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(37, 19);
             this.btnSearch.TabIndex = 7;
@@ -485,7 +460,7 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 94.10681F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.893186F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 768F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 770F));
             this.tableLayoutPanel3.Controls.Add(this.statusStrip2, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.dataGridViewServer, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.dataGridViewDatabase, 2, 1);
@@ -529,7 +504,7 @@ namespace Fanex.ManagementSP.UI
             this.dataGridViewServer.Location = new System.Drawing.Point(3, 33);
             this.dataGridViewServer.MultiSelect = false;
             this.dataGridViewServer.Name = "dataGridViewServer";
-            this.dataGridViewServer.Size = new System.Drawing.Size(103, 538);
+            this.dataGridViewServer.Size = new System.Drawing.Size(101, 538);
             this.dataGridViewServer.TabIndex = 0;
             this.dataGridViewServer.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewServer_CellMouseDown);
             this.dataGridViewServer.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewServer_CellValueChanged);
@@ -542,10 +517,10 @@ namespace Fanex.ManagementSP.UI
             this.dataGridViewDatabase.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewDatabase.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewDatabase.Location = new System.Drawing.Point(118, 33);
+            this.dataGridViewDatabase.Location = new System.Drawing.Point(116, 33);
             this.dataGridViewDatabase.MultiSelect = false;
             this.dataGridViewDatabase.Name = "dataGridViewDatabase";
-            this.dataGridViewDatabase.Size = new System.Drawing.Size(763, 538);
+            this.dataGridViewDatabase.Size = new System.Drawing.Size(765, 538);
             this.dataGridViewDatabase.TabIndex = 1;
             this.dataGridViewDatabase.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewDatabase_CellFormatting);
             this.dataGridViewDatabase.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewDatabase_CellMouseDown);
@@ -568,7 +543,7 @@ namespace Fanex.ManagementSP.UI
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(115, 0);
+            this.label3.Location = new System.Drawing.Point(113, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 16);
@@ -933,6 +908,19 @@ namespace Fanex.ManagementSP.UI
             this.imageListError.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListError.Images.SetKeyName(0, "exclamation.png");
             // 
+            // gridStoreProcedure
+            // 
+            this.gridStoreProcedure.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridStoreProcedure.EnableSort = true;
+            this.gridStoreProcedure.Location = new System.Drawing.Point(3, 3);
+            this.gridStoreProcedure.Name = "gridStoreProcedure";
+            this.gridStoreProcedure.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
+            this.gridStoreProcedure.SelectionMode = SourceGrid.GridSelectionMode.Cell;
+            this.gridStoreProcedure.Size = new System.Drawing.Size(878, 533);
+            this.gridStoreProcedure.TabIndex = 5;
+            this.gridStoreProcedure.TabStop = true;
+            this.gridStoreProcedure.ToolTipText = "";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -954,7 +942,6 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel1.ResumeLayout(false);
             this.statusStrip5.ResumeLayout(false);
             this.statusStrip5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outlookGridStore)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
@@ -1018,7 +1005,6 @@ namespace Fanex.ManagementSP.UI
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSettingStore;
         private System.Windows.Forms.TabPage tabPage1;
-        private OutlookStyleControls.OutlookGrid outlookGridStore;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnUpdateAPIUrl;
@@ -1058,6 +1044,7 @@ namespace Fanex.ManagementSP.UI
         private System.Windows.Forms.StatusStrip statusStrip4;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
         private SourceGrid.Grid gridLog;
+        private SourceGrid.Grid gridStoreProcedure;
 
     }
 }
