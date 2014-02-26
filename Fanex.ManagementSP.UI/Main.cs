@@ -2221,8 +2221,13 @@ namespace Fanex.ManagementSP.UI
 
         private void btnSubmitLog_Click(object sender, EventArgs e)
         {
-            gridLog.Rows.Clear();
-            UtilityUI.InitHeaderColumnsGridLog(gridLog);
+            if (gridLog.RowsCount > 2)
+            {
+                while (gridLog.RowsCount > 2)
+                {
+                    gridLog.Rows.Remove(2);
+                }
+            }
 
             var logs = _logService.SearchLog(txtNameLog.Text.Trim(),
                             txtUsernameLog.Text.Trim(),
