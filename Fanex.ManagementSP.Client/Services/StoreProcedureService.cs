@@ -90,6 +90,10 @@ namespace Fanex.ManagementSP.Client.Services
         {
             try
             {
+                name = name.Trim();
+                actionName = actionName.Trim();
+                description = description.Trim();
+
                 var list = new List<StoreProcedure>();
                 var format = string.Empty;
                 format = "?id={0}&serverId={1}&databaseId={2}&name={3}&isFunction={4}&actionName={5}&modifiedById={6}&status={7}&description={8}&issueId={9}&developerId={10}";

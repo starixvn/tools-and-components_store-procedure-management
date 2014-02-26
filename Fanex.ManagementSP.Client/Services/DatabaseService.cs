@@ -73,6 +73,10 @@ namespace Fanex.ManagementSP.Client.Services
         {
             try
             {
+                name = name.Trim();
+                description = description.Trim();
+                password = password.Trim();
+
                 var format = "?id={0}&name={1}&description={2}&serverId={3}&userId={4}&password={5}&modifiedById={6}";
                 var query = string.Format(format, id, name, description, serverId, userId, System.Web.HttpUtility.UrlEncode(password), modifiedById);
 
