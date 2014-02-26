@@ -125,6 +125,12 @@ namespace Fanex.ManagementSP.UI
 
             this.dataGridViewMyIssue.RowHeadersVisible = true;
             this.dataGridViewMyIssue.RowPostPaint += new DataGridViewRowPostPaintEventHandler(outlookGridStore_RowPostPaint);
+
+            // For log
+            dtpFromLog.MinDate = DateTime.Now.AddMonths(-3);
+            dtpFromLog.MaxDate = DateTime.Now;
+            dtpToLog.MinDate = DateTime.Now.AddMonths(-3);
+            dtpToLog.MaxDate = DateTime.Now;
         }
 
         /// <summary>
@@ -1005,7 +1011,7 @@ namespace Fanex.ManagementSP.UI
 
                 if (!string.IsNullOrWhiteSpace(storeIds))
                 {
-                    _storeProcedureService.UpdateStatus(storeIds, statusId, Utility.CurrentUsername, _userId);
+                    _storeProcedureService.UpdateStatus(storeIds, statusId, _userId);
 
                     if (minIndex == maxIndex)
                     {

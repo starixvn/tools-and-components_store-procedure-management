@@ -130,11 +130,11 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
-        public bool UpdateStatus(string ids, int statusId, string username, int modifiedById)
+        public bool UpdateStatus(string ids, int statusId, int modifiedById)
         {
             try
             {
-                return _storeProcedureRepository.UpdateStatus(ids, statusId, username, modifiedById);
+                return _storeProcedureRepository.UpdateStatus(ids, statusId, modifiedById);
             }
             catch (Exception ex)
             {

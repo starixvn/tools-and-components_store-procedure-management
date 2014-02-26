@@ -73,9 +73,9 @@ namespace Fanex.ManagementSP.Web.Controllers
         /// <param name="ids">The array identifier.</param>
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
-        public void Put(string ids, int statusId, string username, int modifiedById)
+        public void Put(string ids, int statusId, int modifiedById)
         {
-            _storeProcedureService.UpdateStatus(ids, statusId, username, modifiedById);
+            _storeProcedureService.UpdateStatus(ids, statusId, modifiedById);
         }
 
         /// <summary>

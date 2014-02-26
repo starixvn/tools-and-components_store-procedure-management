@@ -139,11 +139,11 @@ namespace Fanex.ManagementSP.Client.Services
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
-        public bool UpdateStatus(string ids, int statusId, string username, int modifiedById)
+        public bool UpdateStatus(string ids, int statusId, int modifiedById)
         {
             try
             {
-                string query = string.Format("?ids={0}&statusId={1}&username={2}&modifiedById={3}", ids, statusId, username, modifiedById);
+                string query = string.Format("?ids={0}&statusId={1}&modifiedById={2}", ids, statusId, modifiedById);
                 var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + query, WebRequestMethods.Http.Put);
 
                 var result = taskRequest.Result;
