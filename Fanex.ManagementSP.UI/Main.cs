@@ -169,7 +169,16 @@ namespace Fanex.ManagementSP.UI
             _listServer = _serverService.GetAll();
             _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
             _listUser = _userService.GetAll();
-            _userId = Utility.GetUserId(_listUser.ToList());
+
+            if (ReferenceEquals(_listDatabase, null)
+                || ReferenceEquals(_listServer, null)
+                || ReferenceEquals(_listIssue, null)
+                || ReferenceEquals(_listUser, null))
+            {
+                MessageBox.Show("Can not connect to server. Please check your internet connection or try again later!", "Error", MessageBoxButtons.OK);
+            }
+
+            _userId = Utility.GetUserId(_listUser);
 
             // Binding data to control
             UtilityData.BindingDataToGridViewServer(dataGridViewServer, _listServer);
