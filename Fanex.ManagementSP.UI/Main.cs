@@ -16,13 +16,12 @@ namespace Fanex.ManagementSP.UI
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+    using AutoUpdaterDotNET;
     using Fanex.ManagementSP.Client.Services;
     using Fanex.ManagementSP.Entities;
-    using Fanex.ManagementSP.Entities.Models;
     using Fanex.ManagementSP.UI.ColumnIndex;
     using NPOI.HSSF.UserModel;
     using OutlookStyleControls;
-    using SourceGrid;
 
     /// <summary>
     /// The main class.
@@ -198,6 +197,8 @@ namespace Fanex.ManagementSP.UI
             txtUsernameLog.AutoCompleteSource = AutoCompleteSource.CustomSource;
             txtUsernameLog.AutoCompleteCustomSource = UtilityConverter.ToAutoCompleteStringCollection(_listUser);
             cmboFilterTypeLog.SelectedIndex = 0;
+
+            AutoUpdater.Start(_apiUri + "update-version.xml");
         }
 
         #endregion

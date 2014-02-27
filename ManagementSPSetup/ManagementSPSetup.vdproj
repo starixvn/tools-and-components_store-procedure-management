@@ -417,6 +417,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9C8C789C62161B84E33F93D7A5AD1912"
+        "OwnerKey" = "8:_033F20C466414D3D88ADFF8DFD4A92C5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9C8C789C62161B84E33F93D7A5AD1912"
+        "OwnerKey" = "8:_5E7278B0702CEA56598D8895E829DF0C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9C8C789C62161B84E33F93D7A5AD1912"
+        "OwnerKey" = "8:_D5A8AD72EC814F0382140A6AE10C1843"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9D7C219C29D62AA46F6F19AA78E71C1B"
         "OwnerKey" = "8:_BC51053C10B657962C7A245C966C0FD8"
         "MsmSig" = "8:_UNDEFINED"
@@ -671,6 +689,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C234BB863615E152996CCFA876B642CF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9C8C789C62161B84E33F93D7A5AD1912"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1079,7 +1103,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Client, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_2F759D0BE2ADD850A68FAFF115FE0ADD"
@@ -1265,7 +1289,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Entities, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_559B81B8B4D0854B6F2E324A3A67CCCA"
@@ -1378,7 +1402,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.UI, Version=1.0.0.1, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_5E7278B0702CEA56598D8895E829DF0C"
@@ -1471,7 +1495,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Entities, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_7A7B2AE7968441B08AC48CB2A4E6264A"
@@ -1625,6 +1649,37 @@
                     }
                 }
             "SourcePath" = "8:EnvDTE80.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_91742237583D42878535D68C052096A6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9C8C789C62161B84E33F93D7A5AD1912"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9C8C789C62161B84E33F93D7A5AD1912"
+                    {
+                    "Name" = "8:AutoUpdater.NET.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:AutoUpdater.NET.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_91742237583D42878535D68C052096A6"
@@ -1872,7 +1927,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Fanex.ManagementSP.Client, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_B8820018E57779007BB489020BBACDD8"
@@ -2307,15 +2362,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Manage SP Tool"
-        "ProductCode" = "8:{10C8958D-8F6F-4EDC-AD32-F036481B83B3}"
-        "PackageCode" = "8:{1C48687B-D567-41CC-9AEA-DA448077521C}"
+        "ProductCode" = "8:{33E808B1-AF78-4166-ABF0-5BE29FCACEE2}"
+        "PackageCode" = "8:{6C03B74D-749D-4443-9B55-B33FE9511DF4}"
         "UpgradeCode" = "8:{D9A24ABE-39C0-49E9-8533-F2630B43042D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.5"
+        "ProductVersion" = "8:1.0.6"
         "Manufacturer" = "8:Nexcel Solutions"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
