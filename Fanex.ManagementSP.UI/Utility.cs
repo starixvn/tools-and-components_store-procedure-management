@@ -30,13 +30,16 @@ namespace Fanex.ManagementSP.UI
             }
         }
 
-        public static int GetUserId(List<User> users)
+        public static int GetUserId(IEnumerable<User> users)
         {
-            var user = users.Where(x => string.Equals(x.Username, CurrentUsername, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-
-            if (!ReferenceEquals(user, null))
+            if (!ReferenceEquals(users, null) && users.Any())
             {
-                return user.Id;
+                var user = users.Where(x => string.Equals(x.Username, CurrentUsername, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+                if (!ReferenceEquals(user, null))
+                {
+                    return user.Id;
+                }
             }
 
             return 0;

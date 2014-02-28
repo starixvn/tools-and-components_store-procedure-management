@@ -38,6 +38,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET">
+      <HintPath>..\Dependency\AutoUpdater.NET 1.2\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex.Common.dll</HintPath>
     </Reference>

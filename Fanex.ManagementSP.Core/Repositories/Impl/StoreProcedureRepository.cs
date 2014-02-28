@@ -144,7 +144,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
-        public bool UpdateStatus(string ids, int statusId, string username, int modifiedById)
+        public bool UpdateStatus(string ids, int statusId, int modifiedById)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                 {
                     conn.Execute(
                     sql: "spm_storeprocedures_updatestatus",
-                    param: new { StoreId = ids, StatusId = statusId, Username = username, ModifiedById = modifiedById },
+                    param: new { StoreIds = ids, StatusId = statusId, ModifiedById = modifiedById },
                     commandType: CommandType.StoredProcedure);
                 }
             }

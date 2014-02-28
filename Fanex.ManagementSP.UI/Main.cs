@@ -16,13 +16,12 @@ namespace Fanex.ManagementSP.UI
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+    using AutoUpdaterDotNET;
     using Fanex.ManagementSP.Client.Services;
     using Fanex.ManagementSP.Entities;
-    using Fanex.ManagementSP.Entities.Models;
     using Fanex.ManagementSP.UI.ColumnIndex;
     using NPOI.HSSF.UserModel;
     using OutlookStyleControls;
-    using SourceGrid;
 
     /// <summary>
     /// The main class.
@@ -125,6 +124,12 @@ namespace Fanex.ManagementSP.UI
 
             this.dataGridViewMyIssue.RowHeadersVisible = true;
             this.dataGridViewMyIssue.RowPostPaint += new DataGridViewRowPostPaintEventHandler(outlookGridStore_RowPostPaint);
+
+            // For log
+            dtpFromLog.MinDate = DateTime.Now.AddMonths(-3);
+            dtpFromLog.MaxDate = DateTime.Now;
+            dtpToLog.MinDate = DateTime.Now.AddMonths(-3);
+            dtpToLog.MaxDate = DateTime.Now;
         }
 
         /// <summary>
@@ -163,7 +168,16 @@ namespace Fanex.ManagementSP.UI
             _listServer = _serverService.GetAll();
             _listIssue = _issueService.GetFavoritesByUsername(Utility.CurrentUsername);
             _listUser = _userService.GetAll();
-            _userId = Utility.GetUserId(_listUser.ToList());
+
+            if (ReferenceEquals(_listDatabase, null)
+                || ReferenceEquals(_listServer, null)
+                || ReferenceEquals(_listIssue, null)
+                || ReferenceEquals(_listUser, null))
+            {
+                MessageBox.Show("Can not connect to server. Please check your internet connection or try again later!", "Error", MessageBoxButtons.OK);
+            }
+
+            _userId = Utility.GetUserId(_listUser);
 
             // Binding data to control
             UtilityData.BindingDataToGridViewServer(dataGridViewServer, _listServer);
@@ -183,6 +197,8 @@ namespace Fanex.ManagementSP.UI
             txtUsernameLog.AutoCompleteSource = AutoCompleteSource.CustomSource;
             txtUsernameLog.AutoCompleteCustomSource = UtilityConverter.ToAutoCompleteStringCollection(_listUser);
             cmboFilterTypeLog.SelectedIndex = 0;
+
+            AutoUpdater.Start(_apiUri + "update-version.xml");
         }
 
         #endregion
@@ -1005,7 +1021,7 @@ namespace Fanex.ManagementSP.UI
 
                 if (!string.IsNullOrWhiteSpace(storeIds))
                 {
-                    _storeProcedureService.UpdateStatus(storeIds, statusId, Utility.CurrentUsername, _userId);
+                    _storeProcedureService.UpdateStatus(storeIds, statusId, _userId);
 
                     if (minIndex == maxIndex)
                     {

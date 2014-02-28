@@ -60,7 +60,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Interface
         /// <param name="statusId">The status identifier.</param>
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
-        bool UpdateStatus(string ids, int statusId, string username, int modifiedById);
+        bool UpdateStatus(string ids, int statusId, int modifiedById);
 
         /// <summary>
         /// Deletes the specified identifier.

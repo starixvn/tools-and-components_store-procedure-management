@@ -77,6 +77,12 @@ namespace Fanex.ManagementSP.Client.Services
         {
             try
             {
+                name = name.Trim();
+                ipLocal = ipLocal.Trim();
+                ipUat = ipUat.Trim();
+                ipProduction = ipProduction.Trim();
+                description = description.Trim();
+
                 var format = "?id={0}&name={1}&ipLocal={2}&ipUat={3}&ipProduction={4}&description={5}&modifiedById={6}";
                 var query = string.Format(format, id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
 
