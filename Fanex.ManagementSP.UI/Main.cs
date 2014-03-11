@@ -797,6 +797,7 @@ namespace Fanex.ManagementSP.UI
                                         storeProcedure.Developer.Id);
 
                                     toolStripStatusStore.Text = Resource.UpdateSuccessfully + "( Row " + (rowIndex + 1).ToString() + ")";
+                                    outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].Value = Utility.CurrentUsername;
                                 }
                             }
                             else
@@ -829,6 +830,7 @@ namespace Fanex.ManagementSP.UI
                                     outlookGridStore[StoreColumnIndex.IssueId, rowIndex].Value = issueId;
 
                                     toolStripStatusStore.Text = Resource.AddSuccessfully + "( Row " + (rowIndex + 1).ToString() + ")";
+                                    outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].Value = Utility.CurrentUsername;
                                 }
                             }
                         }
