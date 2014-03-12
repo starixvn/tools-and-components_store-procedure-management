@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <item>
-    <title>New version 1.0.0.1 is available for Manage SP Tool</title>
-    <version>1.0.0.1</version>
-    <url>http://localhost:62215/download/1.0.0.1/ManagementSPAddinSetup.msi</url>
+    <title>New version 1.0.0.2 is available for Manage SP Tool</title>
+    <version>1.0.0.2</version>
+    <url>http://localhost:62215/download/1.0.0.2/ManagementSPAddinSetup.msi</url>
     <changelog>http://localhost:62215</changelog>
 </item>

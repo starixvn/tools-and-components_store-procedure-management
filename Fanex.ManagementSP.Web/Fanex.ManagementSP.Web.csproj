@@ -254,6 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="download\1.0.0.1\ManagementSPAddinSetup.msi" />
+    <None Include="download\1.0.0.2\ManagementSPAddinSetup.msi" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
