@@ -36,7 +36,7 @@ namespace Fanex.ManagementSP.UI
                     name = "Done";
                     break;
                 case "uat [ _xtest]":
-                    name = "UAT [ _xtest]";
+                    name = "UAT [_xtest]";
                     break;
                 case "uat [_xpre]":
                     name = "UAT [_xpre]";
@@ -78,7 +78,7 @@ namespace Fanex.ManagementSP.UI
                 case "Done":
                     statusId = 2;
                     break;
-                case "UAT [ _xtest]":
+                case "UAT [_xtest]":
                     statusId = 3;
                     break;
                 case "UAT [_xpre]":

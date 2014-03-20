@@ -378,7 +378,7 @@ namespace Fanex.ManagementSP.UI
             ToolStripItem statusInProgress = new ToolStripMenuItem("In Progress");
             ToolStripItem statusDone = new ToolStripMenuItem("Done");
             ToolStripItem statusUAT = new ToolStripMenuItem("UAT");
-            ToolStripItem statusUATXTest = new ToolStripMenuItem("UAT [ _xtest]");
+            ToolStripItem statusUATXTest = new ToolStripMenuItem("UAT [_xtest]");
             ToolStripItem statusUATXPre = new ToolStripMenuItem("UAT [_xpre]");
             ToolStripItem statusNotRequired = new ToolStripMenuItem("Not required");
             ToolStripItem statusReleased = new ToolStripMenuItem("Released");

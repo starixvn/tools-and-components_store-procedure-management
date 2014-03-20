@@ -297,7 +297,7 @@ namespace Fanex.ManagementSP.UI
                 cellStatus.Items.Add("In Progress");
                 cellStatus.Items.Add("Done");
                 cellStatus.Items.Add("UAT");
-                cellStatus.Items.Add("UAT [ _xtest]");
+                cellStatus.Items.Add("UAT [_xtest]");
                 cellStatus.Items.Add("UAT [_xpre]");
                 cellStatus.Items.Add("Not required");
                 cellStatus.Items.Add("Released");
