@@ -408,7 +408,7 @@ namespace Fanex.ManagementSP.UI
             // txtIssueId
             // 
             this.txtIssueId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtIssueId.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIssueId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
             this.txtIssueId.ForeColor = System.Drawing.Color.LightGray;
             this.txtIssueId.Location = new System.Drawing.Point(0, 0);
             this.txtIssueId.Margin = new System.Windows.Forms.Padding(0);
@@ -651,7 +651,7 @@ namespace Fanex.ManagementSP.UI
             // txtMyIssuesId
             // 
             this.txtMyIssuesId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMyIssuesId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
+            this.txtMyIssuesId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
             this.txtMyIssuesId.ForeColor = System.Drawing.Color.LightGray;
             this.txtMyIssuesId.Location = new System.Drawing.Point(0, 0);
             this.txtMyIssuesId.Margin = new System.Windows.Forms.Padding(0);

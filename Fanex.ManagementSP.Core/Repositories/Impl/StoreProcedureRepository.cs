@@ -39,7 +39,16 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                     list = conn.Query<StoreProcedureIssue, StoreProcedure, Database, User, Issue, User, Server, StoreProcedureIssue>(
                         sql: "spm_storedprocedure_issues_getbyissueids",
                          param: new { IssueIds = issueIds, IncludeChild = includeChild },
-                         map: (spi, sp, d, du, i, u, s) => { spi.StoreProcedure = sp; sp.Database = d; spi.Developer = du; sp.Server = s; spi.Modifier = u; spi.Issue = i; return spi; },
+                         map: (spi, sp, d, du, i, u, s) =>
+                         {
+                             sp.Database = d;
+                             spi.Developer = du;
+                             sp.Server = s;
+                             spi.StoreProcedure = sp;
+                             spi.Modifier = u;
+                             spi.Issue = i;
+                             return spi;
+                         },
                          splitOn: "Id",
                          commandType: CommandType.StoredProcedure);
                 }

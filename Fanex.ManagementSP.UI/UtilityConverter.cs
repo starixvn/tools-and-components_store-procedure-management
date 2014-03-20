@@ -35,7 +35,7 @@ namespace Fanex.ManagementSP.UI
                 case "done":
                     name = "Done";
                     break;
-                case "uat [ _xtest]":
+                case "uat [_xtest]":
                     name = "UAT [_xtest]";
                     break;
                 case "uat [_xpre]":
