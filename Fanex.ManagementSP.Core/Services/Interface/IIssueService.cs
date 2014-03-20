@@ -24,6 +24,8 @@ namespace Fanex.ManagementSP.Core.Services.Interface
         /// <returns>List of issue.</returns>
         IEnumerable<Issue> GetFavoritiesByUsername(string username);
 
+        IEnumerable<Issue> GetByStoredProcedureId(int id);
+
         /// <summary>
         /// Inserts the favorite.
         /// </summary>

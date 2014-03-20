@@ -16,6 +16,7 @@ namespace Fanex.ManagementSP.UI
     using Fanex.ManagementSP.Entities;
     using Fanex.ManagementSP.UI.ColumnIndex;
     using OutlookStyleControls;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The convert utility class.
@@ -234,50 +235,52 @@ namespace Fanex.ManagementSP.UI
         /// <param name="listServer">The list server.</param>
         /// <param name="listUser">The list user.</param>
         /// <returns>The stored procedure.</returns>
-        public static StoreProcedure ToStoredProcedure(
+        public static StoreProcedureIssue ToStoredProcedureIssue(
             this OutlookGrid outlookGridStore,
             int rowIndex,
-            List<Database> listDatabase,
-            List<Server> listServer,
-            List<User> listUser)
+            IEnumerable<Database> listDatabase,
+            IEnumerable<Server> listServer,
+            IEnumerable<User> listUser)
         {
-            var storeProcedure = new StoreProcedure();
+            var storeProcedureIssue = new StoreProcedureIssue();
+            storeProcedureIssue.StoreProcedure = new StoreProcedure();
 
-            storeProcedure.Server = new Server { Name = outlookGridStore[StoreColumnIndex.Server, rowIndex].EditedFormattedValue.ToString() };
-            storeProcedure.Database = new Database { Name = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString() };
-            storeProcedure.Name = outlookGridStore[StoreColumnIndex.Name, rowIndex].EditedFormattedValue.ToString();
-
-            if (outlookGridStore[StoreColumnIndex.Name, rowIndex].FormattedValueType.Name == "Image")
-            {
-                storeProcedure.Name = string.Empty;
-            }
-
-            storeProcedure.IsFunction = (bool)outlookGridStore[StoreColumnIndex.IsFunction, rowIndex].EditedFormattedValue;
-            storeProcedure.ActionName = outlookGridStore[StoreColumnIndex.ActionName, rowIndex].EditedFormattedValue.ToString();
-            storeProcedure.ActionName = storeProcedure.ActionName.Length == 1 ? storeProcedure.ActionName.ToUpper() : storeProcedure.ActionName;
-            storeProcedure.Modifier = new User { Username = outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].EditedFormattedValue.ToString() };
-            storeProcedure.Status = UtilityConverter.ToStatusID(outlookGridStore[StoreColumnIndex.Status, rowIndex].EditedFormattedValue.ToString());
-            storeProcedure.Description = outlookGridStore[StoreColumnIndex.Description, rowIndex].EditedFormattedValue.ToString();
-            storeProcedure.Developer = new User { Username = outlookGridStore[StoreColumnIndex.Developer, rowIndex].EditedFormattedValue.ToString() };
+            storeProcedureIssue.StoreProcedure.Server = new Server { Name = outlookGridStore[StoreColumnIndex.Server, rowIndex].EditedFormattedValue.ToString() };
+            storeProcedureIssue.StoreProcedure.Database = new Database { Name = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString() };
+            storeProcedureIssue.StoreProcedure.Name = outlookGridStore[StoreColumnIndex.Name, rowIndex].EditedFormattedValue.ToString();
+            storeProcedureIssue.IsFunction = (bool)outlookGridStore[StoreColumnIndex.IsFunction, rowIndex].EditedFormattedValue;
+            storeProcedureIssue.ActionName = outlookGridStore[StoreColumnIndex.ActionName, rowIndex].EditedFormattedValue.ToString();
+            storeProcedureIssue.ActionName = storeProcedureIssue.ActionName.Length == 1 ? storeProcedureIssue.ActionName.ToUpper() : storeProcedureIssue.ActionName;
+            storeProcedureIssue.Modifier = new User { Username = outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].EditedFormattedValue.ToString() };
+            storeProcedureIssue.Status = UtilityConverter.ToStatusID(outlookGridStore[StoreColumnIndex.Status, rowIndex].EditedFormattedValue.ToString());
+            storeProcedureIssue.Description = outlookGridStore[StoreColumnIndex.Description, rowIndex].EditedFormattedValue.ToString();
+            storeProcedureIssue.Developer = new User { Username = outlookGridStore[StoreColumnIndex.Developer, rowIndex].EditedFormattedValue.ToString() };
 
             var strIssueId = outlookGridStore[StoreColumnIndex.IssueId, rowIndex].EditedFormattedValue.ToString();
             var strId = outlookGridStore[StoreColumnIndex.Id, rowIndex].EditedFormattedValue.ToString();
 
             if (!string.IsNullOrWhiteSpace(strIssueId))
             {
-                storeProcedure.Issue = new Issue { Id = Convert.ToInt32(strIssueId) };
+                storeProcedureIssue.Issue = new Issue { Id = Convert.ToInt32(strIssueId) };
             }
 
             if (!string.IsNullOrWhiteSpace(strId))
             {
-                storeProcedure.Id = Convert.ToInt32(strId);
+                storeProcedureIssue.Id = Convert.ToInt32(strId);
             }
 
-            storeProcedure.Server = listServer.Where(x => x.Name.Equals(storeProcedure.Server.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-            storeProcedure.Database = listDatabase.Where(x => x.Name.Equals(storeProcedure.Database.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-            storeProcedure.Developer = listUser.Where(x => x.Username.Equals(storeProcedure.Developer.Username, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            storeProcedureIssue.StoreProcedure.Id = 0;
+            var strStoredProcedureId = outlookGridStore[StoreColumnIndex.StoredProcedureId, rowIndex].EditedFormattedValue.ToString();
+            if (!string.IsNullOrWhiteSpace(strStoredProcedureId))
+            {
+                storeProcedureIssue.StoreProcedure.Id = Convert.ToInt32(strStoredProcedureId);
+            }
 
-            return storeProcedure;
+            storeProcedureIssue.StoreProcedure.Server = listServer.Where(x => x.Name.Equals(storeProcedureIssue.StoreProcedure.Server.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            storeProcedureIssue.StoreProcedure.Database = listDatabase.Where(x => x.Name.Equals(storeProcedureIssue.StoreProcedure.Database.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            storeProcedureIssue.Developer = listUser.Where(x => x.Username.Equals(storeProcedureIssue.Developer.Username, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            return storeProcedureIssue;
         }
     }
 }

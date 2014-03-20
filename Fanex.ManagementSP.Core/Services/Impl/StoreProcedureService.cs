@@ -15,6 +15,7 @@ namespace Fanex.ManagementSP.Core.Services.Impl
     using Fanex.ManagementSP.Core.Repositories.Interface;
     using Fanex.ManagementSP.Core.Services.Interface;
     using Fanex.ManagementSP.Entities;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The stored procedure service class.
@@ -36,14 +37,14 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// <summary>
         /// Gets the stored procedure by issue identifier.
         /// </summary>
-        /// <param name="issueId">The issue identifier.</param>
+        /// <param name="issueIds">The issue identifier.</param>
         /// <param name="includeChild">If set to <c>true</c> [include child].</param>
         /// <returns>List stored procedure.</returns>
-        public IEnumerable<StoreProcedure> GetByIssueId(string issueId, bool includeChild)
+        public IEnumerable<StoreProcedureIssue> GetStoredProcedureIssueByIssueIds(string issueIds, bool includeChild)
         {
             try
             {
-                return _storeProcedureRepository.GetByIssueId(issueId, includeChild);
+                return _storeProcedureRepository.GetStoredProcedureIssueByIssueIds(issueIds, includeChild);
             }
             catch (Exception ex)
             {
@@ -79,7 +80,9 @@ namespace Fanex.ManagementSP.Core.Services.Impl
             int status,
             string description,
             int issueId,
-            int developerId)
+            int developerId,
+            int storedProcedureId,
+            bool isAddNew)
         {
             try
             {
@@ -94,7 +97,9 @@ namespace Fanex.ManagementSP.Core.Services.Impl
                     status,
                     description,
                     issueId,
-                    developerId);
+                    developerId,
+                    storedProcedureId,
+                    isAddNew);
             }
             catch (Exception ex)
             {
@@ -142,6 +147,20 @@ namespace Fanex.ManagementSP.Core.Services.Impl
             }
 
             return false;
+        }
+
+        public IEnumerable<StoreProcedure> GetStoreProcedure(int serverId, int databaseId)
+        {
+            try
+            {
+                return _storeProcedureRepository.GetStoreProcedure(serverId, databaseId);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
         }
     }
 }

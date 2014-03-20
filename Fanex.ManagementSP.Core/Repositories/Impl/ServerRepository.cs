@@ -55,7 +55,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
         /// <param name="description">The description.</param>
         /// <returns>Result of update.</returns>
         public bool InsertOrUpdate(
-            int id,
+            ref int id,
             string name,
             string ipLocal,
             string ipUat,
@@ -67,19 +67,18 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
             {
                 using (var conn = new MySqlConnection(ConnectionString))
                 {
-                    conn.Execute(
-                    sql: "spm_servers_insert",
-                    param: new
-                    {
-                        ServerId = id,
-                        Name = name,
-                        IPLocal = ipLocal,
-                        IPUAT = ipUat,
-                        IPProduction = ipProduction,
-                        Description = description,
-                        ModifiedById = modifiedById
-                    },
-                    commandType: CommandType.StoredProcedure);
+                    var parameter = new DynamicParameters();
+                    parameter.Add("@ServerId", value: id, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+                    parameter.Add("@Name", name);
+                    parameter.Add("@IPLocal", ipLocal);
+                    parameter.Add("@IPUAT", ipUat);
+                    parameter.Add("@IPProduction", ipProduction);
+                    parameter.Add("@Description", description);
+                    parameter.Add("@ModifiedById", modifiedById);
+
+                    conn.Execute(sql: "spm_servers_insert", param: parameter, commandType: CommandType.StoredProcedure);
+
+                    id = parameter.Get<int>("@ServerId");
                 }
             }
             catch

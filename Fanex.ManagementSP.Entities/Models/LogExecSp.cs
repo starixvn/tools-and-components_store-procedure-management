@@ -76,40 +76,40 @@ namespace Fanex.ManagementSP.Entities.Models
             return server;
         }
 
-        public StoreProcedure ToStoreProcedure(string xmlValue)
+        public StoreProcedureIssue ToStoreProcedureIssue(string xmlValue)
         {
-            var storeProcedure = new StoreProcedure();
+            var storeProcedureIssue = new StoreProcedureIssue();
 
             if (!string.IsNullOrWhiteSpace(xmlValue))
             {
                 var root = XElement.Parse(xmlValue);
-                storeProcedure.Id = Convert.ToInt32(root.Element("i").Value);
-                storeProcedure.Name = root.Element("n").Value;
-                storeProcedure.Server = new Server
+                storeProcedureIssue.Id = Convert.ToInt32(root.Element("i").Value);
+                storeProcedureIssue.StoreProcedure.Name = root.Element("n").Value;
+                storeProcedureIssue.StoreProcedure.Server = new Server
                 {
                     Id = Convert.ToInt32(root.Element("si").Value),
                     Name = root.Element("sn").Value
                 };
-                storeProcedure.Database = new Database
+                storeProcedureIssue.StoreProcedure.Database = new Database
                 {
                     Id = Convert.ToInt32(root.Element("di").Value),
                     Name = root.Element("dn").Value
                 };
-                storeProcedure.IsFunction = root.Element("if").Value == "1";
-                storeProcedure.ActionName = root.Element("a").Value;
-                storeProcedure.Status = Convert.ToInt32(root.Element("s").Value);
-                storeProcedure.Description = root.Element("d").Value;
-                storeProcedure.Issue = new Issue
+                storeProcedureIssue.IsFunction = root.Element("if").Value == "1";
+                storeProcedureIssue.ActionName = root.Element("a").Value;
+                storeProcedureIssue.Status = Convert.ToInt32(root.Element("s").Value);
+                storeProcedureIssue.Description = root.Element("d").Value;
+                storeProcedureIssue.Issue = new Issue
                 {
                     Id = Convert.ToInt32(root.Element("ii").Value)
                 };
-                storeProcedure.Developer = new User
+                storeProcedureIssue.Developer = new User
                 {
                     Username = root.Element("dev").Value
                 };
             }
 
-            return storeProcedure;
+            return storeProcedureIssue;
         }
     }
 }

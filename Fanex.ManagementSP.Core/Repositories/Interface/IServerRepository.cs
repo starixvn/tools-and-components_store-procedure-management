@@ -34,7 +34,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Interface
         /// <param name="description">The description.</param>
         /// <returns>Result of update.</returns>
         bool InsertOrUpdate(
-           int id,
+           ref int id,
            string name,
            string ipLocal,
            string ipUat,

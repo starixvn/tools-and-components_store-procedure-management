@@ -67,7 +67,7 @@ namespace Fanex.ManagementSP.Client.Services
         /// <param name="description">The description.</param>
         /// <returns>Result of update.</returns>
         public bool InsertOrUpdate(
-            int id,
+            ref int id,
             string name,
             string ipLocal,
             string ipUat,
@@ -88,7 +88,7 @@ namespace Fanex.ManagementSP.Client.Services
 
                 var taskRequest = AsyncRequsest.MakeRequest(_apiServer + query, WebRequestMethods.Http.Post);
 
-                var result = taskRequest.Result;
+                id = Convert.ToInt32(taskRequest.Result);
             }
             catch (Exception ex)
             {

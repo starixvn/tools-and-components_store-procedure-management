@@ -31,17 +31,17 @@ namespace Fanex.ManagementSP.UI
         /// Bindings the data to grid view store.
         /// </summary>
         /// <param name="outlookGridView">The outlook grid view.</param>
-        /// <param name="listStoreProcedure">The list store procedure.</param>
-        public static void BindingDataToGridViewStore(OutlookGrid outlookGridView, IEnumerable<StoreProcedure> listStoreProcedure)
+        /// <param name="listStoreProcedureIssue">The list store procedure.</param>
+        public static void BindingDataToGridViewStore(OutlookGrid outlookGridView, IEnumerable<StoreProcedureIssue> listStoreProcedureIssue)
         {
             try
             {
-                if (listStoreProcedure != null && listStoreProcedure.Any())
+                if (listStoreProcedureIssue != null && listStoreProcedureIssue.Any())
                 {
                     outlookGridView.Rows.Clear();
                     int rowIndex = 0;
 
-                    foreach (var itemStoreProcedure in listStoreProcedure)
+                    foreach (var itemStoreProcedure in listStoreProcedureIssue)
                     {
                         outlookGridView.Rows.Add();
 
@@ -62,25 +62,26 @@ namespace Fanex.ManagementSP.UI
         /// </summary>
         /// <param name="outlookGridView">The outlook grid view.</param>
         /// <param name="rowIndex">Index of the row.</param>
-        /// <param name="itemStoreProcedure">The item store procedure.</param>
-        public static void BindingDataToGridViewStore(OutlookGrid outlookGridView, int rowIndex, StoreProcedure itemStoreProcedure)
+        /// <param name="itemStoreProcedureIssue">The item store procedure.</param>
+        public static void BindingDataToGridViewStore(OutlookGrid outlookGridView, int rowIndex, StoreProcedureIssue itemStoreProcedureIssue)
         {
-            var id = itemStoreProcedure.Id;
+            var id = itemStoreProcedureIssue.Id;
 
             outlookGridView[StoreColumnIndex.Number, rowIndex].Value = rowIndex.ToString();
-            outlookGridView[StoreColumnIndex.Server, rowIndex].Value = itemStoreProcedure.Server != null ? itemStoreProcedure.Server.Name : string.Empty;
-            outlookGridView[StoreColumnIndex.Database, rowIndex].Value = itemStoreProcedure.Database != null ? itemStoreProcedure.Database.Name : string.Empty;
-            outlookGridView[StoreColumnIndex.Name, rowIndex].Value = itemStoreProcedure.Name;
-            outlookGridView[StoreColumnIndex.IsFunction, rowIndex].Value = id != 0 ? itemStoreProcedure.IsFunction : false;
-            outlookGridView[StoreColumnIndex.ActionName, rowIndex].Value = itemStoreProcedure.ActionName != null ? itemStoreProcedure.ActionName : string.Empty;
-            outlookGridView[StoreColumnIndex.ModifierUser, rowIndex].Value = itemStoreProcedure.Modifier != null ? itemStoreProcedure.Modifier.Username : string.Empty;
-            outlookGridView[StoreColumnIndex.Status, rowIndex].Value = itemStoreProcedure.StatusName != null && id != 0 ? itemStoreProcedure.StatusName : string.Empty;
-            outlookGridView[StoreColumnIndex.Description, rowIndex].Value = itemStoreProcedure.Description;
-            outlookGridView[StoreColumnIndex.IssueName, rowIndex].Value = string.Format("#{0} {1}", itemStoreProcedure.Issue.Id.ToString(), itemStoreProcedure.Issue.Name);
-            outlookGridView[StoreColumnIndex.Id, rowIndex].Value = itemStoreProcedure.Id;
-            outlookGridView[StoreColumnIndex.IssueId, rowIndex].Value = itemStoreProcedure.Issue.Id.ToString();
-            outlookGridView[StoreColumnIndex.Developer, rowIndex].Value = itemStoreProcedure.Developer != null ? itemStoreProcedure.Developer.Username : string.Empty;
-            outlookGridView.Rows[rowIndex].Tag = itemStoreProcedure.Issue.Id.ToString();
+            outlookGridView[StoreColumnIndex.Server, rowIndex].Value = itemStoreProcedureIssue.StoreProcedure.Server != null ? itemStoreProcedureIssue.StoreProcedure.Server.Name : string.Empty;
+            outlookGridView[StoreColumnIndex.Database, rowIndex].Value = itemStoreProcedureIssue.StoreProcedure.Database != null ? itemStoreProcedureIssue.StoreProcedure.Database.Name : string.Empty;
+            outlookGridView[StoreColumnIndex.Name, rowIndex].Value = itemStoreProcedureIssue.StoreProcedure.Name;
+            outlookGridView[StoreColumnIndex.IsFunction, rowIndex].Value = id != 0 ? itemStoreProcedureIssue.IsFunction : false;
+            outlookGridView[StoreColumnIndex.ActionName, rowIndex].Value = itemStoreProcedureIssue.ActionName != null ? itemStoreProcedureIssue.ActionName : string.Empty;
+            outlookGridView[StoreColumnIndex.ModifierUser, rowIndex].Value = itemStoreProcedureIssue.Modifier != null ? itemStoreProcedureIssue.Modifier.Username : string.Empty;
+            outlookGridView[StoreColumnIndex.Status, rowIndex].Value = itemStoreProcedureIssue.StatusName != null && id != 0 ? itemStoreProcedureIssue.StatusName : string.Empty;
+            outlookGridView[StoreColumnIndex.Description, rowIndex].Value = itemStoreProcedureIssue.Description;
+            outlookGridView[StoreColumnIndex.IssueName, rowIndex].Value = string.Format("#{0} {1}", itemStoreProcedureIssue.Issue.Id.ToString(), itemStoreProcedureIssue.Issue.Name);
+            outlookGridView[StoreColumnIndex.Id, rowIndex].Value = itemStoreProcedureIssue.Id;
+            outlookGridView[StoreColumnIndex.IssueId, rowIndex].Value = itemStoreProcedureIssue.Issue.Id.ToString();
+            outlookGridView[StoreColumnIndex.Developer, rowIndex].Value = itemStoreProcedureIssue.Developer != null ? itemStoreProcedureIssue.Developer.Username : string.Empty;
+            outlookGridView[StoreColumnIndex.StoredProcedureId, rowIndex].Value = itemStoreProcedureIssue.StoreProcedure != null ? itemStoreProcedureIssue.StoreProcedure.Id : 0;
+            outlookGridView.Rows[rowIndex].Tag = itemStoreProcedureIssue.Issue.Id.ToString();
             OutlookGridRow row = (OutlookGridRow)outlookGridView.Rows[rowIndex];
             row.IsFavorites = true;
         }
@@ -90,18 +91,18 @@ namespace Fanex.ManagementSP.UI
         /// </summary>
         /// <param name="outlookGridView">The outlook grid view.</param>
         /// <param name="rowIndex">Index of the row.</param>
-        /// <param name="itemStoreProcedure">The item store procedure.</param>
-        public static void PasteDataToGridViewStore(OutlookGrid outlookGridView, int rowIndex, StoreProcedure itemStoreProcedure)
+        /// <param name="itemStoreProcedureIssue">The item store procedure.</param>
+        public static void PasteDataToGridViewStore(OutlookGrid outlookGridView, int rowIndex, StoreProcedureIssue itemStoreProcedureIssue)
         {
             outlookGridView[StoreColumnIndex.Number, rowIndex].Value = rowIndex.ToString();
-            outlookGridView[StoreColumnIndex.Server, rowIndex].Value = itemStoreProcedure.Server != null ? itemStoreProcedure.Server.Name : string.Empty;
-            outlookGridView[StoreColumnIndex.Database, rowIndex].Value = itemStoreProcedure.Database != null ? itemStoreProcedure.Database.Name : string.Empty;
-            outlookGridView[StoreColumnIndex.Name, rowIndex].Value = itemStoreProcedure.Name;
-            outlookGridView[StoreColumnIndex.IsFunction, rowIndex].Value = itemStoreProcedure.IsFunction ? "1" : "0";
-            outlookGridView[StoreColumnIndex.ActionName, rowIndex].Value = itemStoreProcedure.ActionName != null ? itemStoreProcedure.ActionName : string.Empty;
-            outlookGridView[StoreColumnIndex.ModifierUser, rowIndex].Value = itemStoreProcedure.Modifier != null ? itemStoreProcedure.Modifier.Username : string.Empty;
-            outlookGridView[StoreColumnIndex.Status, rowIndex].Value = itemStoreProcedure.StatusName != null ? itemStoreProcedure.StatusName : string.Empty;
-            outlookGridView[StoreColumnIndex.Description, rowIndex].Value = itemStoreProcedure.Description;
+            outlookGridView[StoreColumnIndex.Server, rowIndex].Value = itemStoreProcedureIssue.StoreProcedure.Server != null ? itemStoreProcedureIssue.StoreProcedure.Server.Name : string.Empty;
+            outlookGridView[StoreColumnIndex.Database, rowIndex].Value = itemStoreProcedureIssue.StoreProcedure.Database != null ? itemStoreProcedureIssue.StoreProcedure.Database.Name : string.Empty;
+            outlookGridView[StoreColumnIndex.Name, rowIndex].Value = itemStoreProcedureIssue.StoreProcedure.Name;
+            outlookGridView[StoreColumnIndex.IsFunction, rowIndex].Value = itemStoreProcedureIssue.IsFunction ? "1" : "0";
+            outlookGridView[StoreColumnIndex.ActionName, rowIndex].Value = itemStoreProcedureIssue.ActionName != null ? itemStoreProcedureIssue.ActionName : string.Empty;
+            outlookGridView[StoreColumnIndex.ModifierUser, rowIndex].Value = itemStoreProcedureIssue.Modifier != null ? itemStoreProcedureIssue.Modifier.Username : string.Empty;
+            outlookGridView[StoreColumnIndex.Status, rowIndex].Value = itemStoreProcedureIssue.StatusName != null ? itemStoreProcedureIssue.StatusName : string.Empty;
+            outlookGridView[StoreColumnIndex.Description, rowIndex].Value = itemStoreProcedureIssue.Description;
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace Fanex.ManagementSP.UI
         {
             try
             {
-                DataGridViewComboBoxCellExtended cellServer = new DataGridViewComboBoxCellExtended();
+                var cellServer = new DataGridViewComboBoxCellExtended();
                 cellServer.DataSource = listServer;
                 cellServer.DisplayMember = "Name";
                 cellServer.ValueMember = "Id";
@@ -210,7 +211,7 @@ namespace Fanex.ManagementSP.UI
         {
             try
             {
-                DataGridViewComboBoxCellExtended cellDatabase = new DataGridViewComboBoxCellExtended();
+                var cellDatabase = new DataGridViewComboBoxCellExtended();
                 cellDatabase.DataSource = listDatabase.Where(x => x.Server.Name.Equals(currentServer, StringComparison.OrdinalIgnoreCase)).ToList();
                 cellDatabase.DisplayMember = "Name";
                 cellDatabase.ValueMember = "Id";
@@ -263,7 +264,7 @@ namespace Fanex.ManagementSP.UI
         {
             try
             {
-                DataGridViewComboBoxCellExtended cellAction = new DataGridViewComboBoxCellExtended();
+                var cellAction = new DataGridViewComboBoxCellExtended();
                 cellAction.Items.Add("A");
                 cellAction.Items.Add("E");
                 cellAction.Items.Add("D");
@@ -292,7 +293,7 @@ namespace Fanex.ManagementSP.UI
         {
             try
             {
-                DataGridViewComboBoxCellExtended cellStatus = new DataGridViewComboBoxCellExtended();
+                var cellStatus = new DataGridViewComboBoxCellExtended();
                 cellStatus.Items.Add("In Progress");
                 cellStatus.Items.Add("Done");
                 cellStatus.Items.Add("UAT");
@@ -329,7 +330,7 @@ namespace Fanex.ManagementSP.UI
         {
             try
             {
-                DataGridViewComboBoxCellExtended cellDatabase = new DataGridViewComboBoxCellExtended();
+                var cellDatabase = new DataGridViewComboBoxCellExtended();
                 cellDatabase.DataSource = listUser;
                 cellDatabase.DisplayMember = "Username";
                 cellDatabase.ValueMember = "Id";
@@ -392,7 +393,7 @@ namespace Fanex.ManagementSP.UI
                 {
                     foreach (var item in listIssue)
                     {
-                        gridView.Rows.Add(item.Id, item.Name);
+                        gridView.Rows.Add(item.Id, "#" + item.ToString());
                     }
                 }
             }
@@ -442,13 +443,13 @@ namespace Fanex.ManagementSP.UI
 
             if (!string.IsNullOrWhiteSpace(itemLog.Data))
             {
-                var storeProcedure = itemLog.ToStoreProcedure(itemLog.Data);
+                var storeProcedure = itemLog.ToStoreProcedureIssue(itemLog.Data);
                 BindingLogDataRowStoreProcedureDetails(grid, index, 6, storeProcedure);
             }
 
             if (!string.IsNullOrWhiteSpace(itemLog.OldData))
             {
-                var storeProcedure = itemLog.ToStoreProcedure(itemLog.OldData);
+                var storeProcedure = itemLog.ToStoreProcedureIssue(itemLog.OldData);
                 BindingLogDataRowStoreProcedureDetails(grid, index, 7, storeProcedure);
             }
         }
@@ -496,17 +497,17 @@ namespace Fanex.ManagementSP.UI
             }
         }
 
-        private static void BindingLogDataRowStoreProcedureDetails(Grid grid, int index, int colIndex, StoreProcedure storeProcedure)
+        private static void BindingLogDataRowStoreProcedureDetails(Grid grid, int index, int colIndex, StoreProcedureIssue storeProcedureIssue)
         {
-            grid[index, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Server.Name, typeof(string));
-            grid[index + 1, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Database.Name, typeof(string));
-            grid[index + 2, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Name, typeof(string));
-            grid[index + 3, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.IsFunction.ToString(), typeof(string));
-            grid[index + 4, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.ActionName, typeof(string));
-            grid[index + 5, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.StatusName, typeof(string));
-            grid[index + 6, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Description, typeof(string));
-            grid[index + 7, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Issue.Id, typeof(string));
-            grid[index + 8, colIndex] = new SourceGrid.Cells.Cell(storeProcedure.Developer.Username, typeof(string));
+            grid[index, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.StoreProcedure.Server.Name, typeof(string));
+            grid[index + 1, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.StoreProcedure.Database.Name, typeof(string));
+            grid[index + 2, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.StoreProcedure.Name, typeof(string));
+            grid[index + 3, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.IsFunction.ToString(), typeof(string));
+            grid[index + 4, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.ActionName, typeof(string));
+            grid[index + 5, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.StatusName, typeof(string));
+            grid[index + 6, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.Description, typeof(string));
+            grid[index + 7, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.Issue.Id, typeof(string));
+            grid[index + 8, colIndex] = new SourceGrid.Cells.Cell(storeProcedureIssue.Developer.Username, typeof(string));
         }
 
         private static void BindingLogDataRowServerDetails(Grid grid, int index, int colIndex, Server server)
@@ -640,15 +641,15 @@ namespace Fanex.ManagementSP.UI
         /// <param name="objectA">The object a.</param>
         /// <param name="objectB">The object b.</param>
         /// <returns>Compare result.</returns>
-        public static bool StoreProcedureEquals(StoreProcedure objectA, StoreProcedure objectB)
+        public static bool StoreProcedureEquals(StoreProcedureIssue objectA, StoreProcedureIssue objectB)
         {
             if (string.Equals(objectA.ActionName, objectB.ActionName, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(objectA.Database.Name, objectB.Database.Name, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(objectA.StoreProcedure.Database.Name, objectB.StoreProcedure.Database.Name, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.Description, objectB.Description, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.Developer.Username, objectB.Developer.Username, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.IsFunction.ToString(), objectB.IsFunction.ToString(), StringComparison.OrdinalIgnoreCase)
-                && string.Equals(objectA.Name, objectB.Name, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(objectA.Server.Name, objectB.Server.Name, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(objectA.StoreProcedure.Name, objectB.StoreProcedure.Name, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(objectA.StoreProcedure.Server.Name, objectB.StoreProcedure.Server.Name, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.StatusName, objectB.StatusName, StringComparison.OrdinalIgnoreCase))
             {
                 return true;

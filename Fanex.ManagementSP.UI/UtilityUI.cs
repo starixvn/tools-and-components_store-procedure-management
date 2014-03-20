@@ -46,6 +46,7 @@ namespace Fanex.ManagementSP.UI
             outlookGridView.Columns.Add("StoreId", "StoreId");
             outlookGridView.Columns.Add("IssueId", "IssueId");
             outlookGridView.Columns.Add("ModifiedBy", "Modified By");
+            outlookGridView.Columns.Add("StoredProcedureId", "Stored ProcedureId");
 
             // Init width            
             var totalWith = outlookGridView.Width;
@@ -71,6 +72,7 @@ namespace Fanex.ManagementSP.UI
             outlookGridView.Columns[StoreColumnIndex.IssueName].Visible = false;
             outlookGridView.Columns[StoreColumnIndex.IssueId].Visible = false;
             outlookGridView.Columns[StoreColumnIndex.Id].Visible = false;
+            outlookGridView.Columns[StoreColumnIndex.StoredProcedureId].Visible = false;
 
             // Disable edit
             outlookGridView.Columns[StoreColumnIndex.Number].ReadOnly = true;

@@ -66,15 +66,17 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// <param name="name">The database name.</param>
         /// <param name="description">The description.</param>
         /// <param name="serverId">The server identifier.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="password">The password.</param>
+        /// <param name="userLogin">The user identifier.</param>
+        /// <param name="userPassword">The password.</param>
         /// <returns>Result of update.</returns>
-        public bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password, int modifiedById)
+        public bool InsertOrUpdate(ref int id, string name, string description, int serverId, string userLogin, string userPassword, int modifiedById)
         {
             try
             {
-                password = Cryptography.CfsEnCrypt(password);
-                return _databaseRepository.InsertOrUpdate(id, name, description, serverId, userId, password, modifiedById);
+                userPassword = Cryptography.CfsEnCrypt(userPassword);
+                _databaseRepository.InsertOrUpdate(ref id, name, description, serverId, userLogin, userPassword, modifiedById);
+
+                return true;
             }
             catch (Exception ex)
             {

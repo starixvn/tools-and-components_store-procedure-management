@@ -11,6 +11,7 @@ namespace Fanex.ManagementSP.Core.Services.Interface
 {
     using System.Collections.Generic;
     using Fanex.ManagementSP.Entities;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The stored procedure interface.
@@ -20,10 +21,10 @@ namespace Fanex.ManagementSP.Core.Services.Interface
         /// <summary>
         /// Gets the stored procedure by issue identifier.
         /// </summary>
-        /// <param name="issueId">The issue identifier.</param>
+        /// <param name="issueIds">The issue identifier.</param>
         /// <param name="includeChild">If set to <c>true</c> [include child].</param>
         /// <returns>List stored procedure.</returns>
-        IEnumerable<StoreProcedure> GetByIssueId(string issueId, bool includeChild);
+        IEnumerable<StoreProcedureIssue> GetStoredProcedureIssueByIssueIds(string issueIds, bool includeChild);
 
         /// <summary>
         /// Inserts the or update.
@@ -51,7 +52,9 @@ namespace Fanex.ManagementSP.Core.Services.Interface
            int status,
            string description,
            int issueId,
-           int developerId);
+           int developerId,
+           int storedProcedureId,
+           bool isAddNew);
 
         /// <summary>
         /// Deletes the specified identifier.
@@ -68,5 +71,7 @@ namespace Fanex.ManagementSP.Core.Services.Interface
         /// <param name="username">The username.</param>
         /// <returns>Result of update.</returns>
         bool UpdateStatus(string ids, int statusId, int modifiedById);
+
+        IEnumerable<StoreProcedure> GetStoreProcedure(int serverId, int databaseId);
     }
 }

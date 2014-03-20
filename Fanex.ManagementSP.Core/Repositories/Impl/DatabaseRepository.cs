@@ -55,28 +55,34 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
         /// <param name="name">The database name.</param>
         /// <param name="description">The description.</param>
         /// <param name="serverId">The server identifier.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="password">The password.</param>
+        /// <param name="userLogin">The user identifier.</param>
+        /// <param name="userPassword">The password.</param>
         /// <returns>Result of update.</returns>
-        public bool InsertOrUpdate(int id, string name, string description, int serverId, string userId, string password, int modifiedById)
+        public bool InsertOrUpdate(
+            ref int id,
+            string name,
+            string description,
+            int serverId,
+            string userLogin,
+            string userPassword,
+            int modifiedById)
         {
             try
             {
                 using (var conn = new MySqlConnection(ConnectionString))
                 {
-                    conn.Execute(
-                    sql: "spm_databases_insert",
-                    param: new
-                    {
-                        DatabaseId = id,
-                        Name = name,
-                        Description = description,
-                        ServerId = serverId,
-                        UserLogin = userId,
-                        UserPassword = password,
-                        ModifiedById = modifiedById
-                    },
-                    commandType: CommandType.StoredProcedure);
+                    var parameter = new DynamicParameters();
+                    parameter.Add("@DatabaseId", value: id, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+                    parameter.Add("@Name", name);
+                    parameter.Add("@Description", description);
+                    parameter.Add("@ServerId", serverId);
+                    parameter.Add("@UserLogin", userLogin);
+                    parameter.Add("@UserPassword", userPassword);
+                    parameter.Add("@ModifiedById", modifiedById);
+
+                    conn.Execute(sql: "spm_databases_insert", param: parameter, commandType: CommandType.StoredProcedure);
+
+                    id = parameter.Get<int>("@DatabaseId");
                 }
             }
             catch

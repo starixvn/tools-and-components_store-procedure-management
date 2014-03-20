@@ -40,7 +40,7 @@ namespace Fanex.ManagementSP.Web.Controllers
         /// <param name="ipUat">The IP UAT.</param>
         /// <param name="ipProduction">The IP production.</param>
         /// <param name="description">The description.</param>
-        public void Post(
+        public int Post(
             int id,
             string name,
             string ipLocal,
@@ -49,7 +49,9 @@ namespace Fanex.ManagementSP.Web.Controllers
             string description,
             int modifiedById)
         {
-            _serverService.InsertOrUpdate(id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
+            _serverService.InsertOrUpdate(ref id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
+
+            return id;
         }
 
         /// <summary>

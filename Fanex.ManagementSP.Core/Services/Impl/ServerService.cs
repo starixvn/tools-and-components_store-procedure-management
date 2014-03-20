@@ -69,7 +69,7 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         /// <param name="description">The description.</param>
         /// <returns>Result of update.</returns>
         public bool InsertOrUpdate(
-            int id,
+            ref int id,
             string name,
             string ipLocal,
             string ipUat,
@@ -79,7 +79,7 @@ namespace Fanex.ManagementSP.Core.Services.Impl
         {
             try
             {
-                return _serverRepository.InsertOrUpdate(id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
+                return _serverRepository.InsertOrUpdate(ref id, name, ipLocal, ipUat, ipProduction, description, modifiedById);
             }
             catch (Exception ex)
             {

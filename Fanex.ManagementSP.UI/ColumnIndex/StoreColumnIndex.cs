@@ -27,5 +27,6 @@ namespace Fanex.ManagementSP.UI.ColumnIndex
         public const int Id = 10;
         public const int IssueId = 11;
         public const int ModifierUser = 12;
+        public const int StoredProcedureId = 13;
     }
 }

@@ -14,6 +14,7 @@ namespace Fanex.ManagementSP.Web.Controllers
     using Fanex.ManagementSP.Core.Services.Impl;
     using Fanex.ManagementSP.Core.Services.Interface;
     using Fanex.ManagementSP.Entities;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The stored procedure API controller.
@@ -28,9 +29,9 @@ namespace Fanex.ManagementSP.Web.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="includeChild">If set to <c>true</c> [include child].</param>
         /// <returns>List stored procedure.</returns>
-        public IEnumerable<StoreProcedure> Get(string id, bool includeChild)
+        public IEnumerable<StoreProcedureIssue> Get(string id, bool includeChild)
         {
-            return _storeProcedureService.GetByIssueId(id, includeChild);
+            return _storeProcedureService.GetStoredProcedureIssueByIssueIds(id, includeChild);
         }
 
         /// <summary>
@@ -59,10 +60,12 @@ namespace Fanex.ManagementSP.Web.Controllers
             int status,
             string description,
             int issueId,
-            int developerId)
+            int developerId,
+            int storedProcedureId,
+            bool isAddNew)
         {
             description = description == null ? string.Empty : description;
-            _storeProcedureService.InsertOrUpdate(ref id, serverId, databaseId, name, isFunction, actionName, modifiedById, status, description, issueId, developerId);
+            _storeProcedureService.InsertOrUpdate(ref id, serverId, databaseId, name, isFunction, actionName, modifiedById, status, description, issueId, developerId, storedProcedureId, isAddNew);
 
             return id;
         }
@@ -85,6 +88,11 @@ namespace Fanex.ManagementSP.Web.Controllers
         public void Delete(int id, int modifiedById)
         {
             _storeProcedureService.Delete(id, modifiedById);
+        }
+
+        public IEnumerable<StoreProcedure> GetStoreProcedure(int serverId, int databaseId)
+        {
+            return _storeProcedureService.GetStoreProcedure(serverId, databaseId);
         }
     }
 }

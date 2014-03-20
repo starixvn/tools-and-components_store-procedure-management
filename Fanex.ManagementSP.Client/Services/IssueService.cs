@@ -57,6 +57,26 @@ namespace Fanex.ManagementSP.Client.Services
             return null;
         }
 
+        public IEnumerable<Issue> GetByStoredProcedureId(int id)
+        {
+            try
+            {
+                var list = new List<Issue>();
+
+                var taskRequest = AsyncRequsest.MakeRequest(_apiIssue + "?storedProcedureId=" + id);
+
+                list = JsonConvert.DeserializeObject<List<Issue>>(taskRequest.Result);
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Inserts the favorite.
         /// </summary>

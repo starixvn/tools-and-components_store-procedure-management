@@ -63,7 +63,7 @@ namespace Fanex.ManagementSP.Client.Services
         /// <param name="password">The password.</param>
         /// <returns>Result of updated.</returns>
         public bool InsertOrUpdate(
-            int id,
+            ref int id,
             string name,
             string description,
             int serverId,
@@ -77,12 +77,12 @@ namespace Fanex.ManagementSP.Client.Services
                 description = description.Trim();
                 password = password.Trim();
 
-                var format = "?id={0}&name={1}&description={2}&serverId={3}&userId={4}&password={5}&modifiedById={6}";
+                var format = "?id={0}&name={1}&description={2}&serverId={3}&userLogin={4}&userPassword={5}&modifiedById={6}";
                 var query = string.Format(format, id, name, description, serverId, userId, System.Web.HttpUtility.UrlEncode(password), modifiedById);
 
                 var taskRequest = AsyncRequsest.MakeRequest(_apiDatabase + query, WebRequestMethods.Http.Post);
 
-                var result = taskRequest.Result;
+                id = Convert.ToInt32(taskRequest.Result);
             }
             catch (Exception ex)
             {

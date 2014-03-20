@@ -12,6 +12,7 @@ namespace Fanex.ManagementSP.Client
     using System.IO;
     using System.Net;
     using System.Threading.Tasks;
+    using System.Security.Cryptography.X509Certificates;
 
     /// <summary>
     /// The asynchronous request class.
@@ -28,8 +29,8 @@ namespace Fanex.ManagementSP.Client
         /// <param name="contentType">Type of the content.</param>
         /// <returns>The task of request.</returns>
         public static Task<string> MakeRequest(
-            string url, 
-            string methodName = WebRequestMethods.Http.Get, 
+            string url,
+            string methodName = WebRequestMethods.Http.Get,
             string contentType = "text/json")
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);

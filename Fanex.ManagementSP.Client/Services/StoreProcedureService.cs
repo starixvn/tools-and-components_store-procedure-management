@@ -14,6 +14,7 @@ namespace Fanex.ManagementSP.Client.Services
     using System.Net;
     using Fanex.ManagementSP.Entities;
     using Newtonsoft.Json;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The stored procedure service class.
@@ -38,12 +39,39 @@ namespace Fanex.ManagementSP.Client.Services
         /// <param name="issueId">The issue identifier.</param>
         /// <param name="includeChild">If set to <c>true</c> [include child].</param>
         /// <returns>List of stored procedure.</returns>
-        public IEnumerable<StoreProcedure> GetByIssueId(string issueId, bool includeChild)
+        public IEnumerable<StoreProcedureIssue> GetStoredProcedureIssueByIssueIds(string issueId, bool includeChild)
         {
             try
             {
                 issueId = issueId.Replace(" ", ",");
                 var query = string.Format("?id={0}&includeChild={1}", issueId, includeChild);
+                var list = new List<StoreProcedureIssue>();
+
+                var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + query);
+
+                list = JsonConvert.DeserializeObject<List<StoreProcedureIssue>>(taskRequest.Result);
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the stored procedure by issue identifier.
+        /// </summary>
+        /// <param name="issueId">The issue identifier.</param>
+        /// <param name="includeChild">If set to <c>true</c> [include child].</param>
+        /// <returns>List of stored procedure.</returns>
+        public IEnumerable<StoreProcedure> GetStoreProcedure(int serverId, int databaseId)
+        {
+            try
+            {
+                var query = string.Format("/GetStoreProcedure?serverId={0}&databaseId={1}", serverId, databaseId);
                 var list = new List<StoreProcedure>();
 
                 var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + query);
@@ -59,6 +87,7 @@ namespace Fanex.ManagementSP.Client.Services
 
             return null;
         }
+
 
         /// <summary>
         /// Inserts the or update.
@@ -86,7 +115,9 @@ namespace Fanex.ManagementSP.Client.Services
             int status,
             string description,
             int issueId,
-            int developerId)
+            int developerId,
+            int storedProcedureId,
+            bool isAddNew)
         {
             try
             {
@@ -96,9 +127,9 @@ namespace Fanex.ManagementSP.Client.Services
 
                 var list = new List<StoreProcedure>();
                 var format = string.Empty;
-                format = "?id={0}&serverId={1}&databaseId={2}&name={3}&isFunction={4}&actionName={5}&modifiedById={6}&status={7}&description={8}&issueId={9}&developerId={10}";
+                format = "?id={0}&serverId={1}&databaseId={2}&name={3}&isFunction={4}&actionName={5}&modifiedById={6}&status={7}&description={8}&issueId={9}&developerId={10}&storedProcedureId={11}&isAddNew={12}";
 
-                string query = string.Format(format, id, serverId, databaseId, name, isFunction, actionName, modifiedById, status, description, issueId, developerId);
+                string query = string.Format(format, id, serverId, databaseId, name, isFunction, actionName, modifiedById, status, description, issueId, developerId, storedProcedureId, isAddNew);
 
                 var taskRequest = AsyncRequsest.MakeRequest(_apiStoreProcedure + query, WebRequestMethods.Http.Post);
 

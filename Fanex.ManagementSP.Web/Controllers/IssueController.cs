@@ -51,5 +51,10 @@ namespace Fanex.ManagementSP.Web.Controllers
         {
             _storeProcedureService.DeleteFavorite(username, issueId);
         }
+
+        public IEnumerable<Issue> Get(int storedProcedureId)
+        {
+            return _storeProcedureService.GetByStoredProcedureId(storedProcedureId);
+        }
     }
 }

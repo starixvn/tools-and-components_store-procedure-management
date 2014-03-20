@@ -15,6 +15,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
     using Fanex.ManagementSP.Core.Repositories.Interface;
     using Fanex.ManagementSP.Entities;
     using MySql.Data.MySqlClient;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The stored procedure repository class.
@@ -24,21 +25,21 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
         /// <summary>
         /// Gets the stored procedure by issue identifier.
         /// </summary>
-        /// <param name="issueId">The issue identifier.</param>
+        /// <param name="issueIds">The issue identifier.</param>
         /// <param name="includeChild">If set to <c>true</c> [include child].</param>
         /// <returns>List stored procedure.</returns>
-        public IEnumerable<StoreProcedure> GetByIssueId(string issueId, bool includeChild)
+        public IEnumerable<StoreProcedureIssue> GetStoredProcedureIssueByIssueIds(string issueIds, bool includeChild)
         {
-            IEnumerable<StoreProcedure> list = null;
+            IEnumerable<StoreProcedureIssue> list = null;
 
             try
             {
                 using (var conn = new MySqlConnection(ConnectionString))
                 {
-                    list = conn.Query<StoreProcedure, Database, User, Issue, User, Server, StoreProcedure>(
-                        sql: "spm_storeprocedures_getbyissueid",
-                         param: new { IssueIds = issueId, IncludeChild = includeChild },
-                         map: (sp, d, du, i, u, s) => { sp.Database = d; sp.Developer = du; sp.Server = s; sp.Modifier = u; sp.Issue = i; return sp; },
+                    list = conn.Query<StoreProcedureIssue, StoreProcedure, Database, User, Issue, User, Server, StoreProcedureIssue>(
+                        sql: "spm_storedprocedure_issues_getbyissueids",
+                         param: new { IssueIds = issueIds, IncludeChild = includeChild },
+                         map: (spi, sp, d, du, i, u, s) => { spi.StoreProcedure = sp; sp.Database = d; spi.Developer = du; sp.Server = s; spi.Modifier = u; spi.Issue = i; return spi; },
                          splitOn: "Id",
                          commandType: CommandType.StoredProcedure);
                 }
@@ -77,7 +78,9 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
             int status,
             string description,
             int issueId,
-            int developerId)
+            int developerId,
+            int storedProcedureId,
+            bool isAddNew)
         {
             try
             {
@@ -95,9 +98,11 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                     parameter.Add("@Description", description);
                     parameter.Add("@IssueId", issueId);
                     parameter.Add("@DeveloperUserId", developerId);
+                    parameter.Add("@StoredProcedureId", storedProcedureId);
+                    parameter.Add("@IsAddNew", isAddNew);
 
                     conn.Execute(
-                    sql: "spm_storeprocedures_insert",
+                    sql: "spm_storedprocedure_issues_insert",
                     param: parameter,
                     commandType: CommandType.StoredProcedure);
 
@@ -124,7 +129,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                 using (var conn = new MySqlConnection(ConnectionString))
                 {
                     conn.Execute(
-                    sql: "spm_storeprocedures_delete",
+                    sql: "spm_storedprocedure_issues_delete",
                     param: new { StoreId = id, ModifiedById = modifiedById },
                     commandType: CommandType.StoredProcedure);
                 }
@@ -151,7 +156,7 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
                 using (var conn = new MySqlConnection(ConnectionString))
                 {
                     conn.Execute(
-                    sql: "spm_storeprocedures_updatestatus",
+                    sql: "spm_storedprocedure_issues_updatestatus",
                     param: new { StoreIds = ids, StatusId = statusId, ModifiedById = modifiedById },
                     commandType: CommandType.StoredProcedure);
                 }
@@ -162,6 +167,25 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
             }
 
             return false;
+        }
+
+        public IEnumerable<StoreProcedure> GetStoreProcedure(int serverId, int databaseId)
+        {
+            IEnumerable<StoreProcedure> list = null;
+
+            try
+            {
+                using (var conn = new MySqlConnection(ConnectionString))
+                {
+                    list = conn.Query<StoreProcedure>(sql: "spm_storedprocedures_getall", param: new { ServerId = serverId, DatabaseId = databaseId }, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return list;
         }
     }
 }

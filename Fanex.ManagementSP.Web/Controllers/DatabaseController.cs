@@ -38,16 +38,18 @@ namespace Fanex.ManagementSP.Web.Controllers
         /// <param name="name">The database name.</param>
         /// <param name="description">The description.</param>
         /// <param name="serverId">The server identifier.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="password">The password.</param>
+        /// <param name="userLogin">The user identifier.</param>
+        /// <param name="userPassword">The password.</param>
         [AcceptVerbs]
-        public void Post(int id, string name, string description, int serverId, string userId, string password, int modifiedById)
+        public int Post(int id, string name, string description, int serverId, string userLogin, string userPassword, int modifiedById)
         {
             description = description != null ? description : string.Empty;
-            userId = userId != null ? userId : string.Empty;
-            password = password != null ? password : string.Empty;
+            userLogin = userLogin != null ? userLogin : string.Empty;
+            userPassword = userPassword != null ? userPassword : string.Empty;
 
-            _databaseService.InsertOrUpdate(id, name, description, serverId, userId, password, modifiedById);
+            _databaseService.InsertOrUpdate(ref id, name, description, serverId, userLogin, userPassword, modifiedById);
+
+            return id;
         }
 
         /// <summary>

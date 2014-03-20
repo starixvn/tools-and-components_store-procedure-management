@@ -98,5 +98,20 @@ namespace Fanex.ManagementSP.Core.Services.Impl
 
             return false;
         }
+
+
+        public IEnumerable<Issue> GetByStoredProcedureId(int id)
+        {
+            try
+            {
+                return _issueProcedureRepository.GetByStoredProcedureId(id);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
+        }
     }
 }

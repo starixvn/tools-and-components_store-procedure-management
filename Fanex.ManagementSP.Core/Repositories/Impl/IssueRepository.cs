@@ -103,5 +103,28 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
 
             return false;
         }
+
+
+        public IEnumerable<Issue> GetByStoredProcedureId(int id)
+        {
+            IEnumerable<Issue> list = null;
+
+            try
+            {
+                using (var conn = new MySqlConnection(ConnectionString))
+                {
+                    list = conn.Query<Issue>(
+                        sql: "spm_issues_getbystoredprocedureid",
+                         param: new { Id = id },
+                         commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return list;
+        }
     }
 }

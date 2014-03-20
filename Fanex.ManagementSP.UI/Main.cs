@@ -22,6 +22,7 @@ namespace Fanex.ManagementSP.UI
     using Fanex.ManagementSP.UI.ColumnIndex;
     using NPOI.HSSF.UserModel;
     using OutlookStyleControls;
+    using Fanex.ManagementSP.Entities.Models;
 
     /// <summary>
     /// The main class.
@@ -45,7 +46,7 @@ namespace Fanex.ManagementSP.UI
         private string _currentValue = string.Empty;
         private IEnumerable<Server> _listServer;
         private IEnumerable<Database> _listDatabase;
-        private IEnumerable<StoreProcedure> _listStoreProcedure;
+        private IEnumerable<StoreProcedureIssue> _listStoreProcedureIssue;
         private IEnumerable<Issue> _listIssue;
         private IEnumerable<User> _listUser;
 
@@ -54,7 +55,7 @@ namespace Fanex.ManagementSP.UI
         private string _redmineIssueUri = string.Empty;
         private bool _isBindingStoreComplete = false;
         private bool _isEventClickComplete = false;
-        private StoreProcedure _storeProcedure = new StoreProcedure();
+        private StoreProcedureIssue _storeProcedureIssue = new StoreProcedureIssue();
 
         private int _userId = 0;
 
@@ -241,12 +242,12 @@ namespace Fanex.ManagementSP.UI
             //// Init header columns    
             UtilityUI.InitHeaderColumnsDataGridViewStore(outlookGridStore);
 
-            _listStoreProcedure = _storeProcedureService.GetByIssueId(issueIds, chbQueryAll.Checked);
+            _listStoreProcedureIssue = _storeProcedureService.GetStoredProcedureIssueByIssueIds(issueIds, chbQueryAll.Checked);
 
-            if (!ReferenceEquals(_listStoreProcedure, null)
-                && _listStoreProcedure.Any())
+            if (!ReferenceEquals(_listStoreProcedureIssue, null)
+                && _listStoreProcedureIssue.Any())
             {
-                UtilityData.BindingDataToGridViewStore(outlookGridStore, _listStoreProcedure.OrderBy(x => x.Issue.Id).ToList());
+                UtilityData.BindingDataToGridViewStore(outlookGridStore, _listStoreProcedureIssue.OrderBy(x => x.Issue.Id).ToList());
                 Utility.GroupDataGridViewByIssue(outlookGridStore, StoreColumnIndex.IssueName);
             }
 
@@ -450,22 +451,22 @@ namespace Fanex.ManagementSP.UI
         }
 
         /// <summary>
-        /// Handles the EditingControlShowing event of the outlookGridStore control.
+        /// Assign selected value changed event for combo box.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="DataGridViewEditingControlShowingEventArgs"/> instance containing the event data.</param>
         private void outlookGridStore_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             var colIndex = outlookGridStore.CurrentCell.ColumnIndex;
+            var rowIndex = outlookGridStore.CurrentCell.RowIndex;
 
             if (colIndex == StoreColumnIndex.Server
                 || colIndex == StoreColumnIndex.Database
-                //|| colIndex == StoreColumnIndex.IsFunction
                 || colIndex == StoreColumnIndex.ActionName
                 || colIndex == StoreColumnIndex.Developer
                 || colIndex == StoreColumnIndex.Status)
             {
-                DataGridViewComboBoxEditingControl combo = e.Control as DataGridViewComboBoxEditingControl;
+                var combo = e.Control as DataGridViewComboBoxEditingControl;
 
                 if (combo != null)
                 {
@@ -474,23 +475,55 @@ namespace Fanex.ManagementSP.UI
                         // Remove an existing event-handler, if present, to avoid 
                         // adding multiple handlers when the editing control is reused.
                         combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
-                        combo.DropDown -= new EventHandler(combo_DropDown);
-                        combo.GotFocus -= new EventHandler(combo_DropDown);
+                        combo.DropDown -= new EventHandler(ComboBox_DropDown);
+                        combo.GotFocus -= new EventHandler(ComboBox_DropDown);
 
                         // Add the event handler. 
                         combo.SelectedValueChanged += new EventHandler(ComboBox_SelectedValueChanged);
-                        combo.DropDown += new EventHandler(combo_DropDown);
-                        combo.GotFocus += new EventHandler(combo_DropDown);
+                        combo.DropDown += new EventHandler(ComboBox_DropDown);
+                        combo.GotFocus += new EventHandler(ComboBox_DropDown);
                     }
 
                     combo.AutoCompleteMode = AutoCompleteMode.Suggest;
                 }
             }
+
+            if (colIndex == StoreColumnIndex.Name)
+            {
+                var storedProcedures = GetStoredProcedures(rowIndex);
+                AutoCompleteStringCollection list = new AutoCompleteStringCollection();
+                foreach (var item in storedProcedures)
+                {
+                    list.Add(item.Name);
+                }
+
+                var textBox = e.Control as DataGridViewTextBoxEditingControl;
+                textBox.AutoCompleteCustomSource = list;
+                textBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                textBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            }
+
+            e.CellStyle.BackColor = this.dataGridViewDatabase.DefaultCellStyle.BackColor;
         }
 
-        private void combo_DropDown(object sender, EventArgs e)
+        private IEnumerable<StoreProcedure> GetStoredProcedures(int rowIndex)
+        {
+            var currentServerName = outlookGridStore[StoreColumnIndex.Server, rowIndex].EditedFormattedValue.ToString();
+            var currentDatabaseName = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString();
+            var currentServer = _listServer.Where(x => x.Name.Equals(currentServerName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            var currentDatabase = _listDatabase.Where(x => x.Server.Id == currentServer.Id && x.Name.Equals(currentDatabaseName)).FirstOrDefault();
+
+            return _storeProcedureService.GetStoreProcedure(currentServer.Id, currentDatabase.Id);
+        }
+
+        private void ComboBox_DropDown(object sender, EventArgs e)
         {
             ((DataGridViewComboBoxEditingControl)sender).BackColor = Color.White;
+        }
+
+        private void TextBox_DropDown(object sender, EventArgs e)
+        {
+            ((DataGridViewTextBoxEditingControl)sender).BackColor = Color.White;
         }
 
         /// <summary>
@@ -512,8 +545,8 @@ namespace Fanex.ManagementSP.UI
                     && !string.Equals(_currentValue, serverName, StringComparison.OrdinalIgnoreCase))
                 {
                     var currentDatabaseName = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString();
-                    var filterListDatabase = _listDatabase.Where(x => x.Server.Name.ToLower() == serverName.ToLower()).ToList();
-                    var database = filterListDatabase.Where(x => x.Name.ToLower() == currentDatabaseName.ToLower()).FirstOrDefault();
+                    var filterListDatabase = _listDatabase.Where(x => x.Server.Name.Equals(serverName, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                    var database = filterListDatabase.Where(x => x.Name.Equals(currentDatabaseName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                     if (database == null)
                     {
@@ -524,8 +557,8 @@ namespace Fanex.ManagementSP.UI
             }
 
             combo.SelectedValueChanged -= new EventHandler(ComboBox_SelectedValueChanged);
-            combo.DropDown -= new EventHandler(combo_DropDown);
-            combo.GotFocus -= new EventHandler(combo_DropDown);
+            combo.DropDown -= new EventHandler(ComboBox_DropDown);
+            combo.GotFocus -= new EventHandler(ComboBox_DropDown);
         }
 
         #region Replace TextBox By ComboBox
@@ -546,6 +579,8 @@ namespace Fanex.ManagementSP.UI
                 {
                     int colIndex = e.ColumnIndex;
                     int rowIndex = e.RowIndex;
+                    var currentServerName = outlookGridStore[StoreColumnIndex.Server, rowIndex].EditedFormattedValue.ToString();
+                    var currentDatabaseName = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString();
 
                     if (rowIndex >= 0)
                     {
@@ -559,22 +594,8 @@ namespace Fanex.ManagementSP.UI
                                 break;
                             case StoreColumnIndex.Database:
                                 _listDatabase = _databaseService.GetAll();
-                                var currentServer = outlookGridStore[StoreColumnIndex.Server, rowIndex].EditedFormattedValue.ToString();
-                                UtilityData.ReplaceDatabaseByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listDatabase, _currentValue, currentServer);
+                                UtilityData.ReplaceDatabaseByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _listDatabase, _currentValue, currentServerName);
                                 break;
-                            case StoreColumnIndex.Name:
-                                bool isImageType = outlookGridStore[colIndex, rowIndex].FormattedValueType.Name == "Image";
-                                if (isImageType)
-                                {
-                                    DataGridViewTextBoxCell cellText = new DataGridViewTextBoxCell();
-                                    cellText.Value = string.Empty;
-                                    outlookGridStore[colIndex, rowIndex] = cellText;
-                                }
-
-                                break;
-                            //case StoreColumnIndex.IsFunction:
-                            //    UtilityData.ReplaceIsFunctionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
-                            //    break;
                             case StoreColumnIndex.ActionName:
                                 UtilityData.ReplaceActionByGridViewComboBoxCell(outlookGridStore, colIndex, rowIndex, _currentValue);
                                 break;
@@ -586,7 +607,7 @@ namespace Fanex.ManagementSP.UI
                                 break;
                         }
 
-                        _storeProcedure = UtilityConverter.ToStoredProcedure(outlookGridStore, e.RowIndex, _listDatabase.ToList(), _listServer.ToList(), _listUser.ToList());
+                        _storeProcedureIssue = UtilityConverter.ToStoredProcedureIssue(outlookGridStore, e.RowIndex, _listDatabase.ToList(), _listServer.ToList(), _listUser.ToList());
                     }
                 }
 
@@ -605,7 +626,7 @@ namespace Fanex.ManagementSP.UI
         /// <param name="e">The <see cref="DataGridViewCellEventArgs"/> instance containing the event data.</param>
         private void outlookGridStore_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (_isBindingStoreComplete)//&& _isEventClickComplete)
+            if (_isBindingStoreComplete)
             {
                 this.outlookGridStore_CellClick(sender, e);
             }
@@ -626,18 +647,11 @@ namespace Fanex.ManagementSP.UI
                     int colIndex = e.ColumnIndex;
                     int rowIndex = e.RowIndex;
 
-                    if (rowIndex > 0
-                        && colIndex != StoreColumnIndex.IsFunction)
+                    if (rowIndex > 0 && colIndex != StoreColumnIndex.IsFunction)
                     {
                         var newValue = outlookGridStore[colIndex, rowIndex].EditedFormattedValue.ToString();
 
-                        if (outlookGridStore[colIndex, rowIndex].FormattedValueType.Name == "Image")
-                        {
-                            newValue = string.Empty;
-                        }
-
-                        if (colIndex == StoreColumnIndex.ActionName
-                            && newValue.Length == 1)
+                        if (colIndex == StoreColumnIndex.ActionName && newValue.Length == 1)
                         {
                             newValue = newValue.ToUpper();
                         }
@@ -712,14 +726,6 @@ namespace Fanex.ManagementSP.UI
                     }
 
                     break;
-                case StoreColumnIndex.IsFunction:
-                    currentValue = outlookGridStore[StoreColumnIndex.IsFunction, e.RowIndex].EditedFormattedValue.ToString();
-                    if (currentValue != "0" || currentValue != "1")
-                    {
-                        outlookGridStore[StoreColumnIndex.IsFunction, e.RowIndex].Value = false;
-                    }
-
-                    break;
                 case StoreColumnIndex.ActionName:
                     currentValue = outlookGridStore[StoreColumnIndex.ActionName, e.RowIndex].EditedFormattedValue.ToString();
                     if (UtilityConverter.ToActionID(currentValue) < 0)
@@ -768,70 +774,22 @@ namespace Fanex.ManagementSP.UI
 
                     if (rowIndex > 0 && outlookGridStore.IsValidStoredProcedure(rowIndex))
                     {
-                        var storeProcedure = UtilityConverter.ToStoredProcedure(
-                            outlookGridStore,
-                            rowIndex,
-                            _listDatabase.ToList(),
-                            _listServer.ToList(),
-                            _listUser.ToList());
+                        StoreProcedureIssue storeProcedureIssue = outlookGridStore.ToStoredProcedureIssue(rowIndex, _listDatabase, _listServer, _listUser);
+                        List<StoreProcedure> storeProcedures = GetStoredProcedures(rowIndex).ToList();
 
-                        if (storeProcedure != null)
+                        StoreProcedure storedProcedure = storeProcedures.Where(x => x.Name.Equals(storeProcedureIssue.StoreProcedure.Name, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                        int storedProcedureId = storedProcedure != null ? storedProcedure.Id : 0;
+
+                        if (storeProcedureIssue != null)
                         {
-                            int storeId = storeProcedure.Id;
-                            if (storeProcedure.Id > 0)
+                            int storedProcedureIssueId = storeProcedureIssue.Id;
+                            if (storedProcedureIssueId > 0)
                             {
-                                if (!UtilityData.StoreProcedureEquals(_storeProcedure, storeProcedure))
-                                {
-                                    ////Update data
-                                    _storeProcedureService.InsertOrUpdate(
-                                        ref storeId,
-                                        storeProcedure.Server.Id,
-                                        storeProcedure.Database.Id,
-                                        storeProcedure.Name,
-                                        storeProcedure.IsFunction,
-                                        storeProcedure.ActionName,
-                                        _userId,
-                                        storeProcedure.Status,
-                                        storeProcedure.Description,
-                                        storeProcedure.Issue.Id,
-                                        storeProcedure.Developer.Id);
-
-                                    toolStripStatusStore.Text = Resource.UpdateSuccessfully + "( Row " + (rowIndex + 1).ToString() + ")";
-                                    outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].Value = Utility.CurrentUsername;
-                                }
+                                UpdateNewStoredProcedureIssue(rowIndex, storeProcedureIssue, storedProcedureId, storedProcedureIssueId);
                             }
                             else
                             {
-                                // Find issue id in current selected group
-                                int issueId = UtilityData.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
-
-                                // Insert new
-                                if (storeProcedure.Server.Id != 0
-                                    && storeProcedure.Database.Id != 0
-                                    && !string.IsNullOrWhiteSpace(storeProcedure.Name)
-                                    && storeProcedure.Status != -1
-                                    && !string.IsNullOrWhiteSpace(storeProcedure.ActionName)
-                                    && !string.IsNullOrWhiteSpace(storeProcedure.Name))
-                                {
-                                    _storeProcedureService.InsertOrUpdate(
-                                    ref storeId,
-                                    storeProcedure.Server.Id,
-                                    storeProcedure.Database.Id,
-                                    storeProcedure.Name,
-                                    storeProcedure.IsFunction,
-                                    storeProcedure.ActionName,
-                                    _userId,
-                                    storeProcedure.Status,
-                                    storeProcedure.Description,
-                                    issueId,
-                                    storeProcedure.Developer.Id);
-
-                                    outlookGridStore[StoreColumnIndex.Id, rowIndex].Value = storeId;
-                                    outlookGridStore[StoreColumnIndex.IssueId, rowIndex].Value = issueId;
-
-                                    toolStripStatusStore.Text = Resource.AddSuccessfully + "( Row " + (rowIndex + 1).ToString() + ")";
-                                    outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].Value = Utility.CurrentUsername;
-                                }
+                                InsertNewStoredProcedureIssue(rowIndex, storeProcedureIssue, storedProcedureId, storedProcedureIssueId);
                             }
                         }
                     }
@@ -840,6 +798,109 @@ namespace Fanex.ManagementSP.UI
             catch (Exception ex)
             {
                 Utility.HandleException(ex);
+            }
+        }
+
+        private void InsertNewStoredProcedureIssue(int rowIndex, StoreProcedureIssue storeProcedureIssue, int storedProcedureId, int storedProcedureIssueId)
+        {
+            // Find issue id in current selected group
+            int issueId = UtilityData.FindIssueIdInGroup(outlookGridStore, txtIssueId, rowIndex);
+
+            // Insert new
+            if (storeProcedureIssue.StoreProcedure.Server.Id != 0
+                && storeProcedureIssue.StoreProcedure.Database.Id != 0
+                && !string.IsNullOrWhiteSpace(storeProcedureIssue.StoreProcedure.Name)
+                && storeProcedureIssue.Status != -1
+                && !string.IsNullOrWhiteSpace(storeProcedureIssue.ActionName)
+                && !string.IsNullOrWhiteSpace(storeProcedureIssue.StoreProcedure.Name))
+            {
+                _storeProcedureService.InsertOrUpdate(
+                    ref storedProcedureIssueId,
+                    storeProcedureIssue.StoreProcedure.Server.Id,
+                    storeProcedureIssue.StoreProcedure.Database.Id,
+                    storeProcedureIssue.StoreProcedure.Name,
+                    storeProcedureIssue.IsFunction,
+                    storeProcedureIssue.ActionName,
+                    _userId,
+                    storeProcedureIssue.Status,
+                    storeProcedureIssue.Description,
+                    issueId,
+                    storeProcedureIssue.Developer.Id,
+                    storedProcedureId,
+                    true);
+
+                outlookGridStore[StoreColumnIndex.Id, rowIndex].Value = storedProcedureIssueId;
+                outlookGridStore[StoreColumnIndex.IssueId, rowIndex].Value = issueId;
+                outlookGridStore[StoreColumnIndex.StoredProcedureId, rowIndex].Value = storedProcedureId;
+
+                toolStripStatusStore.Text = Resource.AddSuccessfully + "( Row " + (rowIndex + 1).ToString() + ")";
+                outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].Value = Utility.CurrentUsername;
+            }
+
+        }
+
+        private void UpdateNewStoredProcedureIssue(int rowIndex, StoreProcedureIssue storeProcedureIssue, int storedProcedureId, int storedProcedureIssueId)
+        {
+            if (!UtilityData.StoreProcedureEquals(_storeProcedureIssue, storeProcedureIssue))
+            {
+                bool isAddNew = storedProcedureId == 0;
+
+                if (storedProcedureId == 0 && _storeProcedureIssue.StoreProcedure.Id != 0)
+                {
+                    List<Issue> issues = _issueService.GetByStoredProcedureId(_storeProcedureIssue.StoreProcedure.Id).ToList();
+                    var msgIssueRelated = string.Empty;
+                    foreach (var item in issues)
+                    {
+                        msgIssueRelated += "#" + item.ToString() + Environment.NewLine;
+                    }
+
+                    CustomMessageBox.MsgBox msgBox = new CustomMessageBox.MsgBox(
+                        string.Format("The stored procedure : {0}.{1}.{2}", _storeProcedureIssue.StoreProcedure.Server.Name, _storeProcedureIssue.StoreProcedure.Database.Name, _storeProcedureIssue.StoreProcedure.Name)
+                        + Environment.NewLine + "Related to issues :" + Environment.NewLine
+                        + msgIssueRelated + Environment.NewLine
+                        + "Do you want create new or update all related issues ?",
+                        "Update stored procedure information");
+                    msgBox.SetButtons(new string[] { "Create New", "Update All" }, new DialogResult[] { DialogResult.Yes, DialogResult.No }, 2);
+                    DialogResult r = msgBox.ShowDialog(this);
+
+                    if (r == DialogResult.Yes)
+                    {
+                        isAddNew = true;
+                    }
+                    else
+                    {
+                        isAddNew = false;
+                        storedProcedureId = _storeProcedureIssue.StoreProcedure.Id;
+
+                        for (int i = 1; i < outlookGridStore.Rows.Count; i++)
+                        {
+                            if (outlookGridStore[StoreColumnIndex.StoredProcedureId, i].EditedFormattedValue.ToString()
+                                == _storeProcedureIssue.StoreProcedure.Id.ToString())
+                            {
+                                outlookGridStore[StoreColumnIndex.Name, i].Value = storeProcedureIssue.StoreProcedure.Name;
+                            }
+                        }
+                    }
+                }
+
+                // Update data
+                _storeProcedureService.InsertOrUpdate(
+                    ref storedProcedureIssueId,
+                    storeProcedureIssue.StoreProcedure.Server.Id,
+                    storeProcedureIssue.StoreProcedure.Database.Id,
+                    storeProcedureIssue.StoreProcedure.Name,
+                    storeProcedureIssue.IsFunction,
+                    storeProcedureIssue.ActionName,
+                    _userId,
+                    storeProcedureIssue.Status,
+                    storeProcedureIssue.Description,
+                    storeProcedureIssue.Issue.Id,
+                    storeProcedureIssue.Developer.Id,
+                    storedProcedureId,
+                    isAddNew);
+
+                toolStripStatusStore.Text = Resource.UpdateSuccessfully + "( Row " + (rowIndex + 1).ToString() + ")";
+                outlookGridStore[StoreColumnIndex.ModifierUser, rowIndex].Value = Utility.CurrentUsername;
             }
         }
 
@@ -969,7 +1030,7 @@ namespace Fanex.ManagementSP.UI
                 {
                     int rowIndex = outlookGridStore.CurrentCell.RowIndex;
 
-                    var storeProcedure = UtilityConverter.ToStoredProcedure(
+                    var storeProcedure = UtilityConverter.ToStoredProcedureIssue(
                         outlookGridStore,
                         rowIndex,
                         _listDatabase.ToList(),
@@ -978,10 +1039,10 @@ namespace Fanex.ManagementSP.UI
 
                     Task.Factory.StartNew(() =>
                     {
-                        string value = UtilityIO.GetDetailsStoredProcedure(storeProcedure.Name, storeProcedure.Server, storeProcedure.Database);
+                        string value = UtilityIO.GetDetailsStoredProcedure(storeProcedure.StoreProcedure.Name, storeProcedure.StoreProcedure.Server, storeProcedure.StoreProcedure.Database);
                         if (!string.IsNullOrWhiteSpace(value))
                         {
-                            UtilityIO.OpenFileDetailStoredProcedure(storeProcedure.Name, value);
+                            UtilityIO.OpenFileDetailStoredProcedure(storeProcedure.StoreProcedure.Name, value);
                         }
                     });
                 }
@@ -1250,11 +1311,14 @@ namespace Fanex.ManagementSP.UI
                                     {
                                         array[3] = array[3] == "1" || array[3].ToLower() == "true" ? "true" : "false";
 
-                                        var storeProcedure = new StoreProcedure
+                                        var storeProcedureIssue = new StoreProcedureIssue
                                         {
-                                            Server = new Server { Name = array[0].Trim() },
-                                            Database = new Database { Name = array[1].Trim() },
-                                            Name = array[2].Trim(),
+                                            StoreProcedure = new StoreProcedure
+                                            {
+                                                Server = new Server { Name = array[0].Trim() },
+                                                Database = new Database { Name = array[1].Trim() },
+                                                Name = array[2].Trim()
+                                            },
                                             IsFunction = Convert.ToBoolean(array[3].Trim()),
                                             ActionName = array[4].Trim(),
                                             Developer = new User { Username = array[5].Trim() },
@@ -1262,35 +1326,35 @@ namespace Fanex.ManagementSP.UI
                                             Description = array.Length >= 8 ? array[7].Trim() : string.Empty
                                         };
 
-                                        var server = _listServer.Where(x => x.Name.ToLower() == storeProcedure.Server.Name.ToLower()).FirstOrDefault();
+                                        var server = _listServer.Where(x => x.Name.ToLower() == storeProcedureIssue.StoreProcedure.Server.Name.ToLower()).FirstOrDefault();
 
                                         if (server == null)
                                         {
                                             ////errorIndexs.Add(rowIndex);
-                                            if (!errorServers.Contains(storeProcedure.Server.Name))
+                                            if (!errorServers.Contains(storeProcedureIssue.StoreProcedure.Server.Name))
                                             {
-                                                errorServers.Add(storeProcedure.Server.Name);
+                                                errorServers.Add(storeProcedureIssue.StoreProcedure.Server.Name);
                                             }
                                         }
                                         else
                                         {
-                                            var database = _listDatabase.Where(x => x.Name.ToLower() == storeProcedure.Database.Name.ToLower()).FirstOrDefault();
+                                            var database = _listDatabase.Where(x => x.Name.ToLower() == storeProcedureIssue.StoreProcedure.Database.Name.ToLower()).FirstOrDefault();
 
                                             if (database == null)
                                             {
                                                 ////errorIndexs.Add(rowIndex);
-                                                if (!errorDatabases.Contains(storeProcedure.Database.Name))
+                                                if (!errorDatabases.Contains(storeProcedureIssue.StoreProcedure.Database.Name))
                                                 {
-                                                    errorDatabases.Add(storeProcedure.Database.Name);
+                                                    errorDatabases.Add(storeProcedureIssue.StoreProcedure.Database.Name);
                                                 }
                                             }
                                             else
                                             {
-                                                var user = _listUser.Where(x => x.Username.ToLower() == storeProcedure.Developer.Username.ToLower()).FirstOrDefault();
+                                                var user = _listUser.Where(x => x.Username.ToLower() == storeProcedureIssue.Developer.Username.ToLower()).FirstOrDefault();
 
                                                 if (user == null)
                                                 {
-                                                    errorUsernames.Add(storeProcedure.Developer.Username);
+                                                    errorUsernames.Add(storeProcedureIssue.Developer.Username);
                                                 }
                                                 else
                                                 {
@@ -1298,14 +1362,14 @@ namespace Fanex.ManagementSP.UI
                                                     row.CreateCells(
                                                         outlookGridStore,
                                                         rowIndex,
-                                                        storeProcedure.Server.Name,
-                                                        storeProcedure.Database.Name,
-                                                        storeProcedure.Name,
-                                                        storeProcedure.IsFunction,
-                                                        storeProcedure.ActionName,
-                                                        storeProcedure.Developer.Username,
-                                                        storeProcedure.StatusName,
-                                                        storeProcedure.Description,
+                                                        storeProcedureIssue.StoreProcedure.Server.Name,
+                                                        storeProcedureIssue.StoreProcedure.Database.Name,
+                                                        storeProcedureIssue.StoreProcedure.Name,
+                                                        storeProcedureIssue.IsFunction,
+                                                        storeProcedureIssue.ActionName,
+                                                        storeProcedureIssue.Developer.Username,
+                                                        storeProcedureIssue.StatusName,
+                                                        storeProcedureIssue.Description,
                                                          string.Empty,
                                                          string.Empty,
                                                          string.Empty,
@@ -1606,19 +1670,22 @@ namespace Fanex.ManagementSP.UI
                         server.Id = Convert.ToInt32(strServerId);
                     }
 
-                    var tempData = _listServer.Where(x => x.Name.ToLower() == server.Name.ToLower()).FirstOrDefault();
+                    var tempData = _listServer.Where(x => x.Name.Equals(server.Name)).FirstOrDefault();
 
                     if (tempData == null || server.Id != 0)
                     {
-                        _serverService.InsertOrUpdate(server.Id, server.Name, server.IPLocal, server.IPUAT, server.IPProduction, server.Description, _userId);
+                        int id = server.Id;
+                        _serverService.InsertOrUpdate(ref id, server.Name, server.IPLocal, server.IPUAT, server.IPProduction, server.Description, _userId);
 
                         _listServer = _serverService.GetAll();
-                        UtilityData.BindingDataToGridViewServer(dataGridViewServer, _listServer);
+                        this.dataGridViewServer[ServerColumnIndex.Id, rowIndex].Value = id;
+                        this.dataGridViewServer[ServerColumnIndex.Name, rowIndex].ErrorText = string.Empty;
                     }
                     else
                     {
                         MessageBox.Show(Resource.ServerAlreadyExists);
-                        dataGridViewServer.Rows.RemoveAt(rowIndex);
+                        this.dataGridViewServer[ServerColumnIndex.Name, rowIndex].ErrorText = "Invalid";
+                        //dataGridViewServer.Rows.RemoveAt(rowIndex);
                     }
 
                     dataGridViewServer.Rows[rowIndex].Selected = true;
@@ -1760,7 +1827,7 @@ namespace Fanex.ManagementSP.UI
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="DataGridViewCellEventArgs"/> instance containing the event data.</param>
-        private void dataGridViewDatabase_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewDatabase_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -1769,7 +1836,6 @@ namespace Fanex.ManagementSP.UI
                 if (rowIndex >= 0)
                 {
                     var database = new Database();
-
                     database.Name = dataGridViewDatabase[DatabaseColumnIndex.Name, rowIndex].EditedFormattedValue.ToString();
                     database.Description = dataGridViewDatabase[DatabaseColumnIndex.Description, rowIndex].EditedFormattedValue.ToString();
                     database.UserID = dataGridViewDatabase[DatabaseColumnIndex.UserID, rowIndex].EditedFormattedValue.ToString();
@@ -1795,24 +1861,24 @@ namespace Fanex.ManagementSP.UI
                         database.Server = new Server { Id = Convert.ToInt32(strServerId) };
 
                         var tempData = _listDatabase.Where(
-                            x => x.Name == database.Name
-                            && x.Description == database.Description
-                            && x.UserID == database.UserID
-                            && x.Password == database.Password
-                            && x.Server.Id == database.Server.Id).FirstOrDefault();
+                            x => x.Name.Equals(database.Name, StringComparison.CurrentCultureIgnoreCase)
+                            && x.Server.Id == database.Server.Id
+                            && x.Id != database.Id).FirstOrDefault();
 
                         if (tempData == null)
                         {
-                            _databaseService.InsertOrUpdate(database.Id, database.Name, database.Description, database.Server.Id, database.UserID, database.Password, _userId);
+                            int id = database.Id;
+                            _databaseService.InsertOrUpdate(ref id, database.Name, database.Description, database.Server.Id, database.UserID, database.Password, _userId);
 
                             _listDatabase = _databaseService.GetAll();
-                            UtilityData.BindingDataToGridViewDatabase(dataGridViewDatabase, _listDatabase, database.Server.Id);
+                            dataGridViewDatabase[DatabaseColumnIndex.Id, rowIndex].Value = id;
+                            this.dataGridViewDatabase[DatabaseColumnIndex.Name, rowIndex].ErrorText = string.Empty;
                         }
                         else
                         {
                             MessageBox.Show(Resource.DatabaseAleadyExistsInThisServer);
-                            this.dataGridViewDatabase_UserDeletingRow(sender, new DataGridViewRowCancelEventArgs(dataGridViewDatabase.Rows[rowIndex]));
-                            this.dataGridViewDatabase.Rows.RemoveAt(rowIndex);
+                            this.dataGridViewDatabase[DatabaseColumnIndex.Name, rowIndex].ErrorText = "Invalid";
+                            this.dataGridViewDatabase.CancelEdit();
                         }
 
                         dataGridViewDatabase.Rows[rowIndex].Selected = true;
@@ -2224,11 +2290,6 @@ namespace Fanex.ManagementSP.UI
         }
 
         #endregion
-
-        private void outlookGridStore_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         #endregion
 
