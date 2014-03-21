@@ -277,7 +277,7 @@ namespace Fanex.ManagementSP.UI
             }
 
             storeProcedureIssue.StoreProcedure.Server = listServer.Where(x => x.Name.Equals(storeProcedureIssue.StoreProcedure.Server.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-            storeProcedureIssue.StoreProcedure.Database = listDatabase.Where(x => x.Name.Equals(storeProcedureIssue.StoreProcedure.Database.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            storeProcedureIssue.StoreProcedure.Database = listDatabase.Where(x => x.Server.Id == storeProcedureIssue.StoreProcedure.Server.Id && x.Name.Equals(storeProcedureIssue.StoreProcedure.Database.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             storeProcedureIssue.Developer = listUser.Where(x => x.Username.Equals(storeProcedureIssue.Developer.Username, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
             return storeProcedureIssue;

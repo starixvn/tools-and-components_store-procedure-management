@@ -84,6 +84,7 @@ namespace Fanex.ManagementSP.Entities.Models
             {
                 var root = XElement.Parse(xmlValue);
                 storeProcedureIssue.Id = Convert.ToInt32(root.Element("i").Value);
+                storeProcedureIssue.StoreProcedure = new StoreProcedure();
                 storeProcedureIssue.StoreProcedure.Name = root.Element("n").Value;
                 storeProcedureIssue.StoreProcedure.Server = new Server
                 {

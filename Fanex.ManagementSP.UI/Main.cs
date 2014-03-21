@@ -822,14 +822,14 @@ namespace Fanex.ManagementSP.UI
 
         private void UpdateNewStoredProcedureIssue(int rowIndex, StoreProcedureIssue storeProcedureIssue, int storedProcedureId, int storedProcedureIssueId)
         {
-            if (!UtilityData.StoreProcedureEquals(_storeProcedureIssue, storeProcedureIssue))
+            if (!_storeProcedureIssue.IsEquals(storeProcedureIssue))
             {
                 bool isAddNew = storedProcedureId == 0;
 
                 if (storedProcedureId == 0 && _storeProcedureIssue.StoreProcedure.Id != 0)
                 {
-                    List<StoreProcedure> storeProcedures = _storeProcedureService.GetStoreProcedure(storeProcedureIssue.StoreProcedure.Server.Id, storeProcedureIssue.StoreProcedure.Database.Id).ToList();
-                    if (storeProcedures != null && storeProcedures.Any())
+                    if (storeProcedureIssue.StoreProcedure.Server.Id == _storeProcedureIssue.StoreProcedure.Server.Id
+                        && storeProcedureIssue.StoreProcedure.Database.Id == _storeProcedureIssue.StoreProcedure.Database.Id)
                     {
                         List<Issue> issues = _issueService.GetByStoredProcedureId(_storeProcedureIssue.StoreProcedure.Id).ToList();
                         var msgIssueRelated = string.Empty;

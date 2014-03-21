@@ -641,14 +641,14 @@ namespace Fanex.ManagementSP.UI
         /// <param name="objectA">The object a.</param>
         /// <param name="objectB">The object b.</param>
         /// <returns>Compare result.</returns>
-        public static bool StoreProcedureEquals(StoreProcedureIssue objectA, StoreProcedureIssue objectB)
+        public static bool IsEquals(this StoreProcedureIssue objectA, StoreProcedureIssue objectB)
         {
             if (string.Equals(objectA.ActionName, objectB.ActionName, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.StoreProcedure.Database.Name, objectB.StoreProcedure.Database.Name, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.Description, objectB.Description, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.Developer.Username, objectB.Developer.Username, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.IsFunction.ToString(), objectB.IsFunction.ToString(), StringComparison.OrdinalIgnoreCase)
-                && string.Equals(objectA.StoreProcedure.Name, objectB.StoreProcedure.Name, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(objectA.StoreProcedure.Name, objectB.StoreProcedure.Name)
                 && string.Equals(objectA.StoreProcedure.Server.Name, objectB.StoreProcedure.Server.Name, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(objectA.StatusName, objectB.StatusName, StringComparison.OrdinalIgnoreCase))
             {
