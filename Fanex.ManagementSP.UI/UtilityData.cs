@@ -625,7 +625,7 @@ namespace Fanex.ManagementSP.UI
 
             for (int i = 0; i < outlookGrid.Columns.Count; i++)
             {
-                if (outlookGrid[i, rowIndex].FormattedValueType.Name == "Image")
+                if (!string.IsNullOrWhiteSpace(outlookGrid[i, rowIndex].ErrorText))
                 {
                     isValid = false;
                     break;

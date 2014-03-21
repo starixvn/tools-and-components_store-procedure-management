@@ -497,7 +497,7 @@ namespace Fanex.ManagementSP.UI
             var currentServerName = outlookGridStore[StoreColumnIndex.Server, rowIndex].EditedFormattedValue.ToString();
             var currentDatabaseName = outlookGridStore[StoreColumnIndex.Database, rowIndex].EditedFormattedValue.ToString();
             var currentServer = _listServer.Where(x => x.Name.Equals(currentServerName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            var currentDatabase = _listDatabase.Where(x => x.Server.Id == currentServer.Id && x.Name.Equals(currentDatabaseName)).FirstOrDefault();
+            var currentDatabase = _listDatabase.Where(x => x.Server.Id == currentServer.Id && x.Name.Equals(currentDatabaseName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
             return _storeProcedureService.GetStoreProcedure(currentServer.Id, currentDatabase.Id);
         }
@@ -842,7 +842,8 @@ namespace Fanex.ManagementSP.UI
                             string.Format("The stored procedure : {0}.{1}.{2}", _storeProcedureIssue.StoreProcedure.Server.Name, _storeProcedureIssue.StoreProcedure.Database.Name, _storeProcedureIssue.StoreProcedure.Name)
                             + Environment.NewLine + "Related to issues :" + Environment.NewLine
                             + msgIssueRelated + Environment.NewLine
-                            + "Do you want create new or update all related issues ?",
+                            + "Do you want create new or update all related issues ?" + Environment.NewLine
+                            + string.Format("({0}.{1}.{2})", storeProcedureIssue.StoreProcedure.Server.Name, storeProcedureIssue.StoreProcedure.Database.Name, storeProcedureIssue.StoreProcedure.Name),
                             "Update stored procedure information");
                         msgBox.SetButtons(new string[] { "Create New", "Update All" }, new DialogResult[] { DialogResult.Yes, DialogResult.No }, 2);
                         DialogResult r = msgBox.ShowDialog(this);
@@ -1302,14 +1303,14 @@ namespace Fanex.ManagementSP.UI
                                         }
                                         else
                                         {
-                                            var database = _listDatabase.Where(x => x.Name.Equals(storeProcedureIssue.StoreProcedure.Database.Name,
+                                            var database = _listDatabase.Where(x => x.Server.Id == server.Id && x.Name.Equals(storeProcedureIssue.StoreProcedure.Database.Name,
                                                                         StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                                             if (database == null)
                                             {
                                                 // errorIndexs.Add(rowIndex);
                                                 if (!errorDatabases.Contains(storeProcedureIssue.StoreProcedure.Database.Name))
                                                 {
-                                                    errorDatabases.Add(storeProcedureIssue.StoreProcedure.Database.Name);
+                                                    errorDatabases.Add(string.Format("{0}.{1}", server.Name, storeProcedureIssue.StoreProcedure.Database.Name));
                                                 }
                                             }
                                             else
