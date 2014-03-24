@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset='utf-8'>
+    <title>Stored Procedure</title>
+    <!--  Loading Handsontable (full distribution that includes all dependencies apart from jQuery)  -->
+    <script type="text/javascript" data-jsfiddle="common" src="Resources/lib/jquery.min.js"></script>
+    <script type="text/javascript" data-jsfiddle="common" src="Resources/dist/jquery.handsontable.full.js"></script>
+    <link data-jsfiddle="common" rel="stylesheet" media="screen" href="Resources/dist/jquery.handsontable.full.css">
+    <!--  Loading demo dependencies. They are used here only to enhance the examples on this page  -->
+    <link data-jsfiddle="common" rel="stylesheet" media="screen" href="Resources/css/samples.css">
+    <script type="text/javascript" src="Resources/js/samples.js"></script>
+    <script type="text/javascript" src="Resources/js/highlight/highlight.pack.js"></script>
+    <link rel="stylesheet" media="screen" href="Resources/js/highlight/styles/github.css">
+</head>
+<body>
+    <div class="container">
+        <div id="example1">
+        </div>
+    </div>
+    <script type="text/javascript" data-jsfiddle="example1">
+        $("#example1").handsontable({
+            startRows: 8,
+            startCols: 9,
+            rowHeaders: true,
+            columnSorting: true,
+            colWidths: [130, 130, 310, 60, 60, 100, 100, 100, 100],
+            colHeaders: ["Server", "Database", "SP/Function", "Function", "Action", "Developer", "Status", "Description", "Modified By"],
+            columns: [
+                {
+                    type: "autocomplete",
+                    data: "server",
+                    source: function (query, process) {
+                        $.ajax({
+                            url: 'http://localhost:62215/api/server',
+                            data: {
+                                query: query
+                            },
+                            success: function (response) {
+                                console.log("response", response);
+                                process(response);
+                            }
+                        });
+                    }
+                },
+                { data: "database" },
+                { data: "name" },
+                { data: "function" },
+                { data: "action" },
+                { data: "developer" },
+                { data: "status" },
+                { data: "description" },
+                { data: "modified", readOnly: true}],
+            minSpareRows: 1,
+            fillHandle: true //possible values: true, false, "horizontal", "vertical"
+        });
+
+        $("#example1").handsontable("loadData");
+          </script>
+</body>
+</html>
