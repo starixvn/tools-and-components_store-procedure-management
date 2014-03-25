@@ -220,6 +220,7 @@
     <Content Include="Widgets\Resources\lib\shims\array.filter.js" />
     <Content Include="Widgets\Resources\lib\shims\array.indexOf.js" />
     <Content Include="Widgets\Resources\lib\shims\weakmap.js" />
+    <Content Include="Widgets\Resources\lib\underscore-min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -248,6 +249,7 @@
     <None Include="Widgets\Resources\js\highlight\LICENSE" />
     <None Include="Widgets\Resources\js\highlight\README.md" />
     <None Include="Widgets\Resources\lib\jquery-1.10.2.min.map" />
+    <None Include="Widgets\Resources\lib\underscore-min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
