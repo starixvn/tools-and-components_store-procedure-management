@@ -166,7 +166,7 @@ $(document).ready(function () {
         startCols: 9,
         rowHeaders: true,
         columnSorting: true,
-        colWidths: [130, 130, 310, 60, 70, 120, 100, 100, 100],
+        colWidths: [140, 140, 310, 60, 70, 120, 100, 100, 100],
         colHeaders: function (col) {
             switch (col) {
                 case 0:
