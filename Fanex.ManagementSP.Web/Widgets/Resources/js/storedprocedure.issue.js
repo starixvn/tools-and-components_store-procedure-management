@@ -2,14 +2,19 @@ var actionSource = ["A", "D", "E", "Nested"];
 var statusSource = ["In Progress", "Done", "UAT", "UAT [_xtest]", "UAT [_xpre]", "Not Required", "Released", "Pending"];
 
 $(document).ready(function () {
-    var arrayServer = new Array();
-    var arrayDatabase = new Array();
-    var arrayServerDatabase = new Array();
-    var arrayDeveloper = new Array();
-    var arrayStoredProcedureIssue = new Array();
+    var arrServer = new Array();
+    var arrDatabase = new Array();
+    var arrServerDatabase = new Array();
+    var arrDeveloper = new Array();
+    var arrSPIssue = new Array();
     var selectedServerName = "";
     var currentUser = new Object();
     var selectLimit = 20;
+    var isAddNew = true;
+    var isSetDataAtRowProp = false;
+
+    //    var apiUrl = 'http://10.21.10.19:9911/api/';
+    var apiUrl = 'http://localhost:62215/api/';
 
     // Parsing parameters
     (window.onpopstate = function () {
@@ -25,46 +30,46 @@ $(document).ready(function () {
     })();
 
     $.ajax({
-        url: 'http://localhost:62215/api/server',
+        url: apiUrl + 'server',
         async: false,
         success: function (response) {
             $.each(response, function (i, data) {
-                arrayServer[i] = data;
+                arrServer[i] = data;
             });
         }
     });
 
     $.ajax({
-        url: 'http://localhost:62215/api/database',
+        url: apiUrl + 'database',
         async: false,
         success: function (response) {
             $.each(response, function (i, data) {
-                arrayDatabase[i] = data;
+                arrDatabase[i] = data;
             });
         }
     });
 
     $.ajax({
-        url: 'http://localhost:62215/api/user',
+        url: apiUrl + 'user',
         async: false,
         success: function (response) {
             $.each(response, function (i, data) {
-                arrayDeveloper[i] = data;
+                arrDeveloper[i] = data;
             });
         }
     });
 
     $.ajax({
-        url: 'http://localhost:62215/api/StoreProcedure?id=' + httpQueries.issueId + '&includeChild=true',
+        url: apiUrl + 'StoreProcedure?id=' + httpQueries.issueId + '&includeChild=true',
         async: false,
         success: function (response) {
             $.each(response, function (index, data) {
-                arrayStoredProcedureIssue[index] = data;
+                arrSPIssue[index] = data;
             });
         }
     });
 
-    currentUser = getAuthor(arrayDeveloper, httpQueries.author);
+    currentUser = getAuthor(arrDeveloper, httpQueries.author);
 
     var hiddenColumnRenderer = function (instance, td, row, col, prop, value, cellProperties) {
         td.hidden = true;
@@ -76,7 +81,7 @@ $(document).ready(function () {
                 {
                     type: "autocomplete",
                     data: "StoreProcedure.Server.Name",
-                    source: convertToSourceName(arrayServer),
+                    source: convertToSourceName(arrServer),
                     strict: true
                 },
                 {
@@ -88,13 +93,41 @@ $(document).ready(function () {
                         var pos = instance.getSelected();
                         selectedServerName = instance.getDataAtCell(pos[0], 0);
 
-                        arrayServerDatabase = getDatabasesByServer(arrayDatabase, selectedServerName);
-                        filterSelect(arrayServerDatabase, query, process);
+                        arrServerDatabase = getDatabasesByServer(arrDatabase, selectedServerName);
+                        filterSelect(arrServerDatabase, query, process);
                     },
                     strict: true
                 },
                 {
-                    data: "StoreProcedure.Name"
+                    type: "autocomplete",
+                    data: "StoreProcedure.Name",
+                    source: function (query, process) {
+                        var instance = $('#storeprocedures').handsontable('getInstance');
+                        var pos = instance.getSelected();
+                        var rowIndex = pos[0];
+                        var rowData = convertToSPIssueOnlyServerAndDatabase(instance, rowIndex);
+
+                        if (rowData != null) {
+                            var param = [
+                            'serverId=' + rowData.StoreProcedure.Server.Id,
+                            'databaseId=' + rowData.StoreProcedure.Database.Id
+                        ];
+
+                            $.ajax({
+                                url: apiUrl + 'StoreProcedure?' + param.join('&'),
+                                async: false,
+                                success: function (response) {
+                                    var array = new Array();
+                                    $.each(response, function (i, data) {
+                                        array.push(data.Name);
+                                    });
+
+                                    filterSelect(array, query, process);
+                                }
+                            });
+                        }
+                    },
+                    strict: false
                 },
                 {
                     type: "checkbox",
@@ -111,7 +144,7 @@ $(document).ready(function () {
                     data: "Developer.Username",
                     source: function (query, process) {
                         var array = new Array();
-                        $.each(arrayDeveloper, function (index, data) {
+                        $.each(arrDeveloper, function (index, data) {
                             array[index] = data.Username;
                         });
                         filterSelect(array, query, process);
@@ -128,7 +161,7 @@ $(document).ready(function () {
                 { data: "Modifier.Username", readOnly: true}];
 
     $("#storeprocedures").handsontable({
-        data: arrayStoredProcedureIssue,
+        data: arrSPIssue,
         startRows: 0,
         startCols: 9,
         rowHeaders: true,
@@ -171,13 +204,7 @@ $(document).ready(function () {
                 },
                 "row_below": {},
                 "hsep1": "---------",
-                "remove_row": {
-                    name: 'Remove this row, ok?',
-                    disabled: function () {
-                        //if first row, disable this option
-                        return ($("#storeprocedures").handsontable('getSelected')[0] === 0);
-                    }
-                },
+                "remove_row": {},
                 "hsep2": "---------"
             }
         },
@@ -185,70 +212,134 @@ $(document).ready(function () {
             if (e != null) {
                 var instance = $('#storeprocedures').handsontable('getInstance');
                 var pos = instance.getSelected();
+                if (pos != undefined) {
+                    if (e[0][1] == "StoreProcedure.Server.Name") {
+                        selectedServerName = e[0][3];
 
-                if (e[0][1] == "StoreProcedure.Server.Name") {
-                    selectedServerName = e[0][3];
+                        arrServerDatabase = getDatabasesByServer(arrDatabase, selectedServerName);
 
-                    arrayServerDatabase = getDatabasesByServer(arrayDatabase, selectedServerName);
+                        instance.setDataAtCell(pos[0], 1, arrServerDatabase[0], arrServerDatabase);
+                    }
 
-                    instance.setDataAtCell(pos[0], 1, arrayServerDatabase[0], arrayServerDatabase);
-                }
-
-                if (e[0][1] != "Modifier.Username") {
-                    instance.setDataAtCell(pos[0], 8, currentUser.Username);
+                    if (e[0][1] != "Modifier.Username") {
+                        instance.setDataAtCell(pos[0], 8, currentUser.Username);
+                    }
                 }
             }
         },
         afterChange: function (source, change) {
-            if (change === 'loadData' || source[0][1] === 'Modifier.Username') {
+            if (change === 'loadData' || source[0][1] === 'Modifier.Username' || source[0][1] === 'Id') {
                 return;
             }
+
+            var arrRowIndex = new Array();
+            for (var i = 0; i < source.length; i++) {
+                var row = _.find(arrRowIndex, function (value) {
+                    return value == source[i][0];
+                });
+
+                if (row == undefined) {
+                    arrRowIndex.push(source[i][0]);
+                }
+            }
             var instance = $('#storeprocedures').handsontable('getInstance');
-            saveStoredProcedureIssue(instance, source[0][0]);
+
+            for (var i = 0; i < arrRowIndex.length; i++) {
+                saveSPIssue(instance, arrRowIndex[i]);
+            }
+        },
+        beforeRemoveRow: function (index, amount) {
+            var instance = $('#storeprocedures').handsontable('getInstance');
+            for (var i = index; i < index + amount; i++) {
+                var spIssue = convertToSPIssue(instance, i);
+
+                $.ajax({
+                    url: apiUrl + 'storeprocedure?id=' + spIssue.Id + '&modifiedById=' + currentUser.Id,
+                    type: 'DELETE',
+                    success: function (response) {
+                        window.console.log(response);
+                    }
+                });
+            }
         }
     });
 
-    function saveStoredProcedureIssue(instance, row) {
+    function convertToSPIssue(instance, row) {
         if (!isEmptyRow(instance, row)) {
             var rowData = instance.getDataAtRow(row);
-            var serverId = _.find(arrayServer, function (item) {
+            var serverId = _.find(arrServer, function (item) {
                 return item.Name === rowData.StoreProcedure.Server.Name;
             }).Id;
 
-            var databaseId = _.find(arrayDatabase, function (item) {
+            var databaseId = (_.find(arrDatabase, function (item) {
                 return item.Name === rowData.StoreProcedure.Database.Name && item.Server.Id === serverId;
-            }).Id;
+            }) || { Id: 0 }).Id;
 
-            var developerId = _.find(arrayDeveloper, function (item) {
+            var developerId = _.find(arrDeveloper, function (item) {
                 return item.Username === rowData.Developer.Username;
             }).Id;
 
-            console.log(rowData);
+            rowData.StoreProcedure.Server.Id = serverId;
+            rowData.StoreProcedure.Database.Id = databaseId;
+            rowData.Developer.Id = developerId;
+            rowData.Status = convertToStatusId(rowData.StatusName);
+
+            return rowData;
+        }
+
+        return null;
+    }
+
+    function convertToSPIssueOnlyServerAndDatabase(instance, row) {
+        if (!isEmptyServerAndDatabase(instance, row)) {
+            var rowData = instance.getDataAtRow(row);
+            var serverId = _.find(arrServer, function (item) {
+                return item.Name === rowData.StoreProcedure.Server.Name;
+            }).Id;
+
+            var databaseId = (_.find(arrDatabase, function (item) {
+                return item.Name === rowData.StoreProcedure.Database.Name && item.Server.Id === serverId;
+            }) || { Id: 0 }).Id;
+
+            rowData.StoreProcedure.Server.Id = serverId;
+            rowData.StoreProcedure.Database.Id = databaseId;
+
+            return rowData;
+        }
+
+        return null;
+    }
+
+    function saveSPIssue(instance, row) {
+        var rowData = convertToSPIssue(instance, row);
+
+        if (rowData != null && isValidSPIssue(rowData)) {
             var param = [
 			    'id=' + (rowData.Id || 0),
-			    'serverId=' + (serverId || 0),
-			    'databaseId=' + (databaseId || 0),
+			    'serverId=' + (rowData.StoreProcedure.Server.Id || 0),
+			    'databaseId=' + (rowData.StoreProcedure.Database.Id || 0),
 			    'name=' + $.trim(rowData.StoreProcedure.Name || ""),
 			    'isFunction=' + (rowData.IsFunction || false),
 			    'actionName=' + $.trim(rowData.ActionName || ""),
 			    'modifiedById=' + currentUser.Id,
-			    'status=' + convertToStatusId(rowData.StatusName),
+			    'status=' + rowData.Status,
 			    'description=' + $.trim(rowData.Description || ""),
 			    'issueId=' + httpQueries.issueId,
-			    'developerId=' + (developerId || 0),
+			    'developerId=' + (rowData.Developer.Id || 0),
                 'storedProcedureId=' + (rowData.StoreProcedure.Id || 0),
-                'isAddNew=true'];
+                'isAddNew=' + isAddNew];
 
-            console.log(param);
+            window.console.log(param);
+
             $.ajax({
-                url: 'http://localhost:62215/api/storeprocedure?' + param.join('&'),
+                url: apiUrl + 'storeprocedure?' + param.join('&'),
                 type: 'POST',
                 success: function (response) {
-
+                    rowData.Id = response;
+                    instance.setDataAtRowProp(row, 'Id', response);
+                    window.console.log(response);
                 }
             });
-
-
         }
     };
 
@@ -301,6 +392,30 @@ $(document).ready(function () {
             && rowData.ActionName != null
             && rowData.Developer.Username != null
             && rowData.StatusName != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function isEmptyServerAndDatabase(instance, row) {
+        var rowData = instance.getDataAtRow(row);
+        if (rowData.StoreProcedure.Server.Name != null
+            && rowData.StoreProcedure.Database.Name != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function isValidSPIssue(data) {
+        if (data.StoreProcedure.Server.Id == 0
+            || data.StoreProcedure.Database.Id == 0
+            || data.StoreProcedure.Name == ""
+            || data.Developer.Id == 0
+            || data.Status.Id == -1
+            || data.ActionName == "") {
+
             return false;
         }
 

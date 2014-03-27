@@ -165,7 +165,7 @@
     <Content Include="Widgets\Resources\js\highlight\styles\zenburn.css" />
     <Content Include="Widgets\Resources\js\jquery.ui.position.js" />
     <Content Include="Widgets\Resources\js\json2.min.js" />
-    <Content Include="Widgets\Resources\js\samples.js" />
+    <Content Include="Widgets\Resources\js\storedprocedure.issue.js" />
     <Content Include="Widgets\Resources\lib\jquery-1.10.2.js" />
     <Content Include="Widgets\Resources\lib\jquery-2.js" />
     <Content Include="Widgets\Resources\lib\jquery-2.min.js" />
@@ -248,8 +248,8 @@
     <None Include="Widgets\Resources\dist\README.md" />
     <None Include="Widgets\Resources\js\highlight\LICENSE" />
     <None Include="Widgets\Resources\js\highlight\README.md" />
-    <None Include="Widgets\Resources\lib\jquery-1.10.2.min.map" />
-    <None Include="Widgets\Resources\lib\underscore-min.map" />
+    <Content Include="Widgets\Resources\lib\jquery-1.10.2.min.map" />
+    <Content Include="Widgets\Resources\lib\underscore-min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

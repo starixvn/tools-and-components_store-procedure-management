@@ -1,138 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
   <publishProfile publishUrl="D:\Deploy\SPMAPI" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="Scripts/jquery.validate.unobtrusive.js" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/jquery.ui.resizable.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Scripts/jquery-1.7.1.min.js" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/jquery.ui.theme.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Images/orderedList6.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/minified/images/ui-icons_cd0a0a_256x240.png" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Scripts/modernizr-2.5.3.js" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/jquery.ui.accordion.css" publishTime="10/31/2013 16:06:14" />
+    <file relUrl="bin/System.Web.Http.xml" publishTime="10/31/2013 15:50:38" />
+    <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="10/31/2013 15:50:36" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_highlight-soft_75_ffe45c_1x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/css/font-awesome/font/fontawesome-webfont.svg" publishTime="03/21/2014 17:11:40" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_diagonals-thick_18_b81900_40x40.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/js/jquery-ui.custom.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="bin/WebGrease.dll" publishTime="10/31/2013 15:50:40" />
+    <file relUrl="bin/Fanex.ManagementSP.Core.pdb" publishTime="03/27/2014 09:54:07" />
     <file relUrl="bin/EntityFramework.xml" publishTime="10/31/2013 15:50:30" />
-    <file relUrl="Views/_ViewStart.cshtml" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Scripts/jquery.validate.unobtrusive.min.js" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/jquery.ui.button.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/System.Web.Mvc.dll" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Web.config" publishTime="02/27/2014 11:34:43" />
-    <file relUrl="bin/System.Web.WebPages.Deployment.xml" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Content/themes/base/images/ui-icons_cd0a0a_256x240.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/images/ui-icons_888888_256x240.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/jquery.ui.datepicker.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/jquery-ui.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Images/accent.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Images/orderedList8.png" publishTime="10/31/2013 16:06:10" />
+    <file relUrl="bin/MySql.Data.dll" publishTime="03/21/2013 15:15:08" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_glass_75_dadada_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Web.config" publishTime="03/27/2014 09:54:40" />
+    <file relUrl="Widgets/Resources/dist/jquery.handsontable.css" publishTime="03/21/2014 17:10:14" />
+    <file relUrl="bin/System.Net.Http.dll" publishTime="10/31/2013 15:50:38" />
+    <file relUrl="bin/Fanex.Common.dll" publishTime="11/22/2013 10:58:45" />
+    <file relUrl="Widgets/Resources/js/storedprocedure.issue.js" publishTime="03/27/2014 10:11:00" />
+    <file relUrl="Widgets/Resources/lib/shims/array.filter.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/js/backbone/backbone-relational/backbone-relational.js" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_ef8c08_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/jquery-ui.custom.css" publishTime="03/21/2014 17:09:48" />
     <file relUrl="Global.asax" publishTime="10/31/2013 16:06:10" />
     <file relUrl="bin/System.Net.Http.Formatting.dll" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Images/orderedList9.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="bin/System.Web.Http.xml" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Content/themes/base/minified/images/ui-icons_888888_256x240.png" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/images/ui-icons_2e83ff_256x240.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.selectable.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.autocomplete.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="bin/Fanex.ManagementSP.Entities.pdb" publishTime="02/27/2014 11:33:23" />
-    <file relUrl="bin/System.Web.WebPages.dll" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="10/31/2013 15:50:40" />
-    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/System.Web.Mvc.xml" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="bin/System.Web.Helpers.xml" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Images/orderedList7.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/Fanex.ManagementSP.Entities.dll" publishTime="02/27/2014 11:33:23" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.core.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Images/orderedList0.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/jquery.ui.core.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/images/ui-icons_222222_256x240.png" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.button.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Images/orderedList1.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/System.Web.Optimization.dll" publishTime="10/31/2013 15:50:40" />
-    <file relUrl="bin/System.Web.Helpers.dll" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="api/update-version.xml" publishTime="02/27/2014 10:53:50" />
     <file relUrl="bin/Newtonsoft.Json.xml" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.theme.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.tabs.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/jquery.ui.selectable.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/images/ui-icons_222222_256x240.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Images/bullet.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/jquery.ui.progressbar.css" publishTime="10/31/2013 16:06:14" />
+    <file relUrl="Widgets/Resources/js/highlight/highlight.pack.js" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_glass_100_f6f6f6_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/dist/jquery.handsontable.full.css" publishTime="03/21/2014 17:10:14" />
+    <file relUrl="bin/System.Web.Mvc.dll" publishTime="10/31/2013 15:50:38" />
+    <file relUrl="bin/Fanex.ManagementSP.Entities.pdb" publishTime="03/27/2014 09:54:07" />
+    <file relUrl="bin/System.Web.WebPages.dll" publishTime="10/31/2013 15:50:36" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_888888_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/js/backbone/lodash.underscore.js" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/animated-overlay.gif" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/js/backbone/backbone.js" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="bin/System.Web.Helpers.xml" publishTime="10/31/2013 15:50:36" />
+    <file relUrl="Widgets/Resources/lib/underscore-min.map" publishTime="03/25/2014 09:56:30" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_ffd27a_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="bin/Fanex.ManagementSP.Entities.dll" publishTime="03/27/2014 09:54:07" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/js/jquery-ui.custom.min.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-1.10.2.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_2e83ff_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-icons_2e83ff_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="bin/System.Web.Razor.dll" publishTime="10/31/2013 15:50:36" />
+    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="10/31/2013 15:50:36" />
+    <file relUrl="api/update-version.xml" publishTime="03/14/2014 14:46:49" />
+    <file relUrl="bin/System.Web.Helpers.dll" publishTime="10/31/2013 15:50:36" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-icons_f6cf3b_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/shims/array.indexOf.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_glass_100_fdf5ce_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/shims/weakmap.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_454545_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-1.10.2.min.map" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_glass_75_dadada_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/css/samples.css" publishTime="03/21/2014 17:11:40" />
+    <file relUrl="Widgets/Resources/dist/jquery.handsontable.full.js" publishTime="03/21/2014 17:10:14" />
     <file relUrl="bin/System.Web.Razor.xml" publishTime="10/31/2013 15:50:36" />
     <file relUrl="packages.config" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/Fanex.ManagementSP.Core.dll" publishTime="02/27/2014 11:33:25" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="03/21/2014 17:09:48" />
     <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Content/themes/base/jquery.ui.base.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/Fanex.ManagementSP.Web.pdb" publishTime="02/27/2014 11:33:26" />
-    <file relUrl="Content/themes/base/jquery.ui.autocomplete.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.progressbar.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Images/orderedList2.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="bin/Fanex.Common.dll" publishTime="11/22/2013 10:58:45" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.datepicker.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="bin/Fanex.ManagementSP.Web.dll" publishTime="02/27/2014 11:33:26" />
-    <file relUrl="Content/themes/base/images/ui-icons_454545_256x240.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.accordion.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="bin/EntityFramework.dll" publishTime="10/31/2013 15:50:30" />
+    <file relUrl="bin/Fanex.ManagementSP.Web.pdb" publishTime="03/27/2014 09:54:09" />
+    <file relUrl="bin/System.Web.WebPages.Deployment.xml" publishTime="10/31/2013 15:50:36" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_228ef1_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/js/highlight/styles/zenburn.css" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/jquery-ui.custom.min.css" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_glass_75_ffffff_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="bin/Fanex.ManagementSP.Web.dll" publishTime="03/27/2014 09:54:09" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_inset-soft_95_fef1ec_1x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/js/highlight/styles/github.css" publishTime="03/21/2014 17:11:56" />
     <file relUrl="bin/System.Web.WebPages.Razor.xml" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Scripts/jquery.validate.min.js" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="10/31/2013 16:06:12" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="03/21/2014 17:09:48" />
     <file relUrl="bin/System.Web.Http.WebHost.dll" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="10/31/2013 16:06:14" />
     <file relUrl="bin/System.Net.Http.WebRequest.xml" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Scripts/knockout-2.1.0.debug.js" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Scripts/jquery.validate-vsdoc.js" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.resizable.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Content/themes/base/minified/images/ui-icons_2e83ff_256x240.png" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="bin/System.Web.Razor.dll" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Images/orderedList3.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="bin/System.Web.Providers.dll" publishTime="10/31/2013 15:50:38" />
     <file relUrl="favicon.ico" publishTime="10/31/2013 16:06:10" />
+    <file relUrl="bin/Fanex.ManagementSP.Core.dll" publishTime="03/27/2014 09:54:07" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-icons_222222_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="bin/System.Web.Providers.dll" publishTime="10/31/2013 15:50:38" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_cd0a0a_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/jquery-ui.custom.css" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/css/font-awesome/css/font-awesome.css" publishTime="03/21/2014 17:11:40" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-icons_cd0a0a_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="bin/System.Web.Optimization.dll" publishTime="10/31/2013 15:50:40" />
     <file relUrl="Views/Web.config" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_75_dadada_1x400.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/jquery.ui.dialog.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/Site.css" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.dialog.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="10/31/2013 16:06:12" />
+    <file relUrl="bin/System.Web.Mvc.xml" publishTime="10/31/2013 15:50:38" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Index.htm" publishTime="03/27/2014 10:00:41" />
     <file relUrl="bin/System.Web.Http.WebHost.xml" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Scripts/jquery-1.7.1-vsdoc.js" publishTime="10/31/2013 16:06:12" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-icons_888888_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery.min.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="bin/EntityFramework.dll" publishTime="10/31/2013 15:50:30" />
     <file relUrl="bin/System.Web.Http.dll" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="bin/MySql.Data.dll" publishTime="03/21/2013 15:15:08" />
-    <file relUrl="Content/themes/base/jquery-ui.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/WebGrease.dll" publishTime="10/31/2013 15:50:40" />
+    <file relUrl="Widgets/Resources/lib/jquery-2.min.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_ffffff_256x240.png" publishTime="03/21/2014 17:09:48" />
     <file relUrl="bin/System.Net.Http.xml" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Images/heroAccent.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Images/orderedList4.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Images/orderedList5.png" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Scripts/_references.js" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/jquery.ui.all.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Scripts/jquery-ui-1.8.20.min.js" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/images/ui-icons_454545_256x240.png" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.slider.min.css" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Scripts/knockout-2.1.0.js" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Scripts/jquery-ui-1.8.20.js" publishTime="10/31/2013 16:06:12" />
+    <file relUrl="Widgets/Resources/lib/numeral.de-de.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/css/font-awesome/css/font-awesome.min.css" publishTime="03/21/2014 17:11:40" />
+    <file relUrl="Widgets/Resources/js/jquery.ui.position.js" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="Widgets/Resources/js/backbone/backbone-relational/LICENSE.txt" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-icons_454545_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_diagonals-thick_20_666666_40x40.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_flat_10_000000_40x100.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/underscore-min.js" publishTime="03/25/2014 09:22:18" />
     <file relUrl="bin/System.Web.WebPages.xml" publishTime="10/31/2013 15:50:36" />
-    <file relUrl="Scripts/jquery.unobtrusive-ajax.js" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/Fanex.ManagementSP.Core.pdb" publishTime="02/27/2014 11:33:25" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="bin/System.Net.Http.dll" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Content/themes/base/jquery.ui.slider.css" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Scripts/jquery-1.7.1.js" publishTime="10/31/2013 16:06:12" />
-    <file relUrl="Scripts/jquery.validate.js" publishTime="10/31/2013 16:06:12" />
+    <file relUrl="Widgets/Resources/js/json2.min.js" publishTime="03/21/2014 17:11:56" />
+    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="10/31/2013 15:50:40" />
+    <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="10/31/2013 15:50:38" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/ui-bootstrap/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-icons_222222_256x240.png" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Widgets/Resources/lib/jquery-ui/css/smoothness/images/ui-bg_gloss-wave_35_f6a828_500x100.png" publishTime="03/21/2014 17:09:48" />
     <file relUrl="bin/System.Net.Http.Formatting.xml" publishTime="10/31/2013 15:50:38" />
-    <file relUrl="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Views/Home/Index.cshtml" publishTime="02/27/2014 10:05:57" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="10/31/2013 16:06:14" />
-    <file relUrl="Views/Shared/Error.cshtml" publishTime="10/31/2013 16:06:10" />
-    <file relUrl="Content/themes/base/jquery.ui.tabs.css" publishTime="10/31/2013 16:06:14" />
+    <file relUrl="Widgets/Resources/dist/jquery.handsontable.js" publishTime="03/21/2014 17:10:14" />
+    <file relUrl="Widgets/Resources/lib/jquery-2.js" publishTime="03/21/2014 17:09:48" />
+    <file relUrl="Views/Home/Index.cshtml" publishTime="03/14/2014 14:46:49" />
+    <file relUrl="Widgets/Resources/lib/numeral.js" publishTime="03/21/2014 17:09:48" />
     <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="10/31/2013 15:50:36" />
   </publishProfile>
 </publishData>
