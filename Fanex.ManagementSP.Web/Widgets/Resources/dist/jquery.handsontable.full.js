@@ -2826,7 +2826,7 @@ Handsontable.TableView.prototype.appendRowHeader = function (row, TH) {
 
     TH.onmouseup = function(){
         var start = parseInt(TBODY.getAttribute('startIndex'));
-        $instance.selectCell(start, 0, row, 8);
+        $instance.selectCell(start, 0, row, 8, false);
     };
   }
   else {
