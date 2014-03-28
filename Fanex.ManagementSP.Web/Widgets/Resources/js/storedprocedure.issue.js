@@ -255,16 +255,21 @@ $(document).ready(function () {
         },
         beforeRemoveRow: function (index, amount) {
             var instance = $('#storeprocedures').handsontable('getInstance');
-            for (var i = index; i < index + amount; i++) {
-                var spIssue = convertToSPIssue(instance, i);
-
-                $.ajax({
-                    url: apiUrl + 'storeprocedure?id=' + spIssue.Id + '&modifiedById=' + currentUser.Id,
-                    type: 'DELETE',
-                    success: function (response) {
-                        window.console.log(response);
+            deleteSPIssue(instance, index, amount);
+        },
+        beforeKeyDown: function (event) {
+            var instance = $('#storeprocedures').handsontable('getInstance');
+            var pos = instance.getSelected();
+            if (pos != undefined) {
+                if (pos[1] == 0 && pos[3] == 8) {
+                    // keyCode : 46 Delete
+                    if (event.keyCode === 46) {
+                        // deleteSPIssue(instance, pos[0], pos[2] - pos[0] + 1);
+                        event.stopImmediatePropagation();
+                        instance.alter('remove_row', pos[0], pos[2] - pos[0] + 1);
+                        event.preventDefault();
                     }
-                });
+                }
             }
         }
     });
@@ -342,6 +347,20 @@ $(document).ready(function () {
                 success: function (response) {
                     rowData.Id = response;
                     instance.setDataAtRowProp(row, 'Id', response);
+                    window.console.log(response);
+                }
+            });
+        }
+    };
+
+    function deleteSPIssue(instance, index, amount) {
+        for (var i = index; i < index + amount; i++) {
+            var spIssue = convertToSPIssue(instance, i);
+
+            $.ajax({
+                url: apiUrl + 'storeprocedure?id=' + spIssue.Id + '&modifiedById=' + currentUser.Id,
+                type: 'DELETE',
+                success: function (response) {
                     window.console.log(response);
                 }
             });

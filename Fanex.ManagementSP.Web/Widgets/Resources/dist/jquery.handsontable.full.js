@@ -2815,6 +2815,11 @@ Handsontable.TableView.prototype.appendRowHeader = function (row, TH) {
     this.wt.wtDom.fastInnerHTML(TH, $instance.getRowHeader(row));
     var TBODY=this.TBODY;
 
+    TH.onmouseover = function()
+    {
+        TH.style.cursor = "pointer";
+    };
+
     TH.onmousedown = function(){
         TBODY.setAttribute('startIndex', row);
     };
@@ -4500,7 +4505,7 @@ Handsontable.SelectionPoint.prototype.arr = function (arr) {
  * @param {Number} col
  * @param {String|Number} prop Row object property name
  * @param value Value to render (remember to escape unsafe HTML before inserting to DOM!)
- * @param {Object} cellProperties Cell properites (shared by cell renderer and editor)
+ * @param {Object} cellProperties Cell properties (shared by cell renderer and editor)
  */
 (function (Handsontable) {
 
@@ -7808,10 +7813,13 @@ Handsontable.PluginHooks.add('afterGetColHeader', htSortColumn.getColHeader);
   ContextMenu.prototype.bindMouseEvents = function (){
 
     function contextMenuOpenListener(event){
-
       event.preventDefault();
 
-      if(event.target.nodeName != 'TD' && !(Handsontable.Dom.hasClass(event.target, 'current') && Handsontable.Dom.hasClass(event.target, 'wtBorder'))){
+      // event.target.cellIndex == undefined 
+      // Menu context for row header
+      if(event.target.nodeName != 'TD' 
+        && event.target.cellIndex == undefined
+        && !(Handsontable.Dom.hasClass(event.target, 'current') && Handsontable.Dom.hasClass(event.target, 'wtBorder'))){
         return;
       }
 
