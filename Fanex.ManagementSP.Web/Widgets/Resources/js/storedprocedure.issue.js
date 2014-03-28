@@ -167,6 +167,7 @@ $(document).ready(function () {
         data: arrSPIssue,
         startRows: 0,
         startCols: 9,
+        fixedColumnsLeft: 3,
         rowHeaders: true,
         columnSorting: true,
         colWidths: [140, 140, 310, 60, 70, 120, 100, 100, 100],
