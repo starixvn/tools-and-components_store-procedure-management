@@ -68,6 +68,9 @@ $(document).ready(function () {
                     arrSPIssue.push(data);
                 }
             });
+            if (arrSPIssue.length <= 0) {
+                arrSPIssue = response[0];
+            }
         }
     });
 
