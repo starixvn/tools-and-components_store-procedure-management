@@ -426,30 +426,30 @@ $(document).ready(function () {
 
     function convertToStatusId(name) {
         var statusId = 0;
-
+        name = name.toLowerCase();
         switch (name) {
-            case "In Progress":
+            case "in progress":
                 statusId = 1;
                 break;
-            case "Done":
+            case "done":
                 statusId = 2;
                 break;
-            case "UAT [_xtest]":
+            case "uat [_xtest]":
                 statusId = 3;
                 break;
-            case "UAT [_xpre]":
+            case "uat [_xpre]":
                 statusId = 4;
                 break;
-            case "Not required":
+            case "not required":
                 statusId = 5;
                 break;
-            case "Released":
+            case "released":
                 statusId = 6;
                 break;
-            case "Pending":
+            case "pending":
                 statusId = 7;
                 break;
-            case "UAT":
+            case "uat":
                 statusId = 8;
                 break;
             default:
