@@ -2811,7 +2811,18 @@ Handsontable.TableView.prototype.scrollViewport = function (coords) {
  */
 Handsontable.TableView.prototype.appendRowHeader = function (row, TH) {
   if (row > -1) {
-    this.wt.wtDom.fastInnerHTML(TH, this.instance.getRowHeader(row));
+    var $instance = this.instance;
+    this.wt.wtDom.fastInnerHTML(TH, $instance.getRowHeader(row));
+    var TBODY=this.TBODY;
+
+    TH.onmousedown = function(){
+        TBODY.setAttribute('startIndex', row);
+    };
+
+    TH.onmouseup = function(){
+        var start = parseInt(TBODY.getAttribute('startIndex'));
+        $instance.selectCell(start, 0, row, 8);
+    };
   }
   else {
     var DIV = document.createElement('DIV');

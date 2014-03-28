@@ -64,7 +64,9 @@ $(document).ready(function () {
         async: false,
         success: function (response) {
             $.each(response, function (index, data) {
-                arrSPIssue[index] = data;
+                if (data.Id != 0) {
+                    arrSPIssue.push(data);
+                }
             });
         }
     });
@@ -134,10 +136,9 @@ $(document).ready(function () {
                     data: "IsFunction"
                 },
                 {
-                    type: "autocomplete",
+                    type: "dropdown",
                     data: "ActionName",
-                    source: actionSource,
-                    strict: true
+                    source: actionSource
                 },
                 {
                     type: "autocomplete",
@@ -152,10 +153,9 @@ $(document).ready(function () {
                     strict: true
                 },
                 {
-                    type: "autocomplete",
+                    type: "dropdown",
                     data: "StatusName",
-                    source: statusSource,
-                    strict: true
+                    source: statusSource
                 },
                 { data: "Description" },
                 { data: "Modifier.Username", readOnly: true}];
@@ -205,7 +205,9 @@ $(document).ready(function () {
                 "row_below": {},
                 "hsep1": "---------",
                 "remove_row": {},
-                "hsep2": "---------"
+                "hsep2": "---------",
+                "undo": {},
+                "redo": {}
             }
         },
         onChange: function (e, changes, source) {
