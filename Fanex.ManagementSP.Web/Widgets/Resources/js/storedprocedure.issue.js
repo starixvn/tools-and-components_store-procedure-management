@@ -228,7 +228,9 @@ $(document).ready(function () {
                     }
 
                     if (e[0][1] != "Modifier.Username") {
-                        instance.setDataAtCell(pos[0], 8, currentUser.Username);
+                        for (var i = pos[0]; i <= pos[2]; i++) {
+                            instance.setDataAtCell(i, 8, currentUser.Username);
+                        }
                     }
                 }
             }

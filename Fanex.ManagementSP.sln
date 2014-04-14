@@ -18,6 +18,9 @@ EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ManagementSPAddinSetup", "ManagementSPSetup\ManagementSPSetup.vdproj", "{D5637706-B968-453F-BE29-1792435DD1B4}"
 EndProject
 Global
+	GlobalSection(JSLint) = preSolution
+		SolutionConfigurationLocation = JSLintOptions.xml
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
