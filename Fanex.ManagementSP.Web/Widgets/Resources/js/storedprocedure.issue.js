@@ -225,6 +225,10 @@ $(document).ready(function () {
         },
         onChange: function (e, changes, source) {
             if (e != null) {
+                if (e.length == 1 && e[0][2] == e[0][3]) {
+                    return;
+                }
+
                 var instance = $('#storeprocedures').handsontable('getInstance');
                 var pos = instance.getSelected();
                 if (pos != undefined) {
@@ -246,6 +250,10 @@ $(document).ready(function () {
         },
         afterChange: function (source, change) {
             if (change === 'loadData' || source[0][1] === 'Modifier.Username' || source[0][1] === 'Id') {
+                return;
+            }
+
+            if (source.length == 1 && source[0][2] == source[0][3]) {
                 return;
             }
 

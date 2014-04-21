@@ -2363,7 +2363,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Manage SP Tool"
         "ProductCode" = "8:{C8B311A5-95DE-4590-B8D1-1F79AF8FE436}"
-        "PackageCode" = "8:{28D7D5E5-9228-4FE9-B193-479A0C0BCE38}"
+        "PackageCode" = "8:{9EAB07B1-D816-4A59-A4FD-28EA74B8C7AD}"
         "UpgradeCode" = "8:{D9A24ABE-39C0-49E9-8533-F2630B43042D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
