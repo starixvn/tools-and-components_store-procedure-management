@@ -327,13 +327,13 @@ namespace Fanex.ManagementSP.UI
             // 
             this.toolStripStatusLabel4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(167, 13);
-            this.toolStripStatusLabel4.Text = "© 2013 Nexcel Solutions Co., Ltd";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(244, 13);
+            this.toolStripStatusLabel4.Text = "Version 1.0.0.5 © 2013 Nexcel Solutions Co., Ltd";
             // 
             // toolStripStatusLabel5
             // 
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(637, 13);
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(529, 13);
             this.toolStripStatusLabel5.Spring = true;
             // 
             // toolStripStatusStore
@@ -374,7 +374,7 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 394F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 238F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 241F));
             this.tableLayoutPanel2.Controls.Add(this.cmboMyIssues, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.txtIssueId, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.chbQueryAll, 2, 0);
@@ -396,7 +396,7 @@ namespace Fanex.ManagementSP.UI
             this.cmboMyIssues.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmboMyIssues.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmboMyIssues.FormattingEnabled = true;
-            this.cmboMyIssues.Location = new System.Drawing.Point(23, 0);
+            this.cmboMyIssues.Location = new System.Drawing.Point(21, 0);
             this.cmboMyIssues.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.cmboMyIssues.MinimumSize = new System.Drawing.Size(88, 0);
             this.cmboMyIssues.Name = "cmboMyIssues";
@@ -408,13 +408,13 @@ namespace Fanex.ManagementSP.UI
             // txtIssueId
             // 
             this.txtIssueId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtIssueId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            this.txtIssueId.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIssueId.ForeColor = System.Drawing.Color.LightGray;
             this.txtIssueId.Location = new System.Drawing.Point(0, 0);
             this.txtIssueId.Margin = new System.Windows.Forms.Padding(0);
             this.txtIssueId.MinimumSize = new System.Drawing.Size(83, 23);
             this.txtIssueId.Name = "txtIssueId";
-            this.txtIssueId.Size = new System.Drawing.Size(83, 23);
+            this.txtIssueId.Size = new System.Drawing.Size(83, 24);
             this.txtIssueId.TabIndex = 4;
             this.txtIssueId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtIssueId_KeyDown);
             // 
@@ -422,7 +422,7 @@ namespace Fanex.ManagementSP.UI
             // 
             this.chbQueryAll.AutoSize = true;
             this.chbQueryAll.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbQueryAll.Location = new System.Drawing.Point(38, 5);
+            this.chbQueryAll.Location = new System.Drawing.Point(35, 5);
             this.chbQueryAll.Margin = new System.Windows.Forms.Padding(10, 5, 0, 0);
             this.chbQueryAll.Name = "chbQueryAll";
             this.chbQueryAll.Size = new System.Drawing.Size(162, 17);
@@ -449,7 +449,7 @@ namespace Fanex.ManagementSP.UI
             // pictureBoxLoading
             // 
             this.pictureBoxLoading.Image = global::Fanex.ManagementSP.UI.Properties.Resources._495_2_;
-            this.pictureBoxLoading.Location = new System.Drawing.Point(211, 3);
+            this.pictureBoxLoading.Location = new System.Drawing.Point(208, 3);
             this.pictureBoxLoading.Name = "pictureBoxLoading";
             this.pictureBoxLoading.Size = new System.Drawing.Size(30, 30);
             this.pictureBoxLoading.TabIndex = 6;
@@ -461,7 +461,7 @@ namespace Fanex.ManagementSP.UI
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Image = global::Fanex.ManagementSP.UI.Properties.Resources.gnome_edit_find;
-            this.btnSearch.Location = new System.Drawing.Point(605, 3);
+            this.btnSearch.Location = new System.Drawing.Point(602, 3);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(37, 19);
             this.btnSearch.TabIndex = 7;
@@ -485,7 +485,7 @@ namespace Fanex.ManagementSP.UI
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 94.10681F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.893186F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 782F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 785F));
             this.tableLayoutPanel3.Controls.Add(this.statusStrip2, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.dataGridViewServer, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.dataGridViewDatabase, 2, 1);
@@ -518,8 +518,8 @@ namespace Fanex.ManagementSP.UI
             // 
             this.toolStripStatusLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(167, 13);
-            this.toolStripStatusLabel1.Text = "© 2013 Nexcel Solutions Co., Ltd";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(244, 13);
+            this.toolStripStatusLabel1.Text = "Version 1.0.0.5 © 2013 Nexcel Solutions Co., Ltd";
             // 
             // dataGridViewServer
             // 
@@ -529,7 +529,7 @@ namespace Fanex.ManagementSP.UI
             this.dataGridViewServer.Location = new System.Drawing.Point(3, 33);
             this.dataGridViewServer.MultiSelect = false;
             this.dataGridViewServer.Name = "dataGridViewServer";
-            this.dataGridViewServer.Size = new System.Drawing.Size(89, 538);
+            this.dataGridViewServer.Size = new System.Drawing.Size(87, 538);
             this.dataGridViewServer.TabIndex = 0;
             this.dataGridViewServer.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewServer_CellMouseDown);
             this.dataGridViewServer.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewServer_CellValueChanged);
@@ -542,10 +542,10 @@ namespace Fanex.ManagementSP.UI
             this.dataGridViewDatabase.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewDatabase.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewDatabase.Location = new System.Drawing.Point(104, 33);
+            this.dataGridViewDatabase.Location = new System.Drawing.Point(101, 33);
             this.dataGridViewDatabase.MultiSelect = false;
             this.dataGridViewDatabase.Name = "dataGridViewDatabase";
-            this.dataGridViewDatabase.Size = new System.Drawing.Size(777, 538);
+            this.dataGridViewDatabase.Size = new System.Drawing.Size(780, 538);
             this.dataGridViewDatabase.TabIndex = 1;
             this.dataGridViewDatabase.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDatabase_CellEndEdit);
             this.dataGridViewDatabase.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewDatabase_CellFormatting);
@@ -568,7 +568,7 @@ namespace Fanex.ManagementSP.UI
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(101, 0);
+            this.label3.Location = new System.Drawing.Point(98, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 16);
@@ -617,8 +617,8 @@ namespace Fanex.ManagementSP.UI
             // 
             this.toolStripStatusLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(167, 13);
-            this.toolStripStatusLabel2.Text = "© 2013 Nexcel Solutions Co., Ltd";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(244, 13);
+            this.toolStripStatusLabel2.Text = "Version 1.0.0.5 © 2013 Nexcel Solutions Co., Ltd";
             // 
             // dataGridViewMyIssue
             // 
@@ -651,12 +651,12 @@ namespace Fanex.ManagementSP.UI
             // txtMyIssuesId
             // 
             this.txtMyIssuesId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMyIssuesId.Font = new System.Drawing.Font("Tahoma", 10, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (byte)0);
+            this.txtMyIssuesId.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMyIssuesId.ForeColor = System.Drawing.Color.LightGray;
             this.txtMyIssuesId.Location = new System.Drawing.Point(0, 0);
             this.txtMyIssuesId.Margin = new System.Windows.Forms.Padding(0);
             this.txtMyIssuesId.Name = "txtMyIssuesId";
-            this.txtMyIssuesId.Size = new System.Drawing.Size(382, 20);
+            this.txtMyIssuesId.Size = new System.Drawing.Size(382, 24);
             this.txtMyIssuesId.TabIndex = 0;
             // 
             // btnAddMyIssue
@@ -716,8 +716,8 @@ namespace Fanex.ManagementSP.UI
             // 
             this.toolStripStatusLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(167, 13);
-            this.toolStripStatusLabel3.Text = "© 2013 Nexcel Solutions Co., Ltd";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(244, 13);
+            this.toolStripStatusLabel3.Text = "Version 1.0.0.5 © 2013 Nexcel Solutions Co., Ltd";
             // 
             // btnUpdateAPIUrl
             // 
@@ -926,8 +926,8 @@ namespace Fanex.ManagementSP.UI
             // 
             this.toolStripStatusLabel6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
-            this.toolStripStatusLabel6.Size = new System.Drawing.Size(167, 13);
-            this.toolStripStatusLabel6.Text = "© 2013 Nexcel Solutions Co., Ltd";
+            this.toolStripStatusLabel6.Size = new System.Drawing.Size(244, 13);
+            this.toolStripStatusLabel6.Text = "Version 1.0.0.5 © 2013 Nexcel Solutions Co., Ltd";
             // 
             // imageListError
             // 

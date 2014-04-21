@@ -135,7 +135,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="api\update-version.xml" />
+    <Content Include="Api\update-version.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -239,8 +239,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="download\1.0.0.1\ManagementSPAddinSetup.msi" />
-    <None Include="download\1.0.0.2\ManagementSPAddinSetup.msi" />
+    <Content Include="Download\1.0.0.1\ManagementSPAddinSetup.msi" />
+    <Content Include="Download\1.0.0.2\ManagementSPAddinSetup.msi" />
     <None Include="Widgets\Resources\css\font-awesome\font\fontawesome-webfont.eot" />
     <None Include="Widgets\Resources\css\font-awesome\font\fontawesome-webfont.ttf" />
     <None Include="Widgets\Resources\css\font-awesome\font\fontawesome-webfont.woff" />

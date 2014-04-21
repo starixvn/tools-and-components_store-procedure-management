@@ -96,10 +96,17 @@ $(document).ready(function () {
                         // Filter database by serverId
                         var instance = $('#storeprocedures').handsontable('getInstance');
                         var pos = instance.getSelected();
-                        selectedServerName = instance.getDataAtCell(pos[0], 0);
+                        if (pos != undefined) {
+                            selectedServerName = instance.getDataAtCell(pos[0], 0);
 
-                        arrServerDatabase = getDatabasesByServer(arrDatabase, selectedServerName);
-                        filterSelect(arrServerDatabase, query, process);
+                            arrServerDatabase = getDatabasesByServer(arrDatabase, selectedServerName);
+                            filterSelect(arrServerDatabase, query, process);
+                        }
+                        else {
+                            var arr = new Array();
+                            arr.push(query);
+                            process(arr);
+                        }
                     },
                     strict: true
                 },
@@ -109,27 +116,29 @@ $(document).ready(function () {
                     source: function (query, process) {
                         var instance = $('#storeprocedures').handsontable('getInstance');
                         var pos = instance.getSelected();
-                        var rowIndex = pos[0];
-                        var rowData = convertToSPIssueOnlyServerAndDatabase(instance, rowIndex);
+                        if (pos != undefined) {
+                            var rowIndex = pos[0];
+                            var rowData = convertToSPIssueOnlyServerAndDatabase(instance, rowIndex);
 
-                        if (rowData != null) {
-                            var param = [
+                            if (rowData != null) {
+                                var param = [
                             'serverId=' + rowData.StoreProcedure.Server.Id,
                             'databaseId=' + rowData.StoreProcedure.Database.Id
                         ];
 
-                            $.ajax({
-                                url: apiUrl + 'StoreProcedure?' + param.join('&'),
-                                async: false,
-                                success: function (response) {
-                                    var array = new Array();
-                                    $.each(response, function (i, data) {
-                                        array.push(data.Name);
-                                    });
+                                $.ajax({
+                                    url: apiUrl + 'StoreProcedure?' + param.join('&'),
+                                    async: false,
+                                    success: function (response) {
+                                        var array = new Array();
+                                        $.each(response, function (i, data) {
+                                            array.push(data.Name);
+                                        });
 
-                                    filterSelect(array, query, process);
-                                }
-                            });
+                                        filterSelect(array, query, process);
+                                    }
+                                });
+                            }
                         }
                     },
                     strict: false
@@ -327,6 +336,11 @@ $(document).ready(function () {
         var rowData = convertToSPIssue(instance, row);
 
         if (rowData != null && isValidSPIssue(rowData)) {
+
+            if (rowData.Issue.Id == null) {
+                rowData.Issue.Id = httpQueries.issueId;
+            }
+
             var param = [
 			    'id=' + (rowData.Id || 0),
 			    'serverId=' + (rowData.StoreProcedure.Server.Id || 0),
@@ -337,7 +351,7 @@ $(document).ready(function () {
 			    'modifiedById=' + currentUser.Id,
 			    'status=' + rowData.Status,
 			    'description=' + $.trim(rowData.Description || ""),
-			    'issueId=' + httpQueries.issueId,
+			    'issueId=' + rowData.Issue.Id,
 			    'developerId=' + (rowData.Developer.Id || 0),
                 'storedProcedureId=' + (rowData.StoreProcedure.Id || 0),
                 'isAddNew=' + isAddNew];

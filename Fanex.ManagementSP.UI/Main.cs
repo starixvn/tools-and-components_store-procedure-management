@@ -219,6 +219,8 @@ namespace Fanex.ManagementSP.UI
 
                 this.LoadStore(txtIssueId.Text.Trim());
             }
+
+            AutoUpdater.Start(_apiUri + "update-version.xml");
         }
 
         /// <summary>
