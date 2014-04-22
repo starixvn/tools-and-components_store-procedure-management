@@ -297,17 +297,17 @@ $(document).ready(function () {
     function convertToSPIssue(instance, row) {
         if (!isEmptyRow(instance, row)) {
             var rowData = instance.getDataAtRow(row);
-            var serverId = _.find(arrServer, function (item) {
+            var serverId = (_.find(arrServer, function (item) {
                 return item.Name === rowData.StoreProcedure.Server.Name;
-            }) || { Id: 0}.Id;
+            }) || { Id: 0 }).Id;
 
             var databaseId = (_.find(arrDatabase, function (item) {
                 return item.Name === rowData.StoreProcedure.Database.Name && item.Server.Id === serverId;
             }) || { Id: 0 }).Id;
 
-            var developerId = _.find(arrDeveloper, function (item) {
+            var developerId = (_.find(arrDeveloper, function (item) {
                 return item.Username === rowData.Developer.Username;
-            }) || { Id: 0}.Id;
+            }) || { Id: 0 }).Id;
 
             rowData.StoreProcedure.Server.Id = serverId;
             rowData.StoreProcedure.Database.Id = databaseId;
@@ -323,9 +323,9 @@ $(document).ready(function () {
     function convertToSPIssueOnlyServerAndDatabase(instance, row) {
         if (!isEmptyServerAndDatabase(instance, row)) {
             var rowData = instance.getDataAtRow(row);
-            var serverId = _.find(arrServer, function (item) {
+            var serverId = (_.find(arrServer, function (item) {
                 return item.Name === rowData.StoreProcedure.Server.Name;
-            }) || { Id: 0}.Id;
+            }) || { Id: 0 }).Id;
 
             var databaseId = (_.find(arrDatabase, function (item) {
                 return item.Name === rowData.StoreProcedure.Database.Name && item.Server.Id === serverId;
