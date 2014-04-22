@@ -299,7 +299,7 @@ $(document).ready(function () {
             var rowData = instance.getDataAtRow(row);
             var serverId = _.find(arrServer, function (item) {
                 return item.Name === rowData.StoreProcedure.Server.Name;
-            }).Id;
+            }) || { Id: 0}.Id;
 
             var databaseId = (_.find(arrDatabase, function (item) {
                 return item.Name === rowData.StoreProcedure.Database.Name && item.Server.Id === serverId;
@@ -307,7 +307,7 @@ $(document).ready(function () {
 
             var developerId = _.find(arrDeveloper, function (item) {
                 return item.Username === rowData.Developer.Username;
-            }).Id;
+            }) || { Id: 0}.Id;
 
             rowData.StoreProcedure.Server.Id = serverId;
             rowData.StoreProcedure.Database.Id = databaseId;
@@ -325,7 +325,7 @@ $(document).ready(function () {
             var rowData = instance.getDataAtRow(row);
             var serverId = _.find(arrServer, function (item) {
                 return item.Name === rowData.StoreProcedure.Server.Name;
-            }).Id;
+            }) || { Id: 0}.Id;
 
             var databaseId = (_.find(arrDatabase, function (item) {
                 return item.Name === rowData.StoreProcedure.Database.Name && item.Server.Id === serverId;
