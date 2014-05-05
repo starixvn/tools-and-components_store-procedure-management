@@ -40,6 +40,20 @@ namespace Fanex.ManagementSP.Core.Services.Impl
             _issueProcedureRepository = serverService ?? new IssueRepository();
         }
 
+        public Issue Get(int id)
+        {
+            try
+            {
+                return _issueProcedureRepository.Get(id);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Gets the favorites by username.
         /// </summary>

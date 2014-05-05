@@ -22,6 +22,11 @@ namespace Fanex.ManagementSP.Web.Controllers
     {
         private readonly IIssueService _storeProcedureService = new IssueService();
 
+        public Issue GetById(int issueId)
+        {
+            return _storeProcedureService.Get(issueId);
+        }
+
         /// <summary>
         /// Gets the specified identifier.
         /// </summary>

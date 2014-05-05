@@ -17,6 +17,8 @@ namespace Fanex.ManagementSP.Core.Services.Interface
     /// </summary>
     public interface IIssueService
     {
+        Issue Get(int id);
+
         /// <summary>
         /// Gets the favorites by username.
         /// </summary>

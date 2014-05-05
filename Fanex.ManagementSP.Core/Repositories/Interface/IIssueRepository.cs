@@ -17,6 +17,8 @@ namespace Fanex.ManagementSP.Core.Repositories.Interface
     /// </summary>
     public interface IIssueRepository
     {
+        Issue Get(int id);
+
         /// <summary>
         /// Gets the favorites by username.
         /// </summary>

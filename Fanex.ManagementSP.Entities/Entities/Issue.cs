@@ -24,7 +24,11 @@ namespace Fanex.ManagementSP.Entities
 
         public int StatusId { get; set; }
 
+        public string Status { get; set; }
+
         public int PriorityId { get; set; }
+
+        public string Environment { get; set; }
 
         public User Assignee { get; set; }
 

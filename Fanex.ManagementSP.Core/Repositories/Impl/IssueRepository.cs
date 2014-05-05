@@ -15,12 +15,37 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
     using Fanex.ManagementSP.Core.Repositories.Interface;
     using Fanex.ManagementSP.Entities;
     using MySql.Data.MySqlClient;
+    using System.Linq;
 
     /// <summary>
     /// The issue repository class.
     /// </summary>
     public class IssueRepository : BaseRepository, IIssueRepository
     {
+        public Issue Get(int id)
+        {
+            Issue issue = new Issue();
+
+            try
+            {
+                using (var conn = new MySqlConnection(ConnectionString))
+                {
+                    issue = conn.Query<Issue, User, Issue>(
+                        sql: "spm_issues_getbyid",
+                        map: (i, u) => { i.Assignee = u; return i; },
+                        param: new { IssueId = id },
+                        splitOn: "id",
+                        commandType: CommandType.StoredProcedure).FirstOrDefault();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return issue;
+        }
+
         /// <summary>
         /// Gets the favorites by username.
         /// </summary>
