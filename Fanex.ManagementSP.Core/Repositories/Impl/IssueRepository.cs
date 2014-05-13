@@ -30,9 +30,9 @@ namespace Fanex.ManagementSP.Core.Repositories.Impl
             {
                 using (var conn = new MySqlConnection(ConnectionString))
                 {
-                    issue = conn.Query<Issue, User, Issue>(
+                    issue = conn.Query<Issue, User, Issue, Issue>(
                         sql: "spm_issues_getbyid",
-                        map: (i, u) => { i.Assignee = u; return i; },
+                        map: (i, u, pi) => { i.Assignee = u; i.Parent = pi; return i; },
                         param: new { IssueId = id },
                         splitOn: "id",
                         commandType: CommandType.StoredProcedure).FirstOrDefault();
