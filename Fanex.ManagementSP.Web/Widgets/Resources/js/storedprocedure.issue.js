@@ -13,7 +13,7 @@ $(document).ready(function () {
     var isAddNew = true;
     var isSetDataAtRowProp = false;
 
-    //    var apiUrl = 'http://10.21.10.19:9911/api/';
+    //    var apiUrl = 'https://spm.nexcel.vn/api/';
     var apiUrl = 'http://localhost:62215/api/';
 
     // Parsing parameters
@@ -231,7 +231,7 @@ $(document).ready(function () {
 
                 var instance = $('#storeprocedures').handsontable('getInstance');
                 var pos = instance.getSelected();
-                if (pos != undefined) {
+                if (pos != undefined && changes != "autofill") {
                     if (e[0][1] == "StoreProcedure.Server.Name") {
                         selectedServerName = e[0][3];
 
@@ -259,12 +259,14 @@ $(document).ready(function () {
 
             var arrRowIndex = new Array();
             for (var i = 0; i < source.length; i++) {
-                var row = _.find(arrRowIndex, function (value) {
-                    return value == source[i][0];
-                });
+                if (source[i] != null) {
+                    var row = _.find(arrRowIndex, function (value) {
+                        return value == source[i][0];
+                    });
 
-                if (row == undefined) {
-                    arrRowIndex.push(source[i][0]);
+                    if (row == undefined) {
+                        arrRowIndex.push(source[i][0]);
+                    }
                 }
             }
             var instance = $('#storeprocedures').handsontable('getInstance');
@@ -381,14 +383,15 @@ $(document).ready(function () {
     function deleteSPIssue(instance, index, amount) {
         for (var i = index; i < index + amount; i++) {
             var spIssue = convertToSPIssue(instance, i);
-
-            $.ajax({
-                url: apiUrl + 'storeprocedure?id=' + spIssue.Id + '&modifiedById=' + currentUser.Id,
-                type: 'DELETE',
-                success: function (response) {
-                    window.console.log(response);
-                }
-            });
+            if (spIssue != null) {
+                $.ajax({
+                    url: apiUrl + 'storeprocedure?id=' + spIssue.Id + '&modifiedById=' + currentUser.Id,
+                    type: 'DELETE',
+                    success: function (response) {
+                        window.console.log(response);
+                    }
+                });
+            }
         }
     };
 
@@ -435,13 +438,15 @@ $(document).ready(function () {
 
     function isEmptyRow(instance, row) {
         var rowData = instance.getDataAtRow(row);
-        if (rowData.StoreProcedure.Server.Name != null
+        if (rowData != undefined) {
+            if (rowData.StoreProcedure.Server.Name != null
             && rowData.StoreProcedure.Database.Name != null
             && rowData.StoreProcedure.Name != null
             && rowData.ActionName != null
             && rowData.Developer.Username != null
             && rowData.StatusName != null) {
-            return false;
+                return false;
+            }
         }
 
         return true;
@@ -449,9 +454,11 @@ $(document).ready(function () {
 
     function isEmptyServerAndDatabase(instance, row) {
         var rowData = instance.getDataAtRow(row);
-        if (rowData.StoreProcedure.Server.Name != null
+        if (rowData != undefined) {
+            if (rowData.StoreProcedure.Server.Name != null
             && rowData.StoreProcedure.Database.Name != null) {
-            return false;
+                return false;
+            }
         }
 
         return true;
