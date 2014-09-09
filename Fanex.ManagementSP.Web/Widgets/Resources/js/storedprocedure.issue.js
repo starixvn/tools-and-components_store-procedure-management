@@ -1,4 +1,4 @@
-var actionSource = ["A", "D", "E", "Nested"];
+var actionSource = ["A", "D", "E", "Nested", "Review"];
 var statusSource = ["In Progress", "Done", "UAT", "UAT [_xtest]", "UAT [_xpre]", "Not Required", "Released", "Pending"];
 
 $(document).ready(function () {
@@ -208,6 +208,22 @@ $(document).ready(function () {
         minSpareRows: 1,
         fillHandle: true,
         contextMenu: {
+            callback: function (key, options) {
+                var instance = $('#storeprocedures').handsontable('getInstance');
+                var index = instance.countRows() - 1;
+
+                if (key === 'row_bottom_5') {
+                    instance.alter('insert_row', index, 5);
+                }
+
+                if (key === 'row_bottom_10') {
+
+                }
+
+                if (key === 'row_bottom_20') {
+
+                }
+            },
             items: {
                 "row_above": {
                     disabled: function () {
@@ -216,6 +232,9 @@ $(document).ready(function () {
                     }
                 },
                 "row_below": {},
+                "row_bottom_5": { name: "Insert at bottom 5 rows" },
+                "row_bottom_10": { name: "Insert at bottom 10 rows" },
+                "row_bottom_20": { name: "Insert at bottom 20 rows" },
                 "hsep1": "---------",
                 "remove_row": {},
                 "hsep2": "---------",
